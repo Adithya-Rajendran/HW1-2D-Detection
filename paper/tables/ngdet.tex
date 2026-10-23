@@ -1,0 +1,9 @@
+% ngdet run_eval on KITTI (his ImageSets train split, first N frames), Orin Nano, ngdet:jp6 image.
+% Source: ~/Projects/ref/out/*/metrics.json (runs A, C, C_ml, C_e2e, D3*, E5*, DE5*); written by hand from those files.
+Tutorial (RTX 3090), 120 frames, thr 0.3 & 26.4 & -- & -- & 26.2 & 27.9 \\
+Same command, Orin Nano & 23.6 & -- & -- & 24.0 & 23.6 \\
+\midrule
+\texttt{driving3}, thr 0.001 & 24.2 & 24.3 & 23.9 & 24.4 & 23.4 \\
+\quad + DontCare as ignore & 24.9 & 24.9 & 24.7 & 25.0 & 24.5 \\
+\texttt{driving5}, thr 0.001 & 23.8 & \textbf{24.4} & 23.8 & 23.0 & 22.8 \\
+\quad + DontCare as ignore & 24.3 & \textbf{25.0} & 24.4 & 23.5 & 23.7 \\

@@ -165,6 +165,36 @@ Table~\ref{tab:main} gives the main results. COCO AP of 52 to 53 falls to 26 to 
 model; YOLOE falls to 18. RT-DETR-l reproduces its published COCO number to within 0.3 AP and the NMS-free YOLO26m
 head to within 0.3, but the NMS head scores 52.2 against a published 53.1. That gap is the first clue to F1.
 
+\textit{Course harness.} We also ran the tutorial's own \texttt{run\_eval} \cite{liu2026ngdet} unmodified on the
+Orin Nano (Table~\ref{tab:ngdet}). Its exact command gives 23.6 to 24.0 mAP against the published 26.2 to 27.9;
+lowering the score threshold to 0.001 and using 1,000 frames instead of 120 each move the numbers by under one point,
+so neither explains the remaining gap. Three protocol switches, applied to a separate patched copy that matches the
+original exactly when they are off, each change the result by about as much as the gaps between models. Treating
+KITTI DontCare regions as ignore regions, as the devkit does, adds 0.5 to 1.1 mAP to every model. Splitting the
+merged \emph{vehicle} class into car and truck (\texttt{driving5}) is what makes multi-label NMS matter: it adds 0.6
+mAP and 7.7 AR there and nothing under \texttt{driving3}, where a car/truck duplicate is the same class. The switches
+reorder the models: RT-DETR-R50 narrowly leads under the tutorial's protocol, YOLO26x with multi-label NMS under the
+five-class one. Under both taxonomies cyclist AP is 0.0 for every model, because a COCO \emph{bicycle} box never
+matches a KITTI \emph{Cyclist} box drawn around rider and bicycle; a third of the \texttt{driving3} mean is fixed at
+zero, which our rider-plus-bicycle composition (Table~\ref{tab:mapping}) avoids.
+
+\begin{table}[t]
+\centering
+\caption{The course harness on KITTI, Orin Nano (mAP in \%, 1,000 frames unless noted). ML: multi-label NMS;
+NF: NMS-free head. Each protocol switch moves every model by about as much as the gaps between models.}
+\label{tab:ngdet}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Protocol & \multicolumn{3}{c}{YOLO26x} & RT-DETR & F.\ R-CNN \\
+ & NMS & ML & NF & R50 & v2 \\
+\midrule
+\tabin{ngdet}
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{table*}[t]
 \centering
 \caption{Main results (AP in \%, 95\% bootstrap interval in brackets; S/M/L are COCO box-area bins). COCO AP halves

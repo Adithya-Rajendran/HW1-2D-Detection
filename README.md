@@ -41,7 +41,16 @@ The starting point is the course's [ngdet tutorial](https://github.com/lkk688/De
 | `--score-thr 0.001` | 0.248 | 0.248 | 0.238 |
 | `--score-thr 0.001`, 1,000 images | 0.242 | 0.244 | 0.234 |
 
-Variants that change the protocol (KITTI DontCare as ignore regions, a five-class taxonomy, multi-label NMS) run on a separate patched copy outside the tutorial repository; see the paper's reproduction section.
+Protocol variants run on a separate patched copy outside the tutorial repository (it reproduces the first row exactly with the switches off). 1,000 frames, `--score-thr 0.001`, mAP in %; ML is multi-label NMS, NF the NMS-free head:
+
+| Protocol | YOLO26x NMS | YOLO26x ML | YOLO26x NF | RT-DETR-R50 | Faster R-CNN v2 |
+|---|---|---|---|---|---|
+| `driving3` (tutorial) | 24.2 | 24.3 | 23.9 | 24.4 | 23.4 |
+| + DontCare as ignore | 24.9 | 24.9 | 24.7 | 25.0 | 24.5 |
+| `driving5` | 23.8 | **24.4** | 23.8 | 23.0 | 22.8 |
+| + DontCare as ignore | 24.3 | **25.0** | 24.4 | 23.5 | 23.7 |
+
+DontCare-as-ignore (KITTI devkit semantics) adds 0.5 to 1.1 to every model; multi-label NMS matters only once car and truck are separate classes (+0.6 mAP, +7.7 AR); cyclist AP is 0.0 for every model under both taxonomies because a COCO bicycle box never matches a KITTI rider-plus-bicycle box.
 
 ## Original questions
 
