@@ -361,7 +361,7 @@ the most precise zero-shot model (0.78) but the least complete (recall 0.61); on
 the closed-set YOLO26m by 3.8 AP on KITTI (22.4 vs.\ 26.2), yet it has the best zero-shot truck AP (20.8 vs.\ 11 to
 14), plausibly because a text prompt does not inherit COCO's car/truck boundary.
 
-No method covers cyclists, the class COCO lacks. Cosmos~3 Edge finds 11\%, mostly because it boxes the rider as a
+Closed-set COCO detectors have no cyclist class, and no zero-shot alternative covers it well. Cosmos~3 Edge finds 11\%, mostly because it boxes the rider as a
 pedestrian (Fig.~\ref{fig:gallery}e); YOLOE, prompted with ``cyclist'', finds none above 0.25. The zero-cost rule on a
 closed-set detector reaches 24 to 33\% recall, and 681 labeled training cyclists move the fine-tuned model to only
 26\% at the deployment threshold, though its cyclist AP (18.9) is the best of any detector.
