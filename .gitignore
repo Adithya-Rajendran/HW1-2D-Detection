@@ -40,3 +40,6 @@ paper/build/
 .DS_Store
 .idea/
 .vscode/
+
+# Course materials (assignment text) stay out of the public repo
+ASSIGNMENT.md

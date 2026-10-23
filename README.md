@@ -1,6 +1,6 @@
 # One Flag and Two Gaps: What Zero-Shot COCO-to-Driving Detection Results Hide
 
-CMPE 249 Intelligent Autonomous Systems (SJSU, Fall 2026), 2D object detection homework, **Track A (experimental)**. The assignment is in [`ASSIGNMENT.md`](ASSIGNMENT.md), the report in [`paper/`](paper/) (`latexmk -pdf main.tex`).
+CMPE 249 Intelligent Autonomous Systems (SJSU, Fall 2026), 2D object detection homework, **Track A (experimental)**. The assignment text is on the course Canvas page (not reproduced here); the report is in [`paper/`](paper/) (`latexmk -pdf main.tex`).
 
 A devkit-faithful, tested harness for evaluating COCO-pretrained detectors zero-shot and fine-tuned on driving data (KITTI, nuImages), with paired bootstrap tests, a typed error census and Jetson Orin Nano latency.
 

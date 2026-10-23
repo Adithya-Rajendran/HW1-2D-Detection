@@ -60,8 +60,8 @@ findings rather than a leaderboard:
   \item \textbf{Finding 3, missing labels.} Most of the small ``false positives'' that separate models are real
   objects KITTI never labeled (Section~\ref{sec:failures}).
 \end{itemize}
-On nuImages the flag and the resolution effect recur, and the same protocol switches move the course tutorial's own
-numbers by as much as the gaps between its models. The two fine-tunes behave differently: the full fine-tune of the
+On nuImages the flag and the resolution effect recur, and in the course tutorial's harness the same protocol switches
+move results by as much as the gaps between models. The two fine-tunes behave differently: the full fine-tune of the
 detector wins KITTI cars and collapses on nuImages, while LoRA on the VLM learns trucks and cyclists and edges the
 detector on KITTI overall.
 Around them we report the full Track~A comparison: closed-set vs.\ open-vocabulary vs.\ VLM, speed vs.\ accuracy on
@@ -394,7 +394,8 @@ frames; their mean, 19.3~s, matches the 19.1~s here.)
 \centering
 \caption{Cosmos~3 Edge with KITTI LoRA adapters. Subset: the 300 frames of Table~\ref{tab:vlm}; full: all 3{,}769
 validation frames, five classes. AP from conf 0.001 (token-probability scores for the VLM); F1 at IoU 0.5 with every
-box for the VLM and at conf 0.25 for the detector. Latency is end-to-end generation per frame, mean; Orin Nano VLM
+box for the VLM and at conf 0.25 for the detector. All rows here average five classes including cyclist; on Table~\ref{tab:main}'s
+four classes the fine-tuned detector's full-val AP is 28.4. Latency is end-to-end generation per frame, mean; Orin Nano VLM
 latencies are the first 50 subset frames for all three; the detector's is the TensorRT p50 of its architecture.}
 \label{tab:vlmft}
 \scriptsize
@@ -411,7 +412,7 @@ LoRA, compact & 31.5 & 0.82 & 28.6 & 91 & 1.92 & 6.3 \\
 \quad 128-token cap & 31.5 & 0.81 & -- & 80 & 1.69 & -- \\
 \quad 64-token cap & 26.0 & 0.64 & -- & 54 & 1.18 & -- \\
 \midrule
-YOLO26m-FT & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
+YOLO26m-FT, 5-class GT & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -475,6 +476,17 @@ Model & p50 & p99 & p50 & p99 & post & MB \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure*}[t]
+\centering
+\figslot{f6_gallery.pdf}{0.86\textwidth}{F6: failure gallery}
+\caption{One example per failure type. White: KITTI ground truth; dashed blue: DontCare; blue: YOLO26m (NMS) boxes
+at conf 0.25; violet: Cosmos~3 Edge; red: the object or box the panel is about. (a)~Loose: 48\% of YOLO26m's misses
+on KITTI val. (b)~Taxonomy: COCO ``truck'' on a KITTI Van. (c)~A delineator post called a person. (d)~A real
+distant car with no label, scored as a false positive. (e,f)~Cosmos~3 Edge boxes riders, not cyclists, and skips a
+large near car.}
+\label{fig:gallery}
+\end{figure*}
 
 \subsection{Second domain: nuImages}
 nuImages (3{,}000 random validation key frames from six cameras in Boston and Singapore, 1600$\times$900, mapped with
@@ -556,16 +568,7 @@ Model & TP & loose & crowded & confused & small & occluded & missed & loose & du
 \end{tabular}
 \end{table*}
 
-\begin{figure*}[t]
-\centering
-\figslot{f6_gallery.pdf}{\textwidth}{F6: failure gallery}
-\caption{One example per failure type. White: KITTI ground truth; dashed blue: DontCare; blue: YOLO26m (NMS) boxes
-at conf 0.25; violet: Cosmos~3 Edge; red: the object or box the panel is about. (a)~Loose: 48\% of YOLO26m's misses
-on KITTI val. (b)~Taxonomy: COCO ``truck'' on a KITTI Van. (c)~A delineator post called a person. (d)~A real
-distant car with no label, scored as a false positive. (e,f)~Cosmos~3 Edge boxes riders, not cyclists, and skips a
-large near car.}
-\label{fig:gallery}
-\end{figure*}
+
 
 \section{Recommendations for Cross-Dataset Detection Comparisons}\label{sec:practice}
 \begin{enumerate}
@@ -603,7 +606,7 @@ not a replacement.
 
 \section*{AI Tool Use}
 As the assignment allows, Claude (Anthropic) assisted with writing the evaluation harness, debugging the Jetson and
-GX10 setups, and drafting this report. Result Tables IV to VI, VIII, IX and XI to XIII are generated from the run
+GX10 setups, and drafting this report. Result Tables IV to VI, VIII, IX, XI and XII are generated from the run
 outputs by \texttt{det\_eval.paper\_tables}; Tables III, VII and X were transcribed from \texttt{results/ngdet\_repro/},
 \texttt{results/metrics/} and \texttt{results/vlm\_latency\_jetson/}. The evaluator is covered by unit tests against
 pycocotools, and the label audit was judged by inspecting each crop. AI explanations were wrong several times and the
@@ -619,45 +622,51 @@ fixes (that the VLM's outputs were identical across machines). All are corrected
 \section*{Reproducibility}\label{app:repro}
 {\sloppy
 Code, configs (\texttt{configs/experiments.yaml} holds every setting), run manifests, logs and metric files:
-\repourl; the README gives the full run order. Weights: \url{https://huggingface.co/Adithya-Rajendran/yolo26m-kitti}
-and \url{https://huggingface.co/Adithya-Rajendran/cosmos3-edge-kitti-lora}. Detectors: \texttt{python -m det\_eval.run gt}, \texttt{predict},
-\texttt{evaluate}, \texttt{latency -{}-engine}, \texttt{figures}. Fine-tuning: \texttt{python -m det\_eval.finetune
-split}; \texttt{export} (add \texttt{-{}-mask Van Person\_sitting} for the ablation); \texttt{train -{}-hours 7}. LoRA:
-\texttt{python -m det\_eval.vlm\_finetune train -{}-epochs 4 -{}-grad-accum 8} (add \texttt{-{}-format compact
--{}-order size} for the compact adapter), then \texttt{python -m det\_eval.vlm\_grounding -{}-model cosmos3\_edge\_ft}.
-nuImages: \texttt{python -m det\_eval.nuimages subset -{}-n 3000 -{}-seed 0}, then \texttt{gt}. Paired tests:
-\texttt{python -m det\_eval.compare -{}-gt \dots\ -{}-a \dots\ -{}-b \dots}; error census: \texttt{python -m
-det\_eval.failures}. Course harness variants: \texttt{scripts/make\_ngdet\_patched.py},
-\texttt{scripts/ngdet\_variants.sh}. Table~\ref{tab:repro} lists every run with its machine and
-Table~\ref{tab:commands} every command recorded in the manifests.\par}
+\repourl\ (tag \texttt{v1.0}); the README gives the full run order. Weights:
+\url{https://huggingface.co/Adithya-Rajendran/yolo26m-kitti} and
+\url{https://huggingface.co/Adithya-Rajendran/cosmos3-edge-kitti-lora}. Table~\ref{tab:repro} lists every run with its
+settings and machine, and gives representative commands; every command is recorded in its run's manifest. Detector
+fine-tunes use Ultralytics 8.4.183 defaults apart from the listed flags (optimizer auto, which chose MuSGD, lr 0.01,
+momentum 0.9, mosaic on, 3 warmup epochs); LoRA uses rank 16, alpha 32, AdamW at lr $10^{-4}$ with warmup and cosine
+decay.\par}
 
-\begin{table*}[h]
+\begin{table*}[t]
 \centering
-\caption{Every prediction run, from its manifest.}
+\caption{Every run, grouped by configuration and machine, from its manifest. Data gives dataset and input size in
+pixels (VLM rows: frame counts at native resolution). Below: representative commands and the two VLM prompts.}
 \label{tab:repro}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}llllllll@{}}
+\begin{tabular}{@{}lllllll@{}}
 \toprule
-Run & Checkpoint & Data (frames) & Input & conf / head & Precision & Hardware & Framework \\
+Run & Checkpoint & Data & conf / head & Precision & Hardware & Framework \\
 \midrule
 \tabin{repro}
 \bottomrule
 \end{tabular}}
-\end{table*}
 
-\begin{table*}[h]
-\centering
-\caption{Commands recorded in the run manifests.}
-\label{tab:commands}
+\vspace{6pt}
+\begin{minipage}{\textwidth}
 \scriptsize
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}l@{}}
-\toprule
-\tabin{commands}
-\bottomrule
-\end{tabular}}
+\begin{verbatim}
+python -m det_eval.run gt && python -m det_eval.run predict --dataset kitti_val --only yolo26m_nms_ml
+python -m det_eval.run evaluate --only yolo26m_nms_ml && python -m det_eval.run latency --engine
+python -m det_eval.finetune split
+python -m det_eval.finetune export --mask Van Person_sitting --out data/kitti_yolo_maskvan
+python -m det_eval.finetune train --hours 7 --data data/kitti_yolo_maskvan/kitti5.yaml --name yolo26m_kitti5_640_maskvan
+python -m det_eval.vlm_finetune train --epochs 4 --grad-accum 8 --format compact --order size \
+    --out runs/vlm_ft/cosmos3_edge_kitti_compact
+python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --split configs/splits/kitti_val.txt
+python -m det_eval.compare --n 500 --gt data/kitti/annotations/kitti_val_coco.json \
+    --a runs/preds/yolo26m_nms_ml__kitti_val__640.json --b runs/preds/yolo26m_nms__kitti_val__640.json \
+    --out results/paired/mlnms_vs_nms__kitti_val__640.json
+JSON prompt:    Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram.
+                Report bbox coordinates in JSON format.
+Compact prompt: ... categories: car, pedestrian, cyclist, truck, tram. Answer one object per line as: label x1 y1 x2 y2,
+                with coordinates from 0 to 1000, nearest objects first. Answer none if there are none.
+\end{verbatim}
+\end{minipage}
 \end{table*}
 
 \bibliographystyle{IEEEtran}

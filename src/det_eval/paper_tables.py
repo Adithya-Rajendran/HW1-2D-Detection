@@ -229,22 +229,23 @@ VLM_LABEL = {"cosmos3_edge": "Cosmos 3 Edge", "cosmos3_edge_ft": "Cosmos 3 Edge 
 
 
 def table_repro() -> Path:
-    rows = []
+    """One row per configuration and machine; the datasets and input sizes it ran on are grouped in one cell."""
+    groups: dict[tuple, list[str]] = {}
+    short = {"coco_val2017": "COCO", "kitti_val": "KITTI", "nuimages_val3k": "nuImages"}
     for p in sorted((RUNS / "preds").glob("*.manifest.json")):
         mf = load_json(p)
         rt = mf.get("runtime", {})
-        name = p.name.replace(".json.manifest.json", "")
-        model, ds, size = name.split("__")
+        model, ds, size = p.name.replace(".json.manifest.json", "").split("__")
         pk = mf.get("predict_kwargs") or {}
         head = "one-to-one" if pk.get("nms") is False else ("NMS, multi-label" if pk.get("multi_label") else
                                                             ("NMS" if mf.get("kind") == "yolo" else "--"))
         if "NMS" in head:
             head += f", IoU {mf.get('iou_nms', 0.7)}"
-        w = Path(str(mf.get('weights')))
+        w = Path(str(mf.get("weights")))
         wname = f"{w.parent.parent.name}/{w.name}" if w.name == "best.pt" else w.name
-        rows.append(f"{LABEL.get(model, model)} & {wname.replace('_', chr(92) + '_')} & "
-                    f"{DATASET.get(ds, ds)} ({mf.get('n_images')}) & {size} & {mf.get('conf')} / {head} & "
-                    f"{'FP16' if mf.get('fp16') else 'FP32'} & {_hardware(mf)} & Ultralytics {rt.get('ultralytics', '?')}, torch {rt.get('torch', '?').split('+')[0]} \\\\")
+        key = (LABEL.get(model, model), wname, f"{mf.get('conf')} / {head}", "FP16" if mf.get("fp16") else "FP32",
+               _hardware(mf), f"Ultralytics {rt.get('ultralytics', '?')}, torch {rt.get('torch', '?').split('+')[0]}")
+        groups.setdefault(key, []).append(f"{short.get(ds, ds)} {size}")
     vlm = sorted((RUNS / "vlm").glob("cosmos3_edge*__kitti_val__*.json.manifest.json")) + \
         sorted((RES / "vlm_latency_jetson").glob("cosmos3_edge*__kitti_val__*.json.manifest.json"))
     for p in vlm:
@@ -252,11 +253,21 @@ def table_repro() -> Path:
         model, _, n = p.name.replace(".json.manifest.json", "").split("__")
         if model not in VLM_LABEL or n not in ("50", "300", "3769"):
             continue
-        data = "KITTI val" if n == "3769" else "KITTI subset"
         purpose = "latency" if p.parent.name == "vlm_latency_jetson" else "accuracy"
-        rows.append(f"{VLM_LABEL[model]} & nvidia/Cosmos3-Edge & {data} ({n}) & native & greedy, {purpose} & BF16 & "
-                    f"{_hardware(mf)} & transformers 5.21.0.dev0 (60f4954) \\\\")
-    return _write("repro", rows, 8)
+        key = ("Cosmos 3 Edge (zero-shot; LoRA JSON, compact)", "nvidia/Cosmos3-Edge + adapters", f"greedy, {purpose}",
+               "BF16", _hardware(mf), "transformers 5.21.0.dev0 (60f4954)")
+        groups.setdefault(key, []).append(f"KITTI {n} fr.")
+    rows = []
+    for (label, wname, head, prec, hw, fw), runs in groups.items():
+        by_ds: dict[str, list[str]] = {}
+        for r in runs:                                  # "KITTI 640" -> {"KITTI": ["640", ...]}
+            ds, sz = r.split(" ", 1)
+            by_ds.setdefault(ds, []).append(sz.replace(" fr.", ""))
+        order = {"COCO": 0, "KITTI": 1, "nuImages": 2}
+        cell = "; ".join(f"{ds} {'/'.join(sorted(set(v), key=lambda x: int(x)))}" + (" fr." if "fr." in runs[0] else "")
+                         for ds, v in sorted(by_ds.items(), key=lambda kv: order.get(kv[0], 9)))
+        rows.append(f"{label} & {wname.replace('_', chr(92) + '_')} & {cell} & {head} & {prec} & {hw} & {fw} \\\\")
+    return _write("repro", rows, 7)
 
 
 def main() -> None:
