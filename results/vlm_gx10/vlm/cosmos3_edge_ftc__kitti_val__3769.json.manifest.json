@@ -1,0 +1,15 @@
+{
+  "output": "runs/vlm/cosmos3_edge_ftc__kitti_val__3769.json",
+  "created": "2026-10-23T00:32:47-07:00",
+  "command": "/home/ascent/HW1-2D-Detection/src/det_eval/vlm_grounding.py --model cosmos3_edge_ftc --split configs/splits/kitti_val.txt --out runs/vlm/cosmos3_edge_ftc__kitti_val__3769.json",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "cosmos3_edge_ftc",
+  "backend": "TransformersBackend",
+  "model_id": "nvidia/Cosmos3-Edge+runs/vlm_ft/cosmos3_edge_kitti_compact/adapter_best",
+  "prompt": "Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram. Answer one object per line as: label x1 y1 x2 y2, with coordinates from 0 to 1000, nearest objects first. Answer none if there are none.",
+  "coord_mode": "norm1000",
+  "n_frames": 3769
+}

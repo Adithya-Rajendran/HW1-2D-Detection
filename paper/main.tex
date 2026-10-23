@@ -172,7 +172,9 @@ accuracy numbers computed, on an ASUS Ascent GX10 (NVIDIA GB10, 128~GB unified m
 60f4954. Greedy decoding keeps the two machines close but not identical: the zero-shot run gives 1{,}035 true and
 648 false positives at IoU 0.5 on the Orin Nano and 1{,}043 and 668 on the GX10, the same F1 (0.66). Tables~\ref{tab:vlmft} and~\ref{tab:vlm}
 use the GX10 run; the error census (Table~\ref{tab:failures}) and label audit use the Orin Nano run. VLM latencies are measured on the Orin Nano in a container with the same versions. Every
-run writes a manifest with its command, settings, versions and machine; Table~\ref{tab:repro} lists them.
+run writes a manifest with its command and settings (detector manifests also record versions and machine);
+Table~\ref{tab:repro} lists them, and the GX10 VLM outputs, manifests and training logs are in
+\texttt{results/vlm\_gx10/}.
 
 \section{Results}
 \subsection{Baseline and reproduction}
@@ -190,10 +192,11 @@ original exactly when they are off, each change the result by about as much as t
 KITTI DontCare regions as ignore regions, as the devkit does, adds 0.5 to 1.1 mAP to every model. Splitting the
 merged \emph{vehicle} class into car and truck (\texttt{driving5}) is what makes multi-label NMS matter: it adds 0.6
 mAP and 7.7 AR there and nothing under \texttt{driving3}, where a car/truck duplicate is the same class. The switches
-reorder the models: RT-DETR-R50 narrowly leads under the tutorial's protocol, YOLO26x with multi-label NMS under the
-five-class one. Under both taxonomies cyclist AP is 0.0 for every model, because a COCO \emph{bicycle} box never
-matches a KITTI \emph{Cyclist} box drawn around rider and bicycle; a third of the \texttt{driving3} mean is fixed at
-zero, which our rider-plus-bicycle composition (Table~\ref{tab:mapping}) avoids.
+reorder the models: on the Orin Nano RT-DETR-R50 narrowly leads under \texttt{driving3}, YOLO26x with multi-label NMS
+under the five-class one. As the tutorial notes for zero-shot models \cite[\S17.4]{liu2026ngdet}, cyclist AP is
+near zero: here 0.0 for every model under both taxonomies, because a COCO \emph{bicycle} box never matches a KITTI
+\emph{Cyclist} box drawn around rider and bicycle, so a third of the \texttt{driving3} mean is fixed at zero; our
+rider-plus-bicycle composition (Table~\ref{tab:mapping}) is one way around it.
 
 \begin{table}[t]
 \centering
@@ -324,7 +327,7 @@ background; evaluation still uses the devkit rules. Ultralytics' score on the he
 The result is mixed in an informative way (Table~\ref{tab:finetune}). Cars, with 13{,}195 training boxes, improve
 from 50.7 to 68.3 AP and from 74.7 to 90.6 KITTI moderate AP$|_{R40}$, and subset F1 rises from 0.73 to 0.84 as
 precision jumps from 0.68 to 0.92. Trucks and trams, with 450 and 206 training boxes, regress (11.3 to 8.0 and 18.5
-to 10.3 AP), the forgetting the tutorial also reports for small per-domain sets \cite{liu2026ngdet}. Pedestrians gain
+to 10.3 AP). Pedestrians gain
 2.6 COCO-style AP but lose 7 KITTI moderate AP at IoU 0.5, and AR drops because the fine-tuned model emits far fewer
 low-score boxes. The class-averaged gain is only +2.2 AP (paired interval +0.9 to +3.3), which hides a large car gain
 behind two rare-class regressions. We hypothesized that training on Vans as background teaches the model not to fire
@@ -376,8 +379,8 @@ report F1 alongside). Table~\ref{tab:vlmft} has the result. LoRA more than doubl
 and lifts F1 from 0.66 to 0.85, level with the fine-tuned detector's 0.84. On the full validation split the JSON
 adapter reaches 30.1 AP and the compact one 28.6, against 26.5 for the fine-tuned YOLO26m on the same five-class
 ground truth; F1 is 0.83, 0.82 and 0.82, so by the threshold-free and the deployment metric alike the models are
-close, and the difference is in the classes. YOLO26m-FT stays ahead on cars (KITTI moderate 90.6 vs.\ 81.5) and
-level on pedestrians (63.3 vs.\ 62.4); the adapted VLM learns the rare classes the detector loses, trucks (47.7 vs.\
+close, and the difference is in the classes. Against the JSON adapter, YOLO26m-FT stays ahead on cars (KITTI
+moderate 90.6 vs.\ 81.5) and level on pedestrians (63.3 vs.\ 62.4; the compact adapter has 51.1); the adapted VLM learns the rare classes the detector loses, trucks (47.7 vs.\
 5.6 KITTI moderate AP; zero-shot the VLM had 24.9 on the subset), cyclists (49.4 vs.\ 34.1) and trams (21.4 vs.\
 18.7). We cannot attribute this
 to LoRA itself: model size, pretraining data and input resolution all differ between the two models, and the masked-Van
@@ -392,11 +395,9 @@ frames; their mean, 19.3~s, matches the 19.1~s here.)
 
 \begin{table}[t]
 \centering
-\caption{Cosmos~3 Edge with KITTI LoRA adapters. Subset: the 300 frames of Table~\ref{tab:vlm}; full: all 3{,}769
-validation frames, five classes. AP from conf 0.001 (token-probability scores for the VLM); F1 at IoU 0.5 with every
-box for the VLM and at conf 0.25 for the detector. All rows here average five classes including cyclist; on Table~\ref{tab:main}'s
-four classes the fine-tuned detector's full-val AP is 28.4. Latency is end-to-end generation per frame, mean; Orin Nano VLM
-latencies are the first 50 subset frames for all three; the detector's is the TensorRT p50 of its architecture.}
+\caption{Cosmos~3 Edge with KITTI LoRA adapters; five-class AP (Table~\ref{tab:main}'s four-class AP of YOLO26m-FT
+is 28.4). F1 at IoU 0.5: VLM with every box, detector at conf 0.25. Mean s/frame; Orin VLM rows: first 50 subset
+frames; detector: TensorRT p50.}
 \label{tab:vlmft}
 \scriptsize
 \setlength{\tabcolsep}{2.2pt}
@@ -410,7 +411,7 @@ Zero-shot & 14.4 & 0.66 & -- & 271 & 5.47 & 19.1 \\
 LoRA, JSON & \textbf{32.4} & \textbf{0.85} & \textbf{30.1} & 180 & 3.67 & 11.6 \\
 LoRA, compact & 31.5 & 0.82 & 28.6 & 91 & 1.92 & 6.3 \\
 \quad 128-token cap & 31.5 & 0.81 & -- & 80 & 1.69 & -- \\
-\quad 64-token cap & 26.0 & 0.64 & -- & 54 & 1.18 & -- \\
+\quad 64-token cap & 26.0 & 0.63 & -- & 54 & 1.18 & -- \\
 \midrule
 YOLO26m-FT, 5-class GT & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
 \bottomrule
@@ -502,10 +503,12 @@ cannot be tested here without a nuImages fine-tune.
 The KITTI fine-tune does not transfer; it collapses. AP on the three classes both models share falls from 34.0 to
 9.6, and every height bin drops, near cars included (69.4 to 43.6 above 80~px). The model did not break: at
 confidence 0.25 it is 92\% precise but recalls 16\% of objects, and even at confidence 0.001 it emits 4 boxes per
-nuImages frame against 72 for the COCO checkpoint. Seven hours of full fine-tuning on 3{,}412 frames from one camera in one city made it
-confident only on KITTI-looking objects. The masked-Van model behaves the same (10.6). For a robot that will leave
-its training city, the KITTI gains in Table~\ref{tab:finetune} are not free; replay of the original data, a lower
-learning rate or a low-rank update are the standard remedies, which we did not test.
+nuImages frame against 72 for the COCO checkpoint. This is the catastrophic forgetting the course tutorial reports
+when KITTI-heavy fine-tunes are scored on nuImages and Waymo \cite[\S17.4]{liu2026ngdet}, here with KITTI-only
+full training on the full split: seven hours on 3{,}412 frames from one camera in one city made the model confident
+only on KITTI-looking objects. The masked-Van model behaves the same (10.6). The tutorial's playbook
+\cite[\S18]{liu2026ngdet} finds more and more diverse data the most reliable fix and also lists a lower learning
+rate, replay and adapters such as LoRA; we tested none of these for the detector.
 
 \begin{table}[t]
 \centering
@@ -551,10 +554,8 @@ van a truck, KITTI calls it a Van, and the devkit ignores Van only for car (Fig.
 
 \begin{table*}[t]
 \centering
-\caption{Error census on the 300-frame subset at the deployment operating point (IoU 0.5). Loose localization
-dominates every zero-shot model and nearly vanishes after fine-tuning; RT-DETR-l trades nearly three times the false
-positives for its recall; most of Cosmos~3 Edge's false positives are tiny boxes, of which an audited 60\% are real
-unlabeled objects. Cosmos~3 Edge row: the Orin Nano zero-shot run.}
+\caption{Error census, 300-frame subset, conf 0.25, IoU 0.5. Loose localization dominates every zero-shot model and
+nearly vanishes after fine-tuning; most of Cosmos~3 Edge's false positives (Orin Nano run) are tiny, unlabeled boxes.}
 \label{tab:failures}
 \scriptsize
 \setlength{\tabcolsep}{3.2pt}
@@ -587,7 +588,7 @@ Model & TP & loose & crowded & confused & small & occluded & missed & loose & du
 \end{enumerate}
 
 \section{Limitations}
-One board for inference, and VLM confidences come from token probabilities, which are not calibrated like detector
+One board for detector inference and all latency, and VLM confidences come from token probabilities, which are not calibrated like detector
 scores. Mapping choices matter: Van is ignored only for car. Each fine-tune is one run with default hyperparameters,
 a baseline rather than a tuned result, with no repeated seeds; the VLM adapters were not evaluated on nuImages, so
 whether they transfer better than the detector is open, and the detector-vs-VLM comparison confounds model size,
@@ -651,14 +652,14 @@ Run & Checkpoint & Data & conf / head & Precision & Hardware & Framework \\
 \scriptsize
 \begin{verbatim}
 python -m det_eval.run gt && python -m det_eval.run predict --dataset kitti_val --only yolo26m_nms_ml
-python -m det_eval.run evaluate --only yolo26m_nms_ml && python -m det_eval.run latency --engine
+python -m det_eval.run evaluate --only yolo26m_nms_ml --bootstrap 200 && python -m det_eval.run latency --engine
 python -m det_eval.finetune split
 python -m det_eval.finetune export --mask Van Person_sitting --out data/kitti_yolo_maskvan
 python -m det_eval.finetune train --hours 7 --data data/kitti_yolo_maskvan/kitti5.yaml --name yolo26m_kitti5_640_maskvan
 python -m det_eval.vlm_finetune train --epochs 4 --grad-accum 8 --format compact --order size \
-    --out runs/vlm_ft/cosmos3_edge_kitti_compact
+    --val-every 200 --n-val 100 --out runs/vlm_ft/cosmos3_edge_kitti_compact
 python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --split configs/splits/kitti_val.txt
-python -m det_eval.compare --n 500 --gt data/kitti/annotations/kitti_val_coco.json \
+python -m det_eval.compare --n 300 --gt data/kitti/annotations/kitti_val_coco.json \
     --a runs/preds/yolo26m_nms_ml__kitti_val__640.json --b runs/preds/yolo26m_nms__kitti_val__640.json \
     --out results/paired/mlnms_vs_nms__kitti_val__640.json
 JSON prompt:    Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram.

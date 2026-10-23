@@ -23,7 +23,7 @@ Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge
 | 3+ configurations, 2+ families | Paper Table I; `configs/experiments.yaml` |
 | 2+ datasets, taxonomy mapping | COCO, KITTI, nuImages; `configs/kitti_to_coco.yaml`, `configs/nuimages_to_coco.yaml`; Tables II, X |
 | Metrics (AP, AP50/75, S/M/L, per-class, AR, latency, memory) | Tables IV, VI, IX, X |
-| Reproducibility (checkpoint, split, resolution, thresholds, hardware, versions, commands) | Appendix tables XII and XIII, `runs/*/*.manifest.json` |
+| Reproducibility (checkpoint, split, resolution, thresholds, hardware, versions, commands) | Appendix Table XII (runs, settings, machines, commands), `runs/*/*.manifest.json`, `results/vlm_gx10/` |
 | 2+ technical analyses | All five: cross-dataset, architecture, closed vs. open-vocabulary, speed-accuracy, fine-tuning |
 | Failure analysis | Section V, Table XI, Fig. 5 |
 | Evidence the experiments ran | Run logs and manifests in `runs/`, metrics in `results/`, tests in `tests/` |
@@ -86,7 +86,7 @@ DontCare-as-ignore (KITTI devkit semantics) adds 0.5 to 1.1 to every model; mult
 | `qwen3vl_8b` (optional) | General VLM; Cosmos 3 Nano's base model | `Qwen/Qwen3-VL-8B-Instruct` |
 
 - **Datasets:** COCO val2017 (5,000 images, in-domain), the KITTI 2D object val split (3,769 frames, [`configs/splits/`](configs/splits/)) and 3,000 random nuImages val key frames (seed 0, `configs/splits/nuimages_val3k.txt`). The VLM comparison scores every model on the same fixed 300-frame KITTI subset.
-- **Hardware:** NVIDIA Jetson Orin Nano 8GB (JetPack 6) for every detector run, the YOLO fine-tunes and every latency number, including the VLM's. The ASUS Ascent GX10 (NVIDIA GB10, 128 GB) trained the Cosmos LoRA adapters and produced all VLM accuracy numbers (greedy decoding, so outputs do not depend on the machine). Each manifest records the machine.
+- **Hardware:** NVIDIA Jetson Orin Nano 8GB (JetPack 6) for every detector run, the YOLO fine-tunes and every latency number, including the VLM's. The ASUS Ascent GX10 (NVIDIA GB10, 128 GB) trained the Cosmos LoRA adapters and produced all VLM accuracy numbers (greedy decoding keeps the machines close but not identical: the zero-shot run differs by about 1% in true positives, with the same F1). Each manifest records the machine.
 - Everything is driven by [`configs/experiments.yaml`](configs/experiments.yaml).
 
 ## Evaluation protocol
@@ -213,9 +213,9 @@ Every stage skips outputs that already exist; add `--force` to redo one, `--only
 
 ## Reproducibility
 
-Every output file gets a `<name>.manifest.json`. It records the exact command, all settings (checkpoint, input size, thresholds, precision, NMS mode), the software and device versions, and the git commit. The experiments ran before this directory became a git repository, so the recorded commit is null; the tag `v1.0` marks the code that produced the paper. `python -m det_eval.run env` writes the hardware/software report.
+Every output file gets a `<name>.manifest.json`. It records the exact command, all settings (checkpoint, input size, thresholds, precision, NMS mode), and, for detector runs, the software and device versions; it also records the git commit. Most experiments ran before this directory became a git repository, so their recorded commit is null (the later Orin VLM latency runs record one); the tag `v1.0` marks the code and results behind the submitted paper. `python -m det_eval.run env` writes the hardware/software report.
 
-Raw predictions go under `runs/` (not committed; large). Committed as evidence: metric files (`results/metrics/`), paired tests (`results/paired/`), the error census and label audit (`results/failures.json`, `results/audit_unlabeled_small.json`), Orin VLM latency summaries (`results/vlm_latency_jetson/`), the course-harness outputs (`results/ngdet_repro/`), and from `runs/` (force-added past .gitignore): prediction manifests (`runs/preds/*.manifest.json`), every latency run with per-frame timings (`runs/latency/`), Ultralytics validator runs (`runs/ultra_val/`), fine-tune arguments and per-epoch metrics (`runs/finetune/*/args.yaml`, `results.csv`), Orin VLM run manifests and summaries (`runs/vlm/`), the environment report (`runs/env/`), and the experiment logs and driver scripts (`runs/logs/`, minus download logs).
+Raw predictions go under `runs/` (not committed; large). Committed as evidence: metric files (`results/metrics/`), paired tests (`results/paired/`), the error census and label audit (`results/failures.json`, `results/audit_unlabeled_small.json`), Orin VLM latency summaries (`results/vlm_latency_jetson/`), the course-harness outputs (`results/ngdet_repro/`), and from `runs/` (force-added past .gitignore): prediction manifests (`runs/preds/*.manifest.json`), every latency run with per-frame timings (`runs/latency/`), Ultralytics validator runs (`runs/ultra_val/`), fine-tune arguments and per-epoch metrics (`runs/finetune/*/args.yaml`, `results.csv`), Orin VLM run manifests and summaries (`runs/vlm/`), the GX10 VLM runs (raw model outputs, summaries and manifests for the subset, full-val and token-cap runs, LoRA training logs and adapter manifests, and the run queue log: `results/vlm_gx10/`), the environment report (`runs/env/`), and the experiment logs and driver scripts (`runs/logs/`, minus download logs).
 
 `scripts/docker_run.sh` and `scripts/jetson_vlm_latency.sh` mount `/mnt/bench-data` (a local NFS share) only if it exists; override with `DATA_MNT` and `ADAPTER_SRC`.
 

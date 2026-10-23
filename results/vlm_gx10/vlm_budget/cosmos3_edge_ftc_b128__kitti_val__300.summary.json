@@ -1,0 +1,19 @@
+{
+  "name": "cosmos3_edge_ftc",
+  "frames": 300,
+  "parse_status": {
+    "ok": 300
+  },
+  "parse_ok_rate": 1.0,
+  "unknown_labels": {},
+  "n_dets": 1317,
+  "latency_s": {
+    "mean": 1.6899419749431157,
+    "p50": 1.5768315614986932,
+    "p90": 2.631688594710431
+  },
+  "completion_tokens_mean": 80.15333333333334,
+  "decode_tok_per_s": 47.429636355432464,
+  "prompt": "Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram. Answer one object per line as: label x1 y1 x2 y2, with coordinates from 0 to 1000, nearest objects first. Answer none if there are none.",
+  "coord_mode": "norm1000"
+}

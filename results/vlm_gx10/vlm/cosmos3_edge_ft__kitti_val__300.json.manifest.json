@@ -1,0 +1,15 @@
+{
+  "output": "runs/vlm/cosmos3_edge_ft__kitti_val__300.json",
+  "created": "2026-10-22T21:37:04-07:00",
+  "command": "/home/ascent/HW1-2D-Detection/src/det_eval/vlm_grounding.py --model cosmos3_edge_ft --out runs/vlm/cosmos3_edge_ft__kitti_val__300.json",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "cosmos3_edge_ft",
+  "backend": "TransformersBackend",
+  "model_id": "nvidia/Cosmos3-Edge+runs/vlm_ft/cosmos3_edge_kitti/adapter_best",
+  "prompt": "Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram. Report bbox coordinates in JSON format.",
+  "coord_mode": "norm1000",
+  "n_frames": 300
+}
