@@ -2,16 +2,34 @@
 RT-DETR-l & rtdetr-l.pt & COCO val (5000) & 640 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 RT-DETR-l & rtdetr-l.pt & KITTI val (3769) & 1280 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 RT-DETR-l & rtdetr-l.pt & KITTI val (3769) & 640 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+RT-DETR-l & rtdetr-l.pt & nuImages val (3000) & 640 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 YOLO26m, NMS-free & yolo26m.pt & COCO val (5000) & 640 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 YOLO26m, NMS-free & yolo26m.pt & KITTI val (3769) & 1280 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 YOLO26m, NMS-free & yolo26m.pt & KITTI val (3769) & 640 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m-FT, NMS & best.pt & KITTI val (3769) & 640 & 0.001 / NMS & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m-FT, NMS-free & best.pt & KITTI val (3769) & 640 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m, NMS & yolo26m.pt & COCO val (5000) & 640 & 0.001 / NMS & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m, NMS & yolo26m.pt & KITTI val (3769) & 1280 & 0.001 / NMS & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m, NMS & yolo26m.pt & KITTI val (3769) & 640 & 0.001 / NMS & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m, NMS multi-label & yolo26m.pt & COCO val (5000) & 640 & 0.001 / NMS, multi-label & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-YOLO26m, NMS multi-label & yolo26m.pt & KITTI val (3769) & 640 & 0.001 / NMS, multi-label & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS-free & yolo26m.pt & nuImages val (3000) & 1280 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS-free & yolo26m.pt & nuImages val (3000) & 640 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m-FT, NMS & yolo26m\_kitti5\_640/best.pt & KITTI val (3769) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m-FT, NMS & yolo26m\_kitti5\_640/best.pt & nuImages val (3000) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m-FT, NMS-free & yolo26m\_kitti5\_640/best.pt & KITTI val (3769) & 640 & 0.001 / one-to-one & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m-FT, Van masked & yolo26m\_kitti5\_640\_maskvan/best.pt & KITTI val (3769) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m-FT, Van masked & yolo26m\_kitti5\_640\_maskvan/best.pt & nuImages val (3000) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS & yolo26m.pt & COCO val (5000) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS & yolo26m.pt & KITTI val (3769) & 1280 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS & yolo26m.pt & KITTI val (3769) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS & yolo26m.pt & nuImages val (3000) & 1280 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS & yolo26m.pt & nuImages val (3000) & 640 & 0.001 / NMS, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS multi-label & yolo26m.pt & COCO val (5000) & 640 & 0.001 / NMS, multi-label, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS multi-label & yolo26m.pt & KITTI val (3769) & 640 & 0.001 / NMS, multi-label, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+YOLO26m, NMS multi-label & yolo26m.pt & nuImages val (3000) & 640 & 0.001 / NMS, multi-label, IoU 0.7 & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 YOLOE-26m & yoloe-26m-seg.pt & KITTI val (3769) & 1280 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
 YOLOE-26m & yoloe-26m-seg.pt & KITTI val (3769) & 640 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
-Cosmos 3 Edge & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, no thinking & BF16 & Orin Nano 8GB & transformers 5.21.0.dev0 (main) \\
+YOLOE-26m & yoloe-26m-seg.pt & nuImages val (3000) & 640 & 0.001 / -- & FP16 & Orin Nano 8GB & Ultralytics 8.4.183, torch 2.10.0 \\
+Cosmos 3 Edge & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, accuracy & BF16 & GX10 (GB10) & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (JSON) & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, accuracy & BF16 & GX10 (GB10) & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (JSON) & nvidia/Cosmos3-Edge & KITTI val (3769) & native & greedy, accuracy & BF16 & GX10 (GB10) & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (compact) & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, accuracy & BF16 & GX10 (GB10) & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (compact) & nvidia/Cosmos3-Edge & KITTI val (3769) & native & greedy, accuracy & BF16 & GX10 (GB10) & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, latency & BF16 & Orin Nano 8GB & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge & nvidia/Cosmos3-Edge & KITTI subset (50) & native & greedy, latency & BF16 & Orin Nano 8GB & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (JSON) & nvidia/Cosmos3-Edge & KITTI subset (50) & native & greedy, latency & BF16 & Orin Nano 8GB & transformers 5.21.0.dev0 (60f4954) \\
+Cosmos 3 Edge + LoRA (compact) & nvidia/Cosmos3-Edge & KITTI subset (50) & native & greedy, latency & BF16 & Orin Nano 8GB & transformers 5.21.0.dev0 (60f4954) \\

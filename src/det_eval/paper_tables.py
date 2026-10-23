@@ -80,7 +80,9 @@ def table_main() -> Path:
 
 def table_vlm300() -> Path:
     rows = []
-    vsum = RUNS / "vlm" / "cosmos3_edge__kitti_val__300.summary.json"
+    # Orin Nano latency of the zero-shot VLM: the original 300-frame Jetson run (accuracy comes from the scored rerun,
+    # whose greedy outputs give the same TP/FP/FN counts)
+    vsum = RES / "vlm_latency_jetson" / "cosmos3_edge__kitti_val__300.summary.json"
     fail = load_json(RES / "failures.json")["vlm300"] if (RES / "failures.json").exists() else None
     for m in ("yolo26m_nms", "yolo26m_e2e", "rtdetr_l", "yoloe26m", "yolo26m_ft_kitti", "cosmos3_edge"):
         size = "native" if m == "cosmos3_edge" else 640
@@ -212,9 +214,18 @@ def table_commands() -> Path:
             if cmd in seen:
                 continue
             seen.add(cmd)
-            esc = cmd.replace("\\", "/").replace("_", "\\_").replace("&", "\\&")
+            esc = cmd.replace("\\", "/").replace("_", "\\_").replace("&", "\\&").replace("--", "-{}-")
             rows.append(f"\\texttt{{{esc}}} \\\\")
     return _write("commands", rows, 1)
+
+
+def _hardware(mf: dict) -> str:
+    """Where a run executed, from the path in its recorded command (the GX10 user is `ascent`)."""
+    return "GX10 (GB10)" if "/home/ascent/" in mf.get("command", "") else "Orin Nano 8GB"
+
+
+VLM_LABEL = {"cosmos3_edge": "Cosmos 3 Edge", "cosmos3_edge_ft": "Cosmos 3 Edge + LoRA (JSON)",
+             "cosmos3_edge_ftc": "Cosmos 3 Edge + LoRA (compact)"}
 
 
 def table_repro() -> Path:
@@ -227,15 +238,24 @@ def table_repro() -> Path:
         pk = mf.get("predict_kwargs") or {}
         head = "one-to-one" if pk.get("nms") is False else ("NMS, multi-label" if pk.get("multi_label") else
                                                             ("NMS" if mf.get("kind") == "yolo" else "--"))
-        rows.append(f"{LABEL.get(model, model)} & {Path(str(mf.get('weights'))).name.replace('_', chr(92) + '_')} & "
+        if "NMS" in head:
+            head += f", IoU {mf.get('iou_nms', 0.7)}"
+        w = Path(str(mf.get('weights')))
+        wname = f"{w.parent.parent.name}/{w.name}" if w.name == "best.pt" else w.name
+        rows.append(f"{LABEL.get(model, model)} & {wname.replace('_', chr(92) + '_')} & "
                     f"{DATASET.get(ds, ds)} ({mf.get('n_images')}) & {size} & {mf.get('conf')} / {head} & "
-                    f"{'FP16' if mf.get('fp16') else 'FP32'} & Orin Nano 8GB & Ultralytics {rt.get('ultralytics', '?')}, torch {rt.get('torch', '?').split('+')[0]} \\\\")
-    vm = RUNS / "vlm" / "cosmos3_edge__kitti_val__300.json.manifest.json"
-    if vm.exists():
-        mf = load_json(vm)
-        rt = mf.get("runtime", {})
-        rows.append(f"Cosmos 3 Edge & nvidia/Cosmos3-Edge & KITTI subset (300) & native & greedy, no thinking & BF16 & "
-                    f"Orin Nano 8GB & transformers 5.21.0.dev0 (main) \\\\")
+                    f"{'FP16' if mf.get('fp16') else 'FP32'} & {_hardware(mf)} & Ultralytics {rt.get('ultralytics', '?')}, torch {rt.get('torch', '?').split('+')[0]} \\\\")
+    vlm = sorted((RUNS / "vlm").glob("cosmos3_edge*__kitti_val__*.json.manifest.json")) + \
+        sorted((RES / "vlm_latency_jetson").glob("cosmos3_edge*__kitti_val__*.json.manifest.json"))
+    for p in vlm:
+        mf = load_json(p)
+        model, _, n = p.name.replace(".json.manifest.json", "").split("__")
+        if model not in VLM_LABEL or n not in ("50", "300", "3769"):
+            continue
+        data = "KITTI val" if n == "3769" else "KITTI subset"
+        purpose = "latency" if p.parent.name == "vlm_latency_jetson" else "accuracy"
+        rows.append(f"{VLM_LABEL[model]} & nvidia/Cosmos3-Edge & {data} ({n}) & native & greedy, {purpose} & BF16 & "
+                    f"{_hardware(mf)} & transformers 5.21.0.dev0 (60f4954) \\\\")
     return _write("repro", rows, 8)
 
 

@@ -8,12 +8,11 @@ A devkit-faithful, tested harness for evaluating COCO-pretrained detectors zero-
 
 | | Finding | Evidence |
 |---|---|---|
-| F1 | **One flag decides the NMS vs. NMS-free comparison.** Ultralytics' `predict()` runs NMS on the arg-max class; its validator uses `multi_label=True`. Turning the flag on adds 1.6 AP on KITTI, matches the NMS-free head's truck/tram recall, beats it by 0.9 AP, and closes most of the gap to published COCO numbers. | `results/paired/`, `results/metrics/yolo26m_nms_ml__*` |
-| F2 | **The COCO-to-KITTI gap is two gaps.** 1280 px input helps only cars under 40 px; 7 hours of fine-tuning on the Orin Nano helps only cars above 25 px (car AP 50.7 to 68.3). | Paper Fig. 2, `results/metrics/*__full.json` height bins |
-| F3 | **Many "false positives" are missing labels.** 60 to 70% of audited tiny false positives are real, unlabeled objects. | `results/audit_unlabeled_small.json` |
-
-| | **F1 and F2 replicate on nuImages; the KITTI fine-tune does not transfer.** Multi-label NMS adds 0.6 AP / 5.1 AR on nuImages, 1280 px again helps only small objects, and the KITTI fine-tune collapses from 34.0 to 9.6 shared-class AP. | Paper Table X, `results/metrics/*__nuimages_val3k__*` |
-| | **LoRA on a VLM forgets less than a full fine-tune of a detector.** Cosmos 3 Edge with a KITTI LoRA adapter reaches 30.1 AP on KITTI val vs. 26.5 for fine-tuned YOLO26m, keeping trucks (47.7 vs. 5.6 moderate AP) and cyclists; masking Van regions in YOLO training recovers part of the truck loss (8.0 to 18.1 AP). | Paper Tables VI, VII |
+| 1 | **One flag decides the NMS vs. NMS-free comparison in AP.** Ultralytics' `predict()` runs NMS on the arg-max class; its validator uses `multi_label=True`. Turning the flag on adds 1.6 AP on KITTI, matches the NMS-free head's truck/tram recall, beats it by 0.9 AP (paired CI excludes zero), and closes most of the gap to published COCO numbers. At conf 0.25 it changes little. On nuImages it adds 0.6 AP / 5.1 AR (point estimate). | Paper Tables IV, V, X; `results/paired/`, `results/metrics/yolo26m_nms_ml__*` |
+| 2 | **The COCO-to-KITTI gap is two gaps.** 1280 px input helps mainly cars under 40 px; 7 hours of fine-tuning on the Orin Nano helps cars above 25 px (car AP 50.7 to 68.3) but not smaller ones. On nuImages the resolution gain again shrinks with size but reaches mid-size objects. | Paper Fig. 2, Table X; height bins in `results/metrics/*__full.json` |
+| 3 | **Many "false positives" are missing labels.** 60 to 70% of audited tiny false positives are real, unlabeled objects. | `results/audit_unlabeled_small.json` |
+| | **The KITTI fine-tune does not transfer.** On nuImages it falls from 34.0 to 9.6 shared-class AP: 92% precise at conf 0.25 but 16% recall. Masking Van regions during training raises KITTI truck AP from 8.0 to 18.1 (one run per arm). | Paper Tables VI, X |
+| | **LoRA on Cosmos 3 Edge learns the rare classes the fine-tuned detector loses.** Full KITTI val: 30.1 AP (JSON adapter) and 28.6 (compact) vs. 26.5 for fine-tuned YOLO26m; F1 0.83 / 0.82 / 0.82. Trucks 47.7 vs. 5.6 KITTI moderate AP. Orin Nano: 6.3 s/frame (compact) vs. 18 ms. Model size and pretraining are confounded, so this is not a LoRA-vs-full-fine-tune result. | Paper Table VII; `results/metrics/cosmos3_edge*`, `results/vlm_latency_jetson/` |
 
 Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge, 17 s/frame zero-shot on the Orin Nano), TensorRT latency and memory, per-class AP, a failure gallery, and the course tutorial's own harness under three protocol switches.
 
@@ -43,6 +42,8 @@ The starting point is the course's [ngdet tutorial](https://github.com/lkk688/De
 | Reproduced, same command | 0.236 | 0.240 | 0.236 |
 | `--score-thr 0.001` | 0.248 | 0.248 | 0.238 |
 | `--score-thr 0.001`, 1,000 images | 0.242 | 0.244 | 0.234 |
+
+Raw outputs of every run: [`results/ngdet_repro/`](results/ngdet_repro/).
 
 Protocol variants run on a separate patched copy outside the tutorial repository (it reproduces the first row exactly with the switches off). 1,000 frames, `--score-thr 0.001`, mAP in %; ML is multi-label NMS, NF the NMS-free head:
 
@@ -75,13 +76,13 @@ DontCare-as-ignore (KITTI devkit semantics) adds 0.5 to 1.1 to every model; mult
 | `cosmos3_nano` (optional) | Physical-AI VLM, 2D grounding (8B reasoner) | `nvidia/Cosmos3-Nano` |
 | `qwen3vl_8b` (optional) | General VLM; Cosmos 3 Nano's base model | `Qwen/Qwen3-VL-8B-Instruct` |
 
-- **Datasets:** COCO val2017 (5,000 images, in-domain) and the KITTI 2D object val split (3,769 frames, [`configs/splits/`](configs/splits/)). Every model is evaluated zero-shot. The VLM comparison scores every model on the same fixed 300-frame subset.
-- **Hardware:** NVIDIA Jetson Orin Nano 8GB (JetPack 6) for all detector runs, latency and Cosmos 3 Edge. The ASUS Ascent GX10 (NVIDIA GB10, 128 GB) is only needed for the optional 8B VLMs.
+- **Datasets:** COCO val2017 (5,000 images, in-domain), the KITTI 2D object val split (3,769 frames, [`configs/splits/`](configs/splits/)) and 3,000 random nuImages val key frames (seed 0, `configs/splits/nuimages_val3k.txt`). The VLM comparison scores every model on the same fixed 300-frame KITTI subset.
+- **Hardware:** NVIDIA Jetson Orin Nano 8GB (JetPack 6) for every detector run, the YOLO fine-tunes and every latency number, including the VLM's. The ASUS Ascent GX10 (NVIDIA GB10, 128 GB) trained the Cosmos LoRA adapters and produced all VLM accuracy numbers (greedy decoding, so outputs do not depend on the machine). Each manifest records the machine.
 - Everything is driven by [`configs/experiments.yaml`](configs/experiments.yaml).
 
 ## Evaluation protocol
 
-**One evaluator for every model.** pycocotools scores COCO-format JSON for every model, with the same thresholds throughout: conf 0.001 and at most 100 detections per image for AP; conf 0.25 for operating points and latency.
+**One evaluator for every model.** pycocotools scores COCO-format JSON for every model, with the same thresholds throughout: NMS IoU 0.7 and at most 300 boxes per image at prediction; conf 0.001 and the top 100 detections per image for AP; conf 0.25 for operating points and latency.
 
 **KITTI to COCO mapping** ([`configs/kitti_to_coco.yaml`](configs/kitti_to_coco.yaml)):
 
@@ -100,9 +101,9 @@ Closed-set models get a rule-based `cyclist` baseline built from overlapping per
 - AP@[.5:.95], AP50, AP75, AP small/medium/large, AR, and per-class AP.
 - AP by box height (<25, 25-40, 40-80, >=80 px).
 - KITTI-style AP|R40 per difficulty at the devkit IoU (car 0.7, pedestrian and cyclist 0.5).
-- 95% bootstrap intervals from 500 image resamples. With unit weights the bootstrap reproduces pycocotools exactly (tested).
+- 95% percentile bootstrap intervals over images: 200 resamples for single detectors, 300 for VLM runs, 300 to 500 for paired differences (`det_eval.compare`). With unit weights the bootstrap reproduces pycocotools exactly (tested).
 
-**VLMs** return no confidence scores, so they get operating points instead of AP: precision, recall and F1 at IoU 0.5 and 0.7. Detectors are compared at their best F1 and at matched recall.
+**VLMs** return no confidence scores. For AP and AR each box is scored by the geometric-mean probability of the tokens that spell it; because those scores are not calibrated like a detector's, VLMs are also compared by precision, recall and F1 at IoU 0.5 and 0.7 with every box. Detectors are compared at conf 0.25 and threshold-free (AP).
 
 **Latency:**
 - Batch 1, with images decoded before timing and the GPU synchronized around each call.
@@ -124,11 +125,17 @@ Before any timing run, `sudo nvpmodel -q` must report `MAXN_SUPER` (or `MAXN`). 
 
 With 8 GB of unified memory, run one job at a time: detectors first, then the VLM. For the VLM run, booting to console (`sudo systemctl set-default multi-user.target`) frees about 0.8 GB.
 
-### ASUS Ascent GX10 / DGX Spark (optional)
+### Docker on the Jetson (used for all new runs)
 
-Run `bash scripts/spark_docker.sh` for Ultralytics' arm64 image with the repo mounted.
+```bash
+docker build -f docker/Dockerfile.jetson -t hw2d:jp6 .        # detectors, fine-tuning
+docker build -f docker/Dockerfile.cosmos -t hw2d-cosmos:jp6 . # + Transformers 60f4954, peft 0.21.2 for the VLM
+scripts/docker_run.sh python -m det_eval.run predict          # repo mounted at /work, runs as your user
+```
 
-Cosmos 3 Nano needs its own venv: torch 2.10 (cu130) and torchvision 0.25, then `pip install -e ".[vlm]"`.
+### ASUS Ascent GX10 / DGX Spark (VLM fine-tuning)
+
+A venv with torch 2.10 (cu130), `pip install -e ".[vlm]"`, Transformers at commit 60f49549e0db78f022ee30aa1571d9ab6e4a15bf and peft 0.21.2. `bash scripts/spark_docker.sh` gives Ultralytics' arm64 image with the repo mounted.
 
 ## Data
 
@@ -148,39 +155,72 @@ data/coco/images/val2017/*.jpg
 data/coco/annotations/instances_val2017.json
 data/kitti/training/image_2/*.png        (val frames only is enough)
 data/kitti/training/label_2/*.txt
-data/kitti/annotations/kitti_val_coco.json, kitti_val_coco_openvocab.json   (written by make gt)
+data/kitti/annotations/kitti_val_coco.json, kitti_val_coco_openvocab.json   (written by `run gt`)
+data/nuimages/v1.0-val/*.json, data/nuimages/samples/CAM_*/            (official nuImages download)
 ```
 
 ## Run order
 
 ```bash
+# Zero-shot detectors (Orin Nano)
 python -m det_eval.run env                                  # hardware/software report
+python -m det_eval.run gt                                   # COCO-format KITTI GT (closed-set and open-vocab)
+python -m det_eval.nuimages subset --n 3000 --seed 0 --out configs/splits/nuimages_val3k.txt
+python -m det_eval.nuimages gt --split configs/splits/nuimages_val3k.txt --out data/nuimages_coco/nuimages_val3k_coco.json
+python -m det_eval.nuimages gt --split configs/splits/nuimages_val3k.txt --open-vocab --out data/nuimages_coco/nuimages_val3k_coco_openvocab.json
 python -m det_eval.run predict                              # every detector x dataset x input size in the config
-python -m det_eval.run evaluate                             # metrics for every prediction file (and VLM runs)
-python -m det_eval.run latency                              # PyTorch, batch 1, conf 0.25
-python -m det_eval.run latency --engine                     # TensorRT FP16 engines
+python -m det_eval.run predict --dataset nuimages_val3k
+python -m det_eval.run evaluate                             # metrics for every prediction file and VLM run
+python -m det_eval.run latency --engine                     # TensorRT FP16 (drop --engine for PyTorch)
+
+# Fine-tuning YOLO26m on KITTI (Orin Nano, Docker)
+python -m det_eval.finetune split
+python -m det_eval.finetune export                          # ablation: --mask Van Person_sitting --out data/kitti_yolo_maskvan
+python -m det_eval.finetune train --hours 7                 # ablation: --data data/kitti_yolo_maskvan/kitti5.yaml --name yolo26m_kitti5_640_maskvan
+python -m det_eval.run predict --only yolo26m_ft_kitti yolo26m_ft_kitti_e2e yolo26m_ft_kitti_maskvan
+
+# Cosmos 3 Edge (GX10 for accuracy, Orin Nano in Docker for latency)
 python -m det_eval.run vlm --model cosmos3_edge --smoke     # 20 frames, boxes drawn in runs/vlm_smoke/cosmos3_edge/
-python -m det_eval.run vlm --model cosmos3_edge             # full 300-frame run
-python -m det_eval.run evaluate && python -m det_eval.run report && python -m det_eval.run figures
+python -m det_eval.vlm_finetune train --epochs 4 --grad-accum 8 --val-every 200 --n-val 100 --out runs/vlm_ft/cosmos3_edge_kitti
+python -m det_eval.vlm_finetune train --epochs 4 --grad-accum 8 --val-every 200 --n-val 100 --format compact --order size --out runs/vlm_ft/cosmos3_edge_kitti_compact
+python -m det_eval.vlm_grounding --model cosmos3_edge_ft                           # 300-frame subset; also cosmos3_edge, cosmos3_edge_ftc
+python -m det_eval.vlm_grounding --model cosmos3_edge_ft --split configs/splits/kitti_val.txt   # full val
+python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --max-new-tokens 128 --out runs/vlm_budget/cosmos3_edge_ftc_b128__kitti_val__300.json
+bash scripts/jetson_vlm_latency.sh                          # Orin latency, 50 frames, all three VLM configs
+
+# Analyses
+python -m det_eval.compare --gt data/kitti/annotations/kitti_val_coco.json --a runs/preds/A.json --b runs/preds/B.json --out results/paired/A_vs_B.json
+python -m det_eval.failures --gt ... --dets ... --img-ids configs/splits/kitti_val_vlm300.txt --out results/failures.json
+python -m det_eval.run report && python -m det_eval.run figures && python -m det_eval.gallery
+python -m det_eval.paper_tables
 cd paper && latexmk -pdf -outdir=build main.tex
+
+# Course tutorial (ngdet) reproduction and protocol variants, outside the tutorial repo
+python scripts/make_ngdet_patched.py ~/DeepDataMiningLearning ~/ngdet_patched
+bash scripts/ngdet_variants.sh                              # outputs in results/ngdet_repro/
 ```
 
 Every stage skips outputs that already exist; add `--force` to redo one, `--only MODEL ...` to restrict it. After the smoke run, open the drawn frames and confirm the boxes sit on the objects before the full run.
 
 ## Reproducibility
 
-Every output file gets a `<name>.manifest.json`. It records the exact command, git commit and dirty flag, all settings (checkpoint, input size, thresholds, precision, NMS mode) and the software and device versions. `make env` writes the hardware/software report used in the paper's reproducibility table.
+Every output file gets a `<name>.manifest.json`. It records the exact command, all settings (checkpoint, input size, thresholds, precision, NMS mode), the software and device versions, and the git commit. The experiments ran before this directory became a git repository, so the recorded commit is null; the tag `v1.0` marks the code that produced the paper. `python -m det_eval.run env` writes the hardware/software report.
 
-Predictions and logs go under `runs/` (not committed). Metric summaries under `results/` are committed as evidence.
+Raw predictions go under `runs/` (not committed; large). Committed as evidence: metric files (`results/metrics/`), paired tests (`results/paired/`), the error census and label audit (`results/failures.json`, `results/audit_unlabeled_small.json`), Orin VLM latency summaries (`results/vlm_latency_jetson/`), the course-harness outputs (`results/ngdet_repro/`) and the prediction manifests (`runs/preds/*.manifest.json`).
+
+`scripts/docker_run.sh` and `scripts/jetson_vlm_latency.sh` mount `/mnt/bench-data` (a local NFS share) only if it exists; override with `DATA_MNT` and `ADAPTER_SRC`.
 
 ## Layout
 
 ```
-configs/      experiments.yaml (single source of truth), kitti_to_coco.yaml, splits/
-src/det_eval/ kitti.py (GT conversion, splits, frame copy), evaluate.py (all metrics),
-              predict_ultralytics.py, latency.py, vlm_grounding.py, report.py, plots.py,
+configs/      experiments.yaml (single source of truth), kitti_to_coco.yaml, nuimages_to_coco.yaml, splits/
+src/det_eval/ kitti.py, nuimages.py (GT conversion), evaluate.py (all metrics), compare.py (paired bootstrap),
+              failures.py (error census), predict_ultralytics.py, ultra_val.py, latency.py, finetune.py,
+              vlm_grounding.py, vlm_finetune.py (LoRA), report.py, plots.py, gallery.py, paper_tables.py,
               envinfo.py, run.py (orchestrator)
-scripts/      jetson_system_setup.sh (sudo), jetson_setup.sh, spark_docker.sh, get_coco.sh
+docker/       Dockerfile.jetson, Dockerfile.cosmos
+scripts/      docker_run.sh, jetson_vlm_latency.sh, make_ngdet_patched.py, ngdet_variants.sh,
+              jetson_system_setup.sh (sudo), jetson_setup.sh, spark_docker.sh, get_coco.sh
 tests/        synthetic KITTI frames covering every mapping and ignore rule
 paper/        IEEE conference source, figures/, refs.bib
 results/      committed metric summaries

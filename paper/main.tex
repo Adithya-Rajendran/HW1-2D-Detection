@@ -28,40 +28,42 @@
 \maketitle
 
 \begin{abstract}
-COCO-pretrained detectors lose half their AP on KITTI. We evaluate seven configurations from four families (YOLO26
-with three post-processing variants, RT-DETR, open-vocabulary YOLOE, the Cosmos~3 Edge VLM, and YOLO26 fine-tuned) zero-shot and fine-tuned, with a devkit-faithful
-evaluator and paired bootstrap tests, on a Jetson Orin Nano. Three findings change how such comparisons should be
-read. First, one post-processing flag decides an architecture comparison: Ultralytics' predictor keeps one class per
-box, and enabling multi-label NMS adds 1.6 AP on KITTI and beats the NMS-free head it otherwise trails. Second, the
-domain gap is two gaps: doubling resolution helps only cars under 40~px, fine-tuning helps only cars above 25~px
-(car AP 50.7 to 68.3). Third, 60 to 70\% of audited ``false positives'' on tiny boxes are unlabeled real objects.
-The first two replicate on nuImages, where the KITTI fine-tune also collapses (34.0 to 9.6 AP), while a LoRA-tuned
-VLM keeps the rare classes the detector forgets and beats it on KITTI (30.1 vs.\ 26.5 AP). On the robot, a TensorRT
-detector runs in 16~ms; the tuned VLM takes 6.3~s.
+COCO-pretrained detectors lose half their AP on KITTI. We evaluate four families (YOLO26 with three
+post-processing variants, RT-DETR, open-vocabulary YOLOE and the Cosmos~3 Edge VLM) zero-shot and fine-tuned, with a
+devkit-faithful evaluator and paired bootstrap tests, on a Jetson Orin Nano. Three findings change how such
+comparisons should be read. First, one post-processing flag reverses an AP comparison between two heads of the same
+model: Ultralytics' predictor keeps one class per box, and enabling multi-label NMS adds 1.6 AP on KITTI and beats the
+NMS-free head it otherwise trails. Second, the domain gap is two gaps: doubling resolution helps mainly cars under
+40~px, fine-tuning mainly cars above 25~px (car AP 50.7 to 68.3). Third, 60 to 70\% of audited ``false positives''
+on tiny boxes are unlabeled real objects. On nuImages the flag and the resolution effect recur, and the KITTI
+fine-tune collapses (34.0 to 9.6 AP). A LoRA-tuned VLM learns the rare classes the fine-tuned detector loses and
+edges it on KITTI (compact adapter 28.6 vs.\ 26.5 AP, not paired-tested; F1 0.82 for both). On the robot, a TensorRT detector runs in
+16~ms; that adapter takes 6.3~s.
 \end{abstract}
 
 \section{Introduction}
 Robots inherit their eyes from datasets they will never see again. A mobile base or a vehicle typically runs a
 detector pretrained on COCO \cite{lin2014coco} and deployed, unchanged, on its own camera. KITTI \cite{geiger2012kitti}
 is the classic test of that transfer: the objects are familiar, but the viewpoint, the scale and the labeling
-conventions are not. The course tutorial \cite{liu2026ngdet} reports zero-shot KITTI mAP of 0.23 to 0.28 for COCO
-models; we reproduce that range on the full validation split and ask what it is made of, and what a robot can do
-about it on an 8~GB Jetson Orin Nano.
+conventions are not. The course tutorial \cite{liu2026ngdet} reports zero-shot KITTI mAP of 0.26 to 0.28 for COCO
+models on 120 frames; our closed-set models land at 0.26 to 0.28 on the full validation split under a different
+protocol, and we ask what that number is made of, and what a robot can do about it on an 8~GB Jetson Orin Nano.
 
 The answer turns out to depend as much on evaluation choices as on models, so we organize the paper around three
 findings rather than a leaderboard:
 \begin{itemize}
-  \item \textbf{F1, one flag.} The NMS-free head's KITTI advantage over the NMS head (+0.7 AP, +11 AR) is multi-label
-  output, not the absence of NMS. One predictor flag reverses the comparison and explains the gap to published COCO
-  numbers (Section~\ref{sec:flag}).
-  \item \textbf{F2, two gaps.} Resolution recovers far-field objects and nothing else; in-domain fine-tuning recovers
-  near-field objects and nothing else (Section~\ref{sec:gaps}).
-  \item \textbf{F3, missing labels.} Most of the small ``false positives'' that separate models are real objects
-  KITTI never labeled (Section~\ref{sec:failures}).
+  \item \textbf{Finding 1, one flag.} The NMS-free head's KITTI advantage over the NMS head (+0.7 AP, +11 AR) is
+  multi-label output, not the absence of NMS. One predictor flag reverses the AP comparison and explains the gap to
+  published COCO numbers (Section~\ref{sec:flag}).
+  \item \textbf{Finding 2, two gaps.} Resolution recovers mainly far-field objects; in-domain fine-tuning recovers
+  mainly near- and mid-field ones (Section~\ref{sec:gaps}).
+  \item \textbf{Finding 3, missing labels.} Most of the small ``false positives'' that separate models are real
+  objects KITTI never labeled (Section~\ref{sec:failures}).
 \end{itemize}
-F1 and F2 replicate on nuImages, and the same protocol switches move the course tutorial's own numbers by as much as
-the gaps between its models. Fine-tuning splits by method: a full fine-tune of the detector wins KITTI cars and
-collapses on nuImages, while LoRA on a VLM keeps trucks and cyclists and beats it on KITTI overall.
+On nuImages the flag and the resolution effect recur, and the same protocol switches move the course tutorial's own
+numbers by as much as the gaps between its models. The two fine-tunes behave differently: the full fine-tune of the
+detector wins KITTI cars and collapses on nuImages, while LoRA on the VLM learns trucks and cyclists and edges the
+detector on KITTI overall.
 Around them we report the full Track~A comparison: closed-set vs.\ open-vocabulary vs.\ VLM, speed vs.\ accuracy on
 the Jetson, zero-shot vs.\ fine-tuned, and a typed failure analysis. Section~\ref{sec:practice} turns the findings
 into a checklist for anyone comparing detectors across datasets, and the harness, configs, manifests and logs are
@@ -144,38 +146,46 @@ Misc & dropped \\
 \end{tabular}
 \end{table}
 
-\subsection{Evaluation protocol}
-Every model is scored by one pycocotools-based evaluator \cite{cocoapi} that applies the ignore rules. AP runs keep
-boxes down to confidence 0.001 and 100 per image; the deployment operating point is confidence 0.25. We report
+\subsection{Evaluation protocol}\label{sec:protocol}
+Every model is scored by one pycocotools-based evaluator \cite{cocoapi} that applies the ignore rules. Detectors run
+with NMS IoU 0.7 and at most 300 boxes per image; AP runs keep boxes down to confidence 0.001 and score the top 100
+per image (pycocotools maxDets); the deployment operating point is confidence 0.25. We report
 COCO metrics (AP, AP$_{50}$, AP$_{75}$, AP$_{S/M/L}$, AR$_{100}$, per-class AP), AP by box height in pixels, and
 KITTI-style AP$|_{R40}$ at the devkit IoU (0.7 for vehicles, 0.5 for pedestrians and cyclists). Intervals are 95\%
-image-level bootstrap intervals \cite{efron1993bootstrap}; differences between two models use a paired bootstrap
-(300 to 500 resamples, the same image weights applied to both), which our tests show reproduces pycocotools exactly
-at unit weights. The VLM emits no scores, so it is compared by precision, recall and F1 at IoU 0.5 and 0.7.
+image-level percentile bootstrap intervals \cite{efron1993bootstrap} (200 resamples for single models, 300 for the VLM
+runs); differences between two models use a paired bootstrap (300 to 500 resamples, the same image weights applied
+to both), which our tests show reproduces pycocotools exactly at unit weights. The VLM returns no scores; for AP and
+AR we score each box by the geometric-mean probability of the tokens that spell it, but because those scores are not
+calibrated like a detector's we also compare the VLM by precision, recall and F1 at IoU 0.5 and 0.7 with every box.
 Closed-set models get a rule-based cyclist (a person box over a bicycle box). Latency is measured at batch 1 on 500
 KITTI frames after 50 warm-up frames, at confidence 0.25, synchronized, from decoded image to boxes; peak memory is
 the PyTorch allocator peak (unified memory has no per-process counter).
 
 \subsection{Hardware, software and reproducibility}
-All runs use a Jetson Orin Nano Super 8~GB (JetPack 6.2.3, L4T R36.5.2) in MAXN\_SUPER mode with clocks locked by
+All detector runs, the detector fine-tunes and every latency number use a Jetson Orin Nano Super 8~GB (JetPack 6.2.3,
+L4T R36.5.2) in MAXN\_SUPER mode with clocks locked by
 \texttt{jetson\_clocks} (GPU 1.02~GHz, EMC 3.2~GHz), torch 2.10, Ultralytics 8.4.183 \cite{ultralytics} and
 TensorRT 10.3 FP16 engines; Cosmos~3 Edge runs in BF16 through Hugging Face Transformers. Inference is FP16; on
 1{,}000 COCO images FP32 gives 54.28 AP and FP16 54.16, so precision is not a factor. Fine-tuning ran in the
-Ultralytics JetPack~6 container (same Ultralytics and torch versions). The VLM adapters were trained, and the VLM
-accuracy runs made, on an ASUS Ascent GX10 (NVIDIA GB10, 128~GB unified memory) with the same Transformers commit;
-their Orin Nano latency is measured in a container with those versions. Every run writes a manifest with its command,
-settings and versions; Appendix~\ref{app:repro} lists them.
+Ultralytics JetPack~6 container (same Ultralytics and torch versions). The VLM adapters were trained, and all VLM
+accuracy numbers computed, on an ASUS Ascent GX10 (NVIDIA GB10, 128~GB unified memory) with Transformers at commit
+60f4954. Greedy decoding keeps the two machines close but not identical: the zero-shot run gives 1{,}035 true and
+648 false positives at IoU 0.5 on the Orin Nano and 1{,}043 and 668 on the GX10, the same F1 (0.66). Tables~\ref{tab:vlmft} and~\ref{tab:vlm}
+use the GX10 run; the error census (Table~\ref{tab:failures}) and label audit use the Orin Nano run. VLM latencies are measured on the Orin Nano in a container with the same versions. Every
+run writes a manifest with its command, settings, versions and machine; Table~\ref{tab:repro} lists them.
 
 \section{Results}
 \subsection{Baseline and reproduction}
 Table~\ref{tab:main} gives the main results. COCO AP of 52 to 53 falls to 26 to 28 on KITTI for every closed-set
-model; YOLOE falls to 18. RT-DETR-l reproduces its published COCO number to within 0.3 AP and the NMS-free YOLO26m
-head to within 0.3, but the NMS head scores 52.2 against a published 53.1. That gap is the first clue to F1.
+model; YOLOE falls to 22 on the same four classes (its 18.4 in Table~\ref{tab:main} also averages its own cyclist
+class). RT-DETR-l reproduces its published COCO number to within 0.3 AP and the NMS-free YOLO26m head to within 0.3,
+but the NMS head scores 52.2 against a published 53.1. That gap is the first clue to Finding~1.
 
 \textit{Course harness.} We also ran the tutorial's own \texttt{run\_eval} \cite{liu2026ngdet} unmodified on the
-Orin Nano (Table~\ref{tab:ngdet}). Its exact command gives 23.6 to 24.0 mAP against the published 26.2 to 27.9;
-lowering the score threshold to 0.001 and using 1,000 frames instead of 120 each move the numbers by under one point,
-so neither explains the remaining gap. Three protocol switches, applied to a separate patched copy that matches the
+Orin Nano (Table~\ref{tab:ngdet}). Its exact command gives 23.6 to 24.0 mAP against the published 26.2 to 27.9.
+Lowering the score threshold to 0.001 adds 0.2 to 1.2, and using 1,000 frames instead of 120 moves the numbers by
+under 0.7; neither closes the 2 to 4 point gap, which we attribute to the frame sample, hardware and library
+versions without being able to separate them. Three protocol switches, applied to a separate patched copy that matches the
 original exactly when they are off, each change the result by about as much as the gaps between models. Treating
 KITTI DontCare regions as ignore regions, as the devkit does, adds 0.5 to 1.1 mAP to every model. Splitting the
 merged \emph{vehicle} class into car and truck (\texttt{driving5}) is what makes multi-label NMS matter: it adds 0.6
@@ -187,8 +197,9 @@ zero, which our rider-plus-bicycle composition (Table~\ref{tab:mapping}) avoids.
 
 \begin{table}[t]
 \centering
-\caption{The course harness on KITTI, Orin Nano (mAP in \%, 1,000 frames unless noted). ML: multi-label NMS;
-NF: NMS-free head. Each protocol switch moves every model by about as much as the gaps between models.}
+\caption{The course harness on KITTI, Orin Nano (mAP in \%, 1,000 frames and thr 0.001 below the rule). ML:
+multi-label NMS; NF: NMS-free head. Each protocol switch moves every model by about as much as the gaps between
+models. Raw outputs: \texttt{results/ngdet\_repro/}.}
 \label{tab:ngdet}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -206,7 +217,8 @@ Protocol & \multicolumn{3}{c}{YOLO26x} & RT-DETR & F.\ R-CNN \\
 \centering
 \caption{Main results (AP in \%, 95\% bootstrap interval in brackets; S/M/L are COCO box-area bins). COCO AP halves
 on KITTI for every closed-set model; 1280~px input adds 1 to 3 AP. Fine-tuned rows use the same 4-class KITTI ground
-truth as the zero-shot rows.}
+truth as the zero-shot rows. YOLOE rows average five classes including its prompted cyclist class; on the four shared
+classes it scores 22.4 (640) and 25.4 (1280).}
 \label{tab:main}
 \scriptsize
 \begin{tabular}{@{}lllcccccccc@{}}
@@ -218,7 +230,7 @@ Model & Data & Input & AP & AP$_{50}$ & AP$_{75}$ & AP$_S$ & AP$_M$ & AP$_L$ & A
 \end{tabular}
 \end{table*}
 
-\subsection{F1: one flag decides the head comparison}\label{sec:flag}
+\subsection{Finding 1: one flag decides the head comparison in AP}\label{sec:flag}
 On COCO the NMS and NMS-free heads tie (52.2 vs.\ 52.2). On KITTI the NMS-free head is ahead by a small but
 significant 0.7 AP and 11.0 points of class-averaged AR$_{100}$ (Table~\ref{tab:paired}). We expected the reason to
 be NMS deleting overlapping parked cars. It is not: per class, recall with every box kept rises by 30 points for
@@ -236,14 +248,18 @@ one flag in the predictor:
   \item raises our COCO number from 52.2 to 52.8. Ultralytics' own validator gives 53.0 (NMS) and 52.5 (NMS-free) on
   the same weights, matching the published 53.1 and 52.5; the last 0.2 is batching and letterboxing.
 \end{itemize}
+At the 0.25 deployment threshold the flag changes little (precision and recall 0.70 / 0.82 with it, 0.71 / 0.81
+without), and multi-label output can report one object under two labels, which a downstream tracker must handle; the
+finding is about AP and AR, the metrics comparisons are usually made on.
 The flag matters more on KITTI than on COCO because KITTI's vans and box trucks sit on COCO's car/truck boundary;
 the NMS-free head already leads by 3.3 truck AP on COCO itself (Fig.~\ref{fig:nmsgap}). The NMS-free head keeps a
-real advantage, latency: under TensorRT it runs at 15.6~ms p50 against 18.0~ms (Table~\ref{tab:latency}), almost all
-of it the NMS step. Neither head's latency depends on scene clutter with clocks locked (Fig.~\ref{fig:latency}).
+real advantage, latency: under TensorRT it runs at 15.6~ms p50 against 18.0~ms for the arg-max NMS head
+(Table~\ref{tab:latency}), almost all of it the NMS step; we did not time multi-label NMS, which is likely slower. Neither head's latency depends on scene clutter with clocks locked (Fig.~\ref{fig:latency}).
 On nuImages, where cars, trucks and buses are all labeled classes, the same flag adds 0.6 AP and 5.1 AR (33.2 to
 33.7 AP, 45.1 to 50.2 AR; trucks +0.7, buses +0.8), and the NMS-free head again ties the arg-max NMS head on AP
-(33.2) with even higher recall (51.7 AR). The direction replicates on a second dataset with its own
-labeling conventions; the size, about a third of KITTI's, tracks how often a box straddles a class boundary.
+(33.2) with even higher recall (51.7 AR). The direction recurs on a second dataset with its own labeling
+conventions, at about a third of KITTI's size; we did not run a paired test on nuImages, so this is a point
+estimate.
 
 \begin{figure}[t]
 \centering
@@ -269,20 +285,24 @@ Comparison & Data & $\Delta$AP & $\Delta$AR & $\Delta$AP $<$25 \\
 \end{tabular}
 \end{table*}
 
-\subsection{F2: the domain gap is two gaps}\label{sec:gaps}
+\subsection{Finding 2: the domain gap is two gaps}\label{sec:gaps}
 Doubling the input from 640 to 1280~px raises KITTI AP by 2.4 for the NMS head (paired interval +1.8 to +3.1).
 Fig.~\ref{fig:height} shows where: on cars under 25~px tall, YOLO26m gains 7.5 AP (44.8 to 52.3) and YOLOE 9.6; on
-25 to 40~px cars about 3; above 40~px nothing (59.6 vs.\ 58.9 above 80~px). With KITTI's focal length of about
-720~px, a car 5~ft tall is 25~px tall at roughly 140~ft, so resolution is a far-field fix. We plot cars because
+25 to 40~px cars 3.4; above 40~px nothing (59.6 vs.\ 58.9 above 80~px). With KITTI's focal length of about
+720~px, a 1.5~m tall car is 25~px tall at roughly 43~m, so resolution is a far-field fix. (Small rare classes gain
+too: trucks 25 to 40~px tall rise 14 AP, on few boxes.) We plot cars because
 they are the only class with enough small objects: the split has 32 pedestrians and 10 trams under 25~px, and
 class-averaged height-bin AP is dominated by that noise.
 
 The near field is the larger loss, and it is localization. On COCO YOLO26m keeps 75\% of its AP$_{50}$ at
 AP$_{50:95}$ (52.2 / 69.5); on KITTI it keeps 52\% (26.2 / 50.1). At the deployment threshold, 48\% of its misses
 are ``loose'' (a box on the object at IoU below 0.5): large near cars, often truncated at the border, get covered
-by partial boxes (Fig.~\ref{fig:gallery}a). Fine-tuning removes exactly this part. At 640~px, car AP rises from 59.6
-to 81.1 above 80~px and from 48.9 to 68.9 at 40 to 80~px, loose misses on the subset fall from 149 to 13, but cars
-under 25~px do not move (44.8 vs.\ 45.6). In-domain data fixes the near field; only more pixels fix the far field.
+by partial boxes (Fig.~\ref{fig:gallery}a). Fine-tuning removes this part. At 640~px, car AP rises from 59.6 to
+81.1 above 80~px, from 48.9 to 68.9 at 40 to 80~px and from 49.5 to 60.5 at 25 to 40~px, but cars under 25~px do not
+move (44.8 vs.\ 45.6). On the subset at confidence 0.25, loose misses fall from 149 to 13, though total misses do
+not (328 vs.\ 333): the fine-tuned model trades loose boxes for occluded, crowded and outright misses as it emits
+fewer low-confidence boxes. In-domain data fixes near- and mid-field localization; only more pixels fix the far
+field.
 
 \begin{figure}[t]
 \centering
@@ -309,12 +329,12 @@ to 10.3 AP), the forgetting the tutorial also reports for small per-domain sets 
 low-score boxes. The class-averaged gain is only +2.2 AP (paired interval +0.9 to +3.3), which hides a large car gain
 behind two rare-class regressions. We hypothesized that training on Vans as background teaches the model not to fire
 on van-shaped trucks; an ablation that grays out Van and Person\_sitting regions during training tests this.
-It confirms it for trucks. With the same budget, seed and frames, masking the 1{,}251 Van and Person\_sitting
+It supports it for trucks (one run per arm). With the same budget, seed and frames, masking the 1{,}251 Van and Person\_sitting
 regions more than doubles truck AP (8.0 to 18.1; KITTI moderate 5.6 to 20.9) and raises the 4-class AP from 28.4
 to 30.6 (bootstrap intervals [27.5, 29.5] and [29.7, 31.8]), while cars (68.3 vs.\ 68.4) and people (26.9 vs.\ 26.2)
-do not move and trams stay low (9.8). Part of the ``forgetting'' was the training labels contradicting the
-evaluation rules: a box that KITTI evaluation ignores was a hard negative in training. Trams, with no such
-neighbor class, are plain data scarcity.
+do not move and trams stay low (9.8). Part of the truck loss is likely the training labels contradicting the
+evaluation rules: a box that KITTI evaluation ignores was a hard negative in training. Trams, with no such neighbor
+class, look like plain data scarcity.
 
 \begin{table}[t]
 \centering
@@ -333,39 +353,49 @@ Model & AP & car & person & truck & train & cyclist & AR$_{100}$ \\
 \end{table}
 
 \subsection{Closed-set, open-vocabulary and VLM}
-Table~\ref{tab:vlm} compares all families on the 300-frame subset. Cosmos~3 Edge parses cleanly (299 of 300 replies
-valid JSON, one salvaged) and finds 71\% of objects, but at 0.61 precision its F1 is 0.66, against 0.73 for YOLO26m
-and 0.84 fine-tuned, and its boxes are looser (F1 at IoU 0.7: 0.50 vs.\ 0.57). It takes 17.3~s per frame (p90 36~s),
-about 1{,}100 times the TensorRT detector (Fig.~\ref{fig:speedacc}). YOLOE-26m is the most precise zero-shot model
-(0.78) but the least complete (recall 0.61), and trails the closed-set YOLO26m by 7.8 AP on KITTI.
+Table~\ref{tab:vlm} compares all families on the 300-frame subset. Cosmos~3 Edge parses cleanly (297 of 300 replies
+valid JSON, 3 salvaged) and finds 71\% of objects, but at 0.61 precision its F1 is 0.66, against 0.73 for YOLO26m
+and 0.84 fine-tuned, and its boxes are looser (F1 at IoU 0.7: 0.49 vs.\ 0.57). On the Orin Nano it takes 17.3~s per
+frame at the median (p90 36~s), about 1{,}100 times the TensorRT detector (Fig.~\ref{fig:speedacc}). YOLOE-26m is
+the most precise zero-shot model (0.78) but the least complete (recall 0.61); on the four shared classes it trails
+the closed-set YOLO26m by 3.8 AP on KITTI (22.4 vs.\ 26.2), yet it has the best zero-shot truck AP (20.8 vs.\ 11 to
+14), plausibly because a text prompt does not inherit COCO's car/truck boundary.
 
 No method covers cyclists, the class COCO lacks. Cosmos~3 Edge finds 11\%, mostly because it boxes the rider as a
 pedestrian (Fig.~\ref{fig:gallery}e); YOLOE, prompted with ``cyclist'', finds none above 0.25. The zero-cost rule on a
 closed-set detector reaches 24 to 33\% recall, and 681 labeled training cyclists move the fine-tuned model to only
 26\% at the deployment threshold, though its cyclist AP (18.9) is the best of any detector.
 
-\textit{Fine-tuning the VLM.} We trained LoRA adapters \cite{hu2022lora} (rank 16 on the language model's attention and MLP
-projections, about 1.7k steps over the same 3{,}412 frames) on a DGX Spark-class GB10 machine in two output formats:
+\textit{Fine-tuning the VLM.} We trained LoRA adapters \cite{hu2022lora} (rank 16 on the language model's attention
+and MLP projections, 4 epochs over the same 3{,}412 frames, Van and Person\_sitting as background like the detector)
+on the GX10 in two output formats:
 the JSON the zero-shot model already emits, and a compact one, one \texttt{label x1 y1 x2 y2} line per object,
 nearest first, which halves the tokens per answer. To give the VLM AP and AR at all, each box is scored by the
-geometric-mean probability of the tokens that spell it. Table~\ref{tab:vlmft} has the result. LoRA more than doubles
-AP (14.4 to 32.4 on the subset) and lifts F1 from 0.66 to 0.85, past the fine-tuned detector's 0.84. On the full
-validation split the JSON adapter reaches 30.1 AP against 26.5 for the fine-tuned YOLO26m on the same five-class
-ground truth. The classes split cleanly: YOLO26m-FT stays ahead on cars (KITTI moderate 90.6 vs.\ 81.5) and level
-on pedestrians (63.3 vs.\ 62.4), while the VLM keeps what the detector lost, trucks (47.7 vs.\ 5.6), cyclists (49.4
-vs.\ 34.1) and trams (21.4 vs.\ 18.7). A low-rank update to a large pretrained model forgets less than a full update
-to a small one. The compact format gives up 1.5 AP, nearly all of it on pedestrians, for half the latency; capping it
+geometric-mean probability of the tokens that spell it (not calibrated like detector scores, Section~\ref{sec:protocol}, so we
+report F1 alongside). Table~\ref{tab:vlmft} has the result. LoRA more than doubles AP (14.4 to 32.4 on the subset)
+and lifts F1 from 0.66 to 0.85, level with the fine-tuned detector's 0.84. On the full validation split the JSON
+adapter reaches 30.1 AP and the compact one 28.6, against 26.5 for the fine-tuned YOLO26m on the same five-class
+ground truth; F1 is 0.83, 0.82 and 0.82, so by the threshold-free and the deployment metric alike the models are
+close, and the difference is in the classes. YOLO26m-FT stays ahead on cars (KITTI moderate 90.6 vs.\ 81.5) and
+level on pedestrians (63.3 vs.\ 62.4); the adapted VLM learns the rare classes the detector loses, trucks (47.7 vs.\
+5.6 KITTI moderate AP; zero-shot the VLM had 24.9 on the subset), cyclists (49.4 vs.\ 34.1) and trams (21.4 vs.\
+18.7). We cannot attribute this
+to LoRA itself: model size, pretraining data and input resolution all differ between the two models, and the masked-Van
+detector already recovers 20.9 KITTI moderate truck AP. The compact format gives up 1.5 AP, about 0.9 of it on pedestrians, for
+half the latency; capping it
 at 128 tokens costs nothing in AP and another 12\%, and at 64 tokens recall halves because the answer is cut before
 the far objects. On the Orin Nano, where decoding runs at a flat 13 tokens per second, latency follows
 answer length: on the same 50 frames the compact adapter takes 6.3~s per frame (p90 11.3~s), the JSON adapter 11.6~s
 and the zero-shot model 19.1~s. Fine-tuning made the VLM both more accurate and 3$\times$ faster on the robot, but it
-is still 350 times slower than the detector.
+is still 350 times slower than the detector. (Table~\ref{tab:vlm}'s 17.3~s is the zero-shot median over all 300
+frames; their mean, 19.3~s, matches the 19.1~s here.)
 
 \begin{table}[t]
 \centering
 \caption{Cosmos~3 Edge with KITTI LoRA adapters. Subset: the 300 frames of Table~\ref{tab:vlm}; full: all 3{,}769
-validation frames, five classes. F1 at IoU 0.5 with every box. Latency is end-to-end generation per frame, mean;
-Orin Nano latencies are the first 50 subset frames for all three models.}
+validation frames, five classes. AP from conf 0.001 (token-probability scores for the VLM); F1 at IoU 0.5 with every
+box for the VLM and at conf 0.25 for the detector. Latency is end-to-end generation per frame, mean; Orin Nano VLM
+latencies are the first 50 subset frames for all three; the detector's is the TensorRT p50 of its architecture.}
 \label{tab:vlmft}
 \scriptsize
 \setlength{\tabcolsep}{2.2pt}
@@ -381,7 +411,7 @@ LoRA, compact & 31.5 & 0.82 & 28.6 & 91 & 1.92 & 6.3 \\
 \quad 128-token cap & 31.5 & 0.81 & -- & 80 & 1.69 & -- \\
 \quad 64-token cap & 26.0 & 0.64 & -- & 54 & 1.18 & -- \\
 \midrule
-YOLO26m-FT (conf 0.25) & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
+YOLO26m-FT & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -389,8 +419,9 @@ YOLO26m-FT (conf 0.25) & 27.6 & 0.84 & 26.5 & -- & -- & 0.018 \\
 \begin{figure}[t]
 \centering
 \figslot{f5_speed_accuracy.pdf}{\columnwidth}{F5: F1 at IoU 0.5 vs.\ latency per frame (log scale)}
-\caption{The VLM sits three orders of magnitude to the right of the detectors and below them in F1; open
-vocabulary does not buy coverage of the missing class. Detectors at conf 0.25, TensorRT FP16.}
+\caption{Zero-shot, the VLM sits three orders of magnitude to the right of the detectors and below them in F1; open
+vocabulary does not buy coverage of the missing class. Detectors at conf 0.25, TensorRT FP16; Cosmos~3 Edge
+zero-shot, median Orin Nano latency. The LoRA adapters (Table~\ref{tab:vlmft}) reach F1 0.82 to 0.85 at 6 to 12~s.}
 \label{fig:speedacc}
 \end{figure}
 
@@ -416,8 +447,8 @@ Model & P & R & F1 & F1 & AP$_{50}$ & R & ms \\
 \subsection{Speed and memory on the robot}
 TensorRT FP16 halves YOLO latency and cuts RT-DETR's by almost 3$\times$ (Table~\ref{tab:latency}). Every detector
 fits in under 150~MB of allocator memory, so the Orin Nano's 8~GB is not the constraint for detection; it is for the
-VLM, which needs the whole board. RT-DETR-l is 0.6 to 1.3 AP ahead of YOLO26m's default heads but 0.3 behind the
-multi-label NMS head, at twice the latency.
+VLM, which needs the whole board. RT-DETR-l is within about 1 AP of every YOLO26m head on KITTI (its lead over the
+NMS-free head is not significant, Table~\ref{tab:paired}) at twice the latency.
 
 \begin{figure}[t]
 \centering
@@ -449,22 +480,26 @@ Model & p50 & p99 & p50 & p99 & post & MB \\
 nuImages (3{,}000 random validation key frames from six cameras in Boston and Singapore, 1600$\times$900, mapped with
 the same ignore rules) tests whether the findings are KITTI artifacts. Table~\ref{tab:nuimages} has the results.
 Zero-shot, the closed-set models land within 0.5 AP of each other (33.2 to 33.7), RT-DETR-l again just ahead of the
-default YOLO26m heads and just behind the multi-label one. F1 replicates (Section~\ref{sec:flag}). F2 replicates more
-strongly: at 1280~px YOLO26m gains 4.9 AP overall, and on cars 9.7 AP under 25~px, 9.6 at 25 to 40~px, 4.8 at 40 to
-80~px and $-$1.6 above 80~px, the same far-field-only pattern as Fig.~\ref{fig:height}.
+default YOLO26m heads and just behind the multi-label one. The multi-label effect of Finding~1 recurs
+(Section~\ref{sec:flag}). The resolution half of Finding~2 partly recurs: at 1280~px YOLO26m gains 4.9 AP overall,
+and on cars 9.7 AP under 25~px, 9.6 at 25 to 40~px, 4.8 at 40 to 80~px and $-$1.6 above 80~px. The gain still
+shrinks with size and vanishes for the nearest cars, but unlike KITTI it reaches mid-size objects, plausibly because
+nuImages' 1600~px frames are downscaled 2.5$\times$ at 640~px input against KITTI's 1.9$\times$. The fine-tuning half
+cannot be tested here without a nuImages fine-tune.
 
 The KITTI fine-tune does not transfer; it collapses. AP on the three classes both models share falls from 34.0 to
 9.6, and every height bin drops, near cars included (69.4 to 43.6 above 80~px). The model did not break: at
-confidence 0.25 it is 92\% precise, but it emits 4 boxes per nuImages frame against 72 for the COCO checkpoint and
-recalls 16\% of objects. Seven hours of full fine-tuning on 3{,}412 frames from one camera in one city made it
+confidence 0.25 it is 92\% precise but recalls 16\% of objects, and even at confidence 0.001 it emits 4 boxes per
+nuImages frame against 72 for the COCO checkpoint. Seven hours of full fine-tuning on 3{,}412 frames from one camera in one city made it
 confident only on KITTI-looking objects. The masked-Van model behaves the same (10.6). For a robot that will leave
-its training city, the KITTI gains in Table~\ref{tab:finetune} are not free: they need replay of the original data,
-a lower learning rate, or a low-rank update like the VLM's.
+its training city, the KITTI gains in Table~\ref{tab:finetune} are not free; replay of the original data, a lower
+learning rate or a low-rank update are the standard remedies, which we did not test.
 
 \begin{table}[t]
 \centering
 \caption{nuImages, 3{,}000 validation frames (AP in \%). ``Shared'' averages person, car and truck, the classes
-every model predicts; bus is not a class of the KITTI fine-tunes or the YOLOE prompts.}
+every model predicts; bus is not a class of the KITTI fine-tunes or the YOLOE prompts. AR$_{100}$ is over the AP
+column's four classes, or over the shared three where AP is not reported.}
 \label{tab:nuimages}
 \scriptsize
 \setlength{\tabcolsep}{2.5pt}
@@ -486,7 +521,7 @@ YOLO26m, NMS-free & 1280 & 37.9 & 39.1 & 47.7 & 35.7 & 34.0 & 58.4 \\
 \end{tabular}
 \end{table}
 
-\section{Failure Analysis and F3: what the labels miss}\label{sec:failures}
+\section{Failure Analysis and Finding 3: what the labels miss}\label{sec:failures}
 Every error at the deployment threshold gets one type (Table~\ref{tab:failures}; definitions follow
 \cite{hoiem2012diagnosing,bolya2020tide} and are in \texttt{det\_eval/failures.py}). Loose localization is the largest
 category for every zero-shot model, in both misses and false positives, and the one fine-tuning removes. RT-DETR-l's
@@ -496,8 +531,8 @@ calibrated lower: a shared threshold means something different for each model.
 The ``tiny, unlabeled'' type deserves its own finding. KITTI marks some distant regions DontCare but leaves many
 distant objects unlabeled. In random samples of 30 such false positives, 21 of YOLO26m's (70\%, Wilson interval 52
 to 83\%) and 18 of Cosmos's (60\%, 42 to 75\%) were real unlabeled vehicles or people (Fig.~\ref{fig:gallery}d).
-Cosmos has 246 of these on the subset against YOLO26m's 79, so the metric penalizes it most: its true precision is
-closer to 0.70 than 0.61. The genuine hallucinations differ by model: YOLO26m calls
+Cosmos has 246 of these on the subset against YOLO26m's 79, so the metric penalizes it most: correcting for the
+audit, its precision is closer to 0.70 than 0.61, while YOLO26m's moves only from 0.68 to about 0.72. The genuine hallucinations differ by model: YOLO26m calls
 roadside delineator posts and barriers ``person'' (4 of its 8; Fig.~\ref{fig:gallery}c), a phantom-braking risk;
 Cosmos boxes signs, bollards and parts of labeled cars. Taxonomy drives the ``confused'' type: COCO calls a delivery
 van a truck, KITTI calls it a Van, and the devkit ignores Van only for car (Fig.~\ref{fig:gallery}b).
@@ -507,7 +542,7 @@ van a truck, KITTI calls it a Van, and the devkit ignores Van only for car (Fig.
 \caption{Error census on the 300-frame subset at the deployment operating point (IoU 0.5). Loose localization
 dominates every zero-shot model and nearly vanishes after fine-tuning; RT-DETR-l trades nearly three times the false
 positives for its recall; most of Cosmos~3 Edge's false positives are tiny boxes, of which an audited 60\% are real
-unlabeled objects.}
+unlabeled objects. Cosmos~3 Edge row: the Orin Nano zero-shot run.}
 \label{tab:failures}
 \scriptsize
 \setlength{\tabcolsep}{3.2pt}
@@ -544,40 +579,56 @@ large near car.}
   objects.
   \item \textbf{Audit the background errors before ranking.} Sixty to seventy percent of tiny false positives here
   were real objects.
-  \item \textbf{Compare at matched operating points.} A shared confidence threshold is not a shared precision.
+  \item \textbf{Report a threshold-free metric next to any shared threshold.} A shared confidence threshold is not a
+  shared precision: at 0.25, RT-DETR-l has nearly three times YOLO26m's false positives (Table~\ref{tab:failures}).
 \end{enumerate}
 
 \section{Limitations}
 One board for inference, and VLM confidences come from token probabilities, which are not calibrated like detector
-scores, so we lead VLM comparisons with F1. Mapping choices matter: Van is ignored only for car. Each fine-tune is one
-run with default hyperparameters, a baseline rather than a tuned result, and the VLM adapters were not evaluated on
-nuImages, so whether LoRA also transfers is open. The label audit covers 60 boxes and quantifies, but does not correct, KITTI's
+scores. Mapping choices matter: Van is ignored only for car. Each fine-tune is one run with default hyperparameters,
+a baseline rather than a tuned result, with no repeated seeds; the VLM adapters were not evaluated on nuImages, so
+whether they transfer better than the detector is open, and the detector-vs-VLM comparison confounds model size,
+pretraining and the fine-tuning method. nuImages results are point estimates without paired tests. The label audit covers 60 boxes and quantifies, but does not correct, KITTI's
 missing labels. Latency is measured with locked clocks and may differ under thermal throttling.
 
 \section{Conclusion}
-Zero-shot COCO-to-driving numbers hide one flag and two gaps. The NMS-free head's KITTI advantage is multi-label
-output, which an NMS head gets from one setting, and its lasting benefit is 2.4~ms of latency. Resolution recovers
-far-field cars and nothing else; a night of fine-tuning on the robot recovers near-field cars (50.7 to 68.3 AP) and
-nothing else, and that fine-tune collapses on nuImages. Zero-shot, a 2.4B VLM trails a 20M-parameter detector by
-0.07 F1 and three orders of magnitude in speed; after LoRA on the same frames it beats the fine-tuned detector on
-KITTI (30.1 vs.\ 26.5 AP) and keeps trucks and cyclists, at 6.3~s per frame on the robot. That makes it a
-candidate teacher for the detector rather than a replacement.
+Zero-shot COCO-to-driving numbers hide one flag and two gaps. The NMS-free head's KITTI AP advantage is multi-label
+output, which an NMS head gets from one setting, and its lasting benefit is 2.4~ms of latency over the arg-max NMS
+head. Resolution recovers mainly far-field cars; a night of fine-tuning on the robot recovers near- and mid-field cars
+(50.7 to 68.3 AP) but not far ones, and that fine-tune collapses on nuImages. Zero-shot, a 2.4B VLM trails a
+20M-parameter detector by 0.07 F1 and three orders of magnitude in speed; after LoRA on the same frames its compact
+adapter matches the fine-tuned detector in F1 (0.82), edges it in AP (28.6 vs.\ 26.5) and learns the trucks and
+cyclists the detector misses, at 6.3~s per frame on the robot. That makes it a candidate teacher for the detector,
+not a replacement.
 
 \section*{AI Tool Use}
-As the assignment allows, Claude (Anthropic) assisted with writing the evaluation harness, debugging the Jetson
-setup and drafting this report. The result tables IV to VI, VIII, IX and XI to XIII are generated from
-the run outputs by \texttt{det\_eval.paper\_tables}; Tables III, VII and X were transcribed from the metric files in
-\texttt{results/} and checked against them. The evaluator is covered by unit tests against pycocotools, and the error audit
-was judged by inspecting each crop.
+As the assignment allows, Claude (Anthropic) assisted with writing the evaluation harness, debugging the Jetson and
+GX10 setups, and drafting this report. Result Tables IV to VI, VIII, IX and XI to XIII are generated from the run
+outputs by \texttt{det\_eval.paper\_tables}; Tables III, VII and X were transcribed from \texttt{results/ngdet\_repro/},
+\texttt{results/metrics/} and \texttt{results/vlm\_latency\_jetson/}. The evaluator is covered by unit tests against
+pycocotools, and the label audit was judged by inspecting each crop. AI explanations were wrong several times and the
+data caught them: the first explanation of Finding~1 was that NMS deletes overlapping parked cars, which per-class
+recall disproved (cars gained 1.8 points, trucks 30); a class-averaged height-bin plot suggested a small-object effect
+that rested on 10 trams, so the figure became car-only; an early summary misreported how much the course harness
+moves with its score threshold; and the nuImages collapse was first treated as a possible bug and checked against box
+counts before it was reported. An independent AI review of a draft against the repository found stale VLM numbers,
+an unfair YOLOE comparison and overstated claims; a second review caught a false claim in the first round of
+fixes (that the VLM's outputs were identical across machines). All are corrected here.
 
 \appendix
 \section*{Reproducibility}\label{app:repro}
-Code, configs (\texttt{configs/experiments.yaml} holds every setting), run manifests and logs: \repourl. The
-pipeline is: \texttt{python -m det\_eval.run gt}; \texttt{predict}; \texttt{evaluate}; \texttt{latency [--engine]};
-\texttt{vlm --model cosmos3\_edge}; \texttt{report}; \texttt{figures}. Fine-tuning:
-\texttt{python -m det\_eval.finetune split}, \texttt{export}, \texttt{train --hours 7}. Paired tests:
-\texttt{python -m det\_eval.compare --gt \dots\ --a \dots\ --b \dots}. Table~\ref{tab:repro} lists every prediction run
-and Table~\ref{tab:commands} every command recorded in the manifests.
+{\sloppy
+Code, configs (\texttt{configs/experiments.yaml} holds every setting), run manifests, logs and metric files:
+\repourl; the README gives the full run order. Detectors: \texttt{python -m det\_eval.run gt}, \texttt{predict},
+\texttt{evaluate}, \texttt{latency -{}-engine}, \texttt{figures}. Fine-tuning: \texttt{python -m det\_eval.finetune
+split}; \texttt{export} (add \texttt{-{}-mask Van Person\_sitting} for the ablation); \texttt{train -{}-hours 7}. LoRA:
+\texttt{python -m det\_eval.vlm\_finetune train -{}-epochs 4 -{}-grad-accum 8} (add \texttt{-{}-format compact
+-{}-order size} for the compact adapter), then \texttt{python -m det\_eval.vlm\_grounding -{}-model cosmos3\_edge\_ft}.
+nuImages: \texttt{python -m det\_eval.nuimages subset -{}-n 3000 -{}-seed 0}, then \texttt{gt}. Paired tests:
+\texttt{python -m det\_eval.compare -{}-gt \dots\ -{}-a \dots\ -{}-b \dots}; error census: \texttt{python -m
+det\_eval.failures}. Course harness variants: \texttt{scripts/make\_ngdet\_patched.py},
+\texttt{scripts/ngdet\_variants.sh}. Table~\ref{tab:repro} lists every run with its machine and
+Table~\ref{tab:commands} every command recorded in the manifests.\par}
 
 \begin{table*}[h]
 \centering
@@ -585,13 +636,14 @@ and Table~\ref{tab:commands} every command recorded in the manifests.
 \label{tab:repro}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}llllllll@{}}
 \toprule
 Run & Checkpoint & Data (frames) & Input & conf / head & Precision & Hardware & Framework \\
 \midrule
 \tabin{repro}
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table*}
 
 \begin{table*}[h]
@@ -599,11 +651,12 @@ Run & Checkpoint & Data (frames) & Input & conf / head & Precision & Hardware & 
 \caption{Commands recorded in the run manifests.}
 \label{tab:commands}
 \scriptsize
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}l@{}}
 \toprule
 \tabin{commands}
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table*}
 
 \bibliographystyle{IEEEtran}
