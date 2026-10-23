@@ -1,0 +1,33 @@
+{
+  "output": "runs/preds/yolo26m_ft_kitti_maskvan__nuimages_val3k__640.json",
+  "created": "2026-10-22T22:44:15+00:00",
+  "command": "/work/src/det_eval/run.py predict --only yolo26m_ft_kitti_maskvan",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "yolo26m_ft_kitti_maskvan",
+  "kind": "yolo",
+  "weights": "runs/finetune/yolo26m_kitti5_640_maskvan/weights/best.pt",
+  "build_yaml": null,
+  "gt": "data/nuimages_coco/nuimages_val3k_coco_openvocab.json",
+  "image_root": "data/nuimages",
+  "imgsz": 640,
+  "conf": 0.001,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "prompts": null,
+  "n_images": 3000,
+  "n_dets": 10836,
+  "wall_s": 168.8,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

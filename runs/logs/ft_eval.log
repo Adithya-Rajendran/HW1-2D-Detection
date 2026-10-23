@@ -1,0 +1,29 @@
++ cd /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
++ scripts/docker_run.sh python -m det_eval.run predict --only yolo26m_ft_kitti yolo26m_ft_kitti_e2e
+== yolo26m_ft_kitti on kitti_val @ 640
+  500/3769 images, 33s
+  1000/3769 images, 59s
+  1500/3769 images, 86s
+  2000/3769 images, 112s
+  2500/3769 images, 138s
+  3000/3769 images, 164s
+  3500/3769 images, 191s
+wrote runs/preds/yolo26m_ft_kitti__kitti_val__640.json: 34130 detections on 3769 images in 205s
+== yolo26m_ft_kitti_e2e on kitti_val @ 640
+  500/3769 images, 26s
+  1000/3769 images, 52s
+  1500/3769 images, 78s
+  2000/3769 images, 104s
+  2500/3769 images, 130s
+  3000/3769 images, 155s
+  3500/3769 images, 181s
+wrote runs/preds/yolo26m_ft_kitti_e2e__kitti_val__640.json: 38890 detections on 3769 images in 195s
++ scripts/docker_run.sh python -m det_eval.run evaluate --only yolo26m_ft_kitti yolo26m_ft_kitti_e2e
+wrote yolo26m_ft_kitti__kitti_val__640__full.json: AP 0.265
+wrote yolo26m_ft_kitti__kitti_val__640__closed4.json: AP 0.284
+wrote yolo26m_ft_kitti__kitti_val__640__vlm300.json: AP 0.276
+wrote yolo26m_ft_kitti_e2e__kitti_val__640__full.json: AP 0.256
+wrote yolo26m_ft_kitti_e2e__kitti_val__640__closed4.json: AP 0.274
+wrote yolo26m_ft_kitti_e2e__kitti_val__640__vlm300.json: AP 0.267
++ echo FT_EVAL_DONE
+FT_EVAL_DONE

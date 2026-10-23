@@ -1,0 +1,358 @@
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   2%|▏         | 11/670 [00:00<00:06, 99.12it/s]Loading weights:   3%|▎         | 21/670 [00:00<00:06, 98.64it/s]Loading weights:   5%|▌         | 35/670 [00:00<00:05, 107.01it/s]Loading weights:   7%|▋         | 46/670 [00:00<00:05, 106.25it/s]Loading weights:   9%|▉         | 59/670 [00:00<00:05, 107.63it/s]Loading weights:  10%|█         | 70/670 [00:00<00:05, 106.97it/s]Loading weights:  12%|█▏        | 83/670 [00:00<00:05, 105.41it/s]Loading weights:  14%|█▍        | 94/670 [00:00<00:05, 104.61it/s]Loading weights:  16%|█▌        | 107/670 [00:01<00:05, 105.19it/s]Loading weights:  18%|█▊        | 118/670 [00:01<00:05, 105.26it/s]Loading weights:  20%|█▉        | 131/670 [00:01<00:05, 105.97it/s]Loading weights:  21%|██        | 142/670 [00:01<00:05, 104.52it/s]Loading weights:  23%|██▎       | 155/670 [00:01<00:04, 104.36it/s]Loading weights:  25%|██▍       | 166/670 [00:01<00:04, 103.49it/s]Loading weights:  27%|██▋       | 179/670 [00:01<00:04, 102.88it/s]Loading weights:  28%|██▊       | 190/670 [00:01<00:04, 101.79it/s]Loading weights:  30%|███       | 203/670 [00:01<00:04, 104.93it/s]Loading weights:  32%|███▏      | 214/670 [00:02<00:04, 105.50it/s]Loading weights:  34%|███▎      | 226/670 [00:02<00:08, 52.70it/s] Loading weights:  35%|███▌      | 235/670 [00:02<00:07, 55.19it/s]Loading weights:  43%|████▎     | 289/670 [00:02<00:02, 139.69it/s]Loading weights:  53%|█████▎    | 353/670 [00:02<00:01, 237.64it/s]Loading weights:  62%|██████▏   | 416/670 [00:02<00:00, 314.55it/s]Loading weights:  72%|███████▏  | 482/670 [00:03<00:00, 395.12it/s]Loading weights:  81%|████████  | 544/670 [00:03<00:00, 448.69it/s]Loading weights:  91%|█████████ | 609/670 [00:03<00:00, 492.54it/s]Loading weights: 100%|██████████| 670/670 [00:03<00:00, 196.86it/s]
+  [1/300] 000006 ok        5 boxes  13.5s
+  [2/300] 000118 ok        7 boxes  18.3s
+  [3/300] 000128 ok       10 boxes  24.5s
+  [4/300] 000135 ok       19 boxes  44.9s
+  [5/300] 000156 ok        3 boxes   8.1s
+  [6/300] 000197 ok       14 boxes  33.8s
+  [7/300] 000207 ok       20 boxes  47.9s
+  [8/300] 000239 ok        6 boxes  15.1s
+  [9/300] 000291 ok        5 boxes  12.8s
+  [10/300] 000320 ok       12 boxes  29.1s
+  [11/300] 000335 ok        7 boxes  17.3s
+  [12/300] 000341 ok        9 boxes  23.2s
+  [13/300] 000347 ok        7 boxes  17.6s
+  [14/300] 000378 ok        3 boxes   8.1s
+  [15/300] 000473 ok        2 boxes   5.7s
+  [16/300] 000493 ok        8 boxes  19.9s
+  [17/300] 000498 ok        2 boxes   6.0s
+  [18/300] 000499 ok        1 boxes   3.5s
+  [19/300] 000504 ok        2 boxes   5.5s
+  [20/300] 000558 ok       11 boxes  26.8s
+  [21/300] 000564 ok        3 boxes   8.1s
+  [22/300] 000583 ok        6 boxes  15.4s
+  [23/300] 000604 ok        2 boxes   5.9s
+  [24/300] 000610 ok        6 boxes  15.1s
+  [25/300] 000657 ok        2 boxes   5.8s
+  [26/300] 000658 ok        4 boxes  10.4s
+  [27/300] 000679 ok       13 boxes  31.6s
+  [28/300] 000745 ok        6 boxes  15.1s
+  [29/300] 000754 ok       10 boxes  24.4s
+  [30/300] 000756 ok        8 boxes  19.7s
+  [31/300] 000761 ok        2 boxes   5.8s
+  [32/300] 000772 ok        4 boxes  10.4s
+  [33/300] 000790 ok        6 boxes  15.1s
+  [34/300] 000816 ok       12 boxes  30.2s
+  [35/300] 000841 ok        2 boxes   5.9s
+  [36/300] 000843 ok       14 boxes  33.7s
+  [37/300] 000847 ok       15 boxes  36.1s
+  [38/300] 000916 ok        3 boxes   8.1s
+  [39/300] 000967 ok        5 boxes  12.8s
+  [40/300] 000971 ok        6 boxes  16.0s
+  [41/300] 000979 ok        4 boxes  10.7s
+  [42/300] 000981 ok        5 boxes  12.9s
+  [43/300] 001007 ok       17 boxes  40.7s
+  [44/300] 001039 ok        7 boxes  17.5s
+  [45/300] 001043 ok       16 boxes  38.5s
+  [46/300] 001050 ok       20 boxes  47.8s
+  [47/300] 001089 ok        7 boxes  17.4s
+  [48/300] 001148 ok        4 boxes  10.4s
+  [49/300] 001150 ok       10 boxes  24.4s
+  [50/300] 001176 ok        2 boxes   5.7s
+  [51/300] 001199 ok       15 boxes  36.2s
+  [52/300] 001206 ok       10 boxes  24.5s
+  [53/300] 001226 ok        6 boxes  15.2s
+  [54/300] 001251 ok        6 boxes  15.1s
+  [55/300] 001275 ok        5 boxes  12.9s
+  [56/300] 001307 ok        7 boxes  18.1s
+  [57/300] 001376 ok        9 boxes  22.6s
+  [58/300] 001384 ok        5 boxes  13.1s
+  [59/300] 001427 ok        6 boxes  15.1s
+  [60/300] 001478 ok        2 boxes   5.7s
+  [61/300] 001514 ok        8 boxes  19.6s
+  [62/300] 001522 ok       22 boxes  52.3s
+  [63/300] 001535 ok       15 boxes  36.1s
+  [64/300] 001549 ok       12 boxes  30.3s
+  [65/300] 001557 ok        7 boxes  17.4s
+  [66/300] 001565 ok        7 boxes  17.3s
+  [67/300] 001573 ok       10 boxes  24.4s
+  [68/300] 001594 ok       10 boxes  24.3s
+  [69/300] 001633 ok        7 boxes  17.4s
+  [70/300] 001667 ok        5 boxes  13.4s
+  [71/300] 001670 ok        4 boxes  10.2s
+  [72/300] 001683 ok       17 boxes  40.8s
+  [73/300] 001727 ok        5 boxes  13.1s
+  [74/300] 001771 ok        6 boxes  15.1s
+  [75/300] 001797 ok        3 boxes   8.1s
+  [76/300] 001801 ok        8 boxes  19.8s
+  [77/300] 001817 ok        2 boxes   5.9s
+  [78/300] 001818 ok        9 boxes  22.4s
+  [79/300] 001824 ok        5 boxes  13.0s
+  [80/300] 001936 ok        2 boxes   5.7s
+  [81/300] 001967 ok        9 boxes  22.0s
+  [82/300] 001995 ok        4 boxes  10.5s
+  [83/300] 002000 ok       11 boxes  26.7s
+  [84/300] 002008 ok        5 boxes  12.7s
+  [85/300] 002052 ok        4 boxes  10.4s
+  [86/300] 002054 ok        5 boxes  12.8s
+  [87/300] 002120 ok        1 boxes   3.4s
+  [88/300] 002127 ok        3 boxes   8.0s
+  [89/300] 002128 ok        6 boxes  15.0s
+  [90/300] 002130 ok       10 boxes  24.4s
+  [91/300] 002225 ok       11 boxes  26.8s
+  [92/300] 002260 ok        5 boxes  12.8s
+  [93/300] 002262 ok       11 boxes  26.7s
+  [94/300] 002310 ok        2 boxes   5.8s
+  [95/300] 002359 ok        6 boxes  15.1s
+  [96/300] 002382 ok        4 boxes  10.4s
+  [97/300] 002385 ok       10 boxes  24.4s
+  [98/300] 002476 ok       10 boxes  24.5s
+  [99/300] 002477 ok       15 boxes  37.7s
+  [100/300] 002495 ok        8 boxes  19.8s
+  [101/300] 002546 ok        7 boxes  17.5s
+  [102/300] 002558 ok       16 boxes  38.4s
+  [103/300] 002598 ok       14 boxes  33.8s
+  [104/300] 002601 ok        6 boxes  15.4s
+  [105/300] 002628 ok        2 boxes   5.8s
+  [106/300] 002666 ok       16 boxes  40.6s
+  [107/300] 002675 ok        2 boxes   5.9s
+  [108/300] 002713 ok        4 boxes  10.7s
+  [109/300] 002728 ok        6 boxes  15.1s
+  [110/300] 002730 ok        9 boxes  22.1s
+  [111/300] 002748 ok       15 boxes  36.1s
+  [112/300] 002809 ok        6 boxes  15.2s
+  [113/300] 002877 ok        2 boxes   5.8s
+  [114/300] 002900 ok        5 boxes  12.8s
+  [115/300] 002928 ok        4 boxes  10.5s
+  [116/300] 002930 ok        6 boxes  15.0s
+  [117/300] 002937 ok        8 boxes  19.9s
+  [118/300] 002944 ok       19 boxes  48.1s
+  [119/300] 003031 ok        4 boxes  10.4s
+  [120/300] 003043 ok       11 boxes  26.8s
+  [121/300] 003146 ok        6 boxes  15.1s
+  [122/300] 003148 ok        6 boxes  15.0s
+  [123/300] 003179 ok        5 boxes  12.8s
+  [124/300] 003202 ok        2 boxes   5.8s
+  [125/300] 003259 ok        3 boxes   8.2s
+  [126/300] 003315 ok        3 boxes   8.3s
+  [127/300] 003355 ok        7 boxes  17.3s
+  [128/300] 003429 ok        7 boxes  17.5s
+  [129/300] 003443 ok       10 boxes  24.6s
+  [130/300] 003484 ok        9 boxes  22.1s
+  [131/300] 003488 ok       12 boxes  28.9s
+  [132/300] 003557 ok        4 boxes  10.4s
+  [133/300] 003574 ok       10 boxes  24.4s
+  [134/300] 003631 ok        2 boxes   5.8s
+  [135/300] 003633 ok       13 boxes  31.4s
+  [136/300] 003655 ok        7 boxes  17.4s
+  [137/300] 003679 ok        7 boxes  17.5s
+  [138/300] 003705 ok        4 boxes  10.5s
+  [139/300] 003775 ok       11 boxes  26.6s
+  [140/300] 003866 ok        7 boxes  17.5s
+  [141/300] 003890 ok        7 boxes  17.6s
+  [142/300] 003898 ok       13 boxes  31.6s
+  [143/300] 003901 ok        9 boxes  22.0s
+  [144/300] 003945 ok        6 boxes  15.1s
+  [145/300] 003946 ok        5 boxes  12.8s
+  [146/300] 003948 ok        5 boxes  12.8s
+  [147/300] 003970 ok        3 boxes   8.1s
+  [148/300] 004033 ok        3 boxes   8.1s
+  [149/300] 004036 ok        9 boxes  22.3s
+  [150/300] 004063 ok       12 boxes  29.1s
+  [151/300] 004089 ok        4 boxes  10.4s
+  [152/300] 004096 ok        8 boxes  19.7s
+  [153/300] 004157 ok        8 boxes  19.8s
+  [154/300] 004163 ok       11 boxes  27.0s
+  [155/300] 004191 ok        2 boxes   5.9s
+  [156/300] 004202 ok        3 boxes   8.2s
+  [157/300] 004222 ok        4 boxes  10.6s
+  [158/300] 004300 ok       17 boxes  40.6s
+  [159/300] 004303 ok        7 boxes  17.3s
+  [160/300] 004323 ok        2 boxes   5.9s
+  [161/300] 004362 ok       15 boxes  36.4s
+  [162/300] 004388 ok        9 boxes  22.0s
+  [163/300] 004401 ok       13 boxes  31.4s
+  [164/300] 004440 ok        6 boxes  15.1s
+  [165/300] 004443 ok       15 boxes  37.5s
+  [166/300] 004465 ok        2 boxes   5.8s
+  [167/300] 004475 ok        8 boxes  19.8s
+  [168/300] 004494 ok        6 boxes  15.1s
+  [169/300] 004496 ok       17 boxes  40.7s
+  [170/300] 004513 ok       14 boxes  33.8s
+  [171/300] 004530 ok       10 boxes  24.5s
+  [172/300] 004542 ok        6 boxes  15.1s
+  [173/300] 004608 ok        2 boxes   5.7s
+  [174/300] 004612 ok        5 boxes  12.5s
+  [175/300] 004667 ok        3 boxes   8.1s
+  [176/300] 004682 ok        6 boxes  15.0s
+  [177/300] 004685 ok       16 boxes  38.4s
+  [178/300] 004709 ok        4 boxes  11.0s
+  [179/300] 004717 ok        4 boxes  10.6s
+  [180/300] 004720 ok        9 boxes  22.8s
+  [181/300] 004743 ok       14 boxes  34.0s
+  [182/300] 004770 ok       10 boxes  24.2s
+  [183/300] 004806 ok       14 boxes  33.8s
+  [184/300] 004810 ok       12 boxes  28.9s
+  [185/300] 004825 ok        8 boxes  20.9s
+  [186/300] 004881 ok        6 boxes  15.1s
+  [187/300] 004885 ok        9 boxes  21.8s
+  [188/300] 004887 ok       11 boxes  26.7s
+  [189/300] 004927 ok        5 boxes  13.3s
+  [190/300] 004928 ok       16 boxes  40.5s
+  [191/300] 004934 ok       14 boxes  33.9s
+  [192/300] 004949 ok        3 boxes   8.4s
+  [193/300] 004956 ok       11 boxes  26.6s
+  [194/300] 004995 ok       10 boxes  24.5s
+  [195/300] 005001 ok        5 boxes  12.7s
+  [196/300] 005008 ok        8 boxes  19.4s
+  [197/300] 005054 ok       11 boxes  26.8s
+  [198/300] 005067 ok        4 boxes  10.4s
+  [199/300] 005105 ok        4 boxes  10.4s
+  [200/300] 005143 ok        9 boxes  22.2s
+  [201/300] 005168 ok        5 boxes  12.7s
+  [202/300] 005174 ok       16 boxes  38.4s
+  [203/300] 005219 ok        2 boxes   5.9s
+  [204/300] 005226 ok       15 boxes  38.2s
+  [205/300] 005274 ok       12 boxes  29.2s
+  [206/300] 005292 ok        1 boxes   3.4s
+  [207/300] 005343 ok        8 boxes  19.9s
+  [208/300] 005350 ok        7 boxes  17.4s
+  [209/300] 005377 ok       10 boxes  24.5s
+  [210/300] 005441 ok        3 boxes   8.1s
+  [211/300] 005458 ok        3 boxes   8.1s
+  [212/300] 005489 ok        3 boxes   8.1s
+  [213/300] 005534 ok        7 boxes  17.4s
+  [214/300] 005556 ok       10 boxes  24.5s
+  [215/300] 005558 ok        5 boxes  12.8s
+  [216/300] 005559 ok        2 boxes   5.9s
+  [217/300] 005570 ok        7 boxes  17.5s
+  [218/300] 005573 ok       11 boxes  26.7s
+  [219/300] 005588 ok       19 boxes  45.4s
+  [220/300] 005590 ok        3 boxes   8.1s
+  [221/300] 005653 ok        4 boxes  10.4s
+  [222/300] 005712 ok        6 boxes  15.2s
+  [223/300] 005728 ok        7 boxes  17.2s
+  [224/300] 005736 ok        4 boxes  10.5s
+  [225/300] 005763 ok        5 boxes  13.0s
+  [226/300] 005785 ok       16 boxes  38.5s
+  [227/300] 005786 ok        4 boxes  10.3s
+  [228/300] 005796 ok        5 boxes  12.8s
+  [229/300] 005827 ok        9 boxes  22.2s
+  [230/300] 005905 ok        8 boxes  21.3s
+  [231/300] 005912 ok        4 boxes  10.7s
+  [232/300] 005972 ok        6 boxes  15.0s
+  [233/300] 005997 ok        7 boxes  17.6s
+  [234/300] 006001 ok        3 boxes   8.1s
+  [235/300] 006009 ok        5 boxes  12.9s
+  [236/300] 006074 ok        6 boxes  15.1s
+  [237/300] 006196 ok        5 boxes  12.8s
+  [238/300] 006219 ok        2 boxes   5.8s
+  [239/300] 006222 ok        2 boxes   5.9s
+  [240/300] 006315 ok       12 boxes  29.0s
+  [241/300] 006436 ok        4 boxes  10.3s
+  [242/300] 006440 ok        4 boxes  10.6s
+  [243/300] 006446 ok       13 boxes  31.5s
+  [244/300] 006477 ok        5 boxes  12.7s
+  [245/300] 006514 ok        2 boxes   5.7s
+  [246/300] 006520 ok       10 boxes  24.2s
+  [247/300] 006548 ok        9 boxes  22.1s
+  [248/300] 006558 ok        2 boxes   5.7s
+  [249/300] 006568 ok       14 boxes  33.6s
+  [250/300] 006586 ok       14 boxes  34.1s
+  [251/300] 006588 ok        8 boxes  19.8s
+  [252/300] 006602 ok       16 boxes  38.5s
+  [253/300] 006643 ok        6 boxes  15.1s
+  [254/300] 006656 ok        2 boxes   5.9s
+  [255/300] 006678 ok       16 boxes  38.3s
+  [256/300] 006692 ok        9 boxes  22.0s
+  [257/300] 006698 ok        5 boxes  13.1s
+  [258/300] 006733 ok       16 boxes  38.4s
+  [259/300] 006758 salvaged 30 boxes  73.4s
+  [260/300] 006760 ok        3 boxes   8.3s
+  [261/300] 006777 ok       22 boxes  52.7s
+  [262/300] 006785 ok        9 boxes  22.9s
+  [263/300] 006789 ok        8 boxes  19.4s
+  [264/300] 006791 ok       12 boxes  29.1s
+  [265/300] 006815 ok        3 boxes   8.1s
+  [266/300] 006833 ok       16 boxes  38.3s
+  [267/300] 006850 ok        2 boxes   5.8s
+  [268/300] 006853 ok       10 boxes  24.6s
+  [269/300] 006866 ok       10 boxes  24.4s
+  [270/300] 006882 ok        8 boxes  19.9s
+  [271/300] 006898 ok        2 boxes   5.8s
+  [272/300] 006901 ok        4 boxes  10.4s
+  [273/300] 006903 ok        2 boxes   5.9s
+  [274/300] 006944 ok       17 boxes  40.9s
+  [275/300] 006953 ok        8 boxes  19.6s
+  [276/300] 006994 ok        4 boxes  10.7s
+  [277/300] 007067 ok       11 boxes  26.9s
+  [278/300] 007080 ok        2 boxes   6.0s
+  [279/300] 007100 ok        6 boxes  14.9s
+  [280/300] 007139 ok        5 boxes  12.5s
+  [281/300] 007144 ok        3 boxes   8.1s
+  [282/300] 007161 ok       12 boxes  30.1s
+  [283/300] 007265 ok       20 boxes  50.0s
+  [284/300] 007274 ok        3 boxes   8.1s
+  [285/300] 007294 ok        8 boxes  19.8s
+  [286/300] 007322 ok        1 boxes   3.4s
+  [287/300] 007326 ok       15 boxes  37.2s
+  [288/300] 007336 ok        3 boxes   8.2s
+  [289/300] 007350 ok       13 boxes  31.5s
+  [290/300] 007374 ok        4 boxes  10.7s
+  [291/300] 007398 ok       12 boxes  29.2s
+  [292/300] 007410 ok        9 boxes  23.0s
+  [293/300] 007411 ok        9 boxes  22.2s
+  [294/300] 007430 ok        9 boxes  22.1s
+  [295/300] 007449 ok        3 boxes   8.1s
+  [296/300] 007458 ok       14 boxes  33.8s
+  [297/300] 007462 ok       10 boxes  24.5s
+  [298/300] 007464 ok       10 boxes  24.3s
+  [299/300] 007468 ok        5 boxes  13.0s
+  [300/300] 007469 ok       10 boxes  25.2s
+{
+  "frames": 300,
+  "parse_status": {
+    "ok": 299,
+    "salvaged": 1
+  },
+  "parse_ok_rate": 0.9966666666666667,
+  "n_dets": 2329,
+  "latency_s": {
+    "mean": 19.345329222376893,
+    "p50": 17.335828819494054,
+    "p90": 36.26742549709889
+  }
+}
+skip results/metrics/yolo26m_nms__coco_val2017__640__full.json (exists)
+skip results/metrics/yolo26m_nms__coco_val2017__640__shared4.json (exists)
+skip results/metrics/yolo26m_e2e__coco_val2017__640__full.json (exists)
+skip results/metrics/yolo26m_e2e__coco_val2017__640__shared4.json (exists)
+skip results/metrics/rtdetr_l__coco_val2017__640__full.json (exists)
+skip results/metrics/rtdetr_l__coco_val2017__640__shared4.json (exists)
+skip results/metrics/yolo26m_nms__kitti_val__640__full.json (exists)
+skip results/metrics/yolo26m_nms__kitti_val__640__vlm300.json (exists)
+skip results/metrics/yolo26m_nms__kitti_val__1280__full.json (exists)
+skip results/metrics/yolo26m_e2e__kitti_val__640__full.json (exists)
+skip results/metrics/yolo26m_e2e__kitti_val__640__vlm300.json (exists)
+skip results/metrics/yolo26m_e2e__kitti_val__1280__full.json (exists)
+skip results/metrics/rtdetr_l__kitti_val__640__full.json (exists)
+skip results/metrics/rtdetr_l__kitti_val__640__vlm300.json (exists)
+skip results/metrics/rtdetr_l__kitti_val__1280__full.json (exists)
+skip results/metrics/yoloe26m__kitti_val__640__full.json (exists)
+skip results/metrics/yoloe26m__kitti_val__640__vlm300.json (exists)
+skip results/metrics/yoloe26m__kitti_val__1280__full.json (exists)
+wrote cosmos3_edge__kitti_val__native__vlm300.json: F1@0.5 0.658
+     dataset  imgsz       model     AP   AP50   AP75  AP_small  AP_medium  AP_large  AR100
+coco_val2017  640.0    rtdetr_l 0.5274 0.7125 0.5710    0.3432     0.5736    0.7084 0.7170
+coco_val2017  640.0 yolo26m_e2e 0.5222 0.6934 0.5704    0.3553     0.5684    0.6831 0.7211
+coco_val2017  640.0 yolo26m_nms 0.5220 0.6952 0.5678    0.3549     0.5706    0.6807 0.6847
+coco_val2017  640.0    yoloe26m    NaN    NaN    NaN       NaN        NaN       NaN    NaN
+coco_val2017 1280.0    rtdetr_l    NaN    NaN    NaN       NaN        NaN       NaN    NaN
+coco_val2017 1280.0 yolo26m_e2e    NaN    NaN    NaN       NaN        NaN       NaN    NaN
+coco_val2017 1280.0 yolo26m_nms    NaN    NaN    NaN       NaN        NaN       NaN    NaN
+coco_val2017 1280.0    yoloe26m    NaN    NaN    NaN       NaN        NaN       NaN    NaN
+   kitti_val  640.0    rtdetr_l 0.2746 0.5051 0.2547    0.2099     0.2508    0.3539 0.5279
+   kitti_val  640.0 yolo26m_e2e 0.2690 0.5178 0.2446    0.2028     0.2567    0.3325 0.5224
+   kitti_val  640.0 yolo26m_nms 0.2620 0.5009 0.2397    0.1654     0.2397    0.3503 0.4122
+   kitti_val  640.0    yoloe26m 0.1839 0.4008 0.1536    0.1796     0.1607    0.2418 0.3452
+   kitti_val 1280.0    rtdetr_l 0.2853 0.5055 0.2731    0.2471     0.2941    0.3598 0.5735
+   kitti_val 1280.0 yolo26m_e2e 0.2864 0.5403 0.2622    0.2488     0.2726    0.3309 0.5370
+   kitti_val 1280.0 yolo26m_nms 0.2861 0.5394 0.2602    0.2393     0.2668    0.3459 0.4690
+   kitti_val 1280.0    yoloe26m 0.2142 0.4565 0.1799    0.2331     0.2155    0.2501 0.4014
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+F2 paper/figures/f2_height_bins.pdf
+F3 paper/figures/f3_nms_gap.pdf
+F4 paper/figures/f4_latency_vs_clutter.pdf
+F5 paper/figures/f5_speed_accuracy.pdf
+VLM300_DONE

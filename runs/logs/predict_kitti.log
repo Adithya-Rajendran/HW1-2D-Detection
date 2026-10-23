@@ -1,0 +1,121 @@
+== yolo26m_nms on kitti_val @ 640
+  500/3769 images, 30s
+  1000/3769 images, 56s
+  1500/3769 images, 83s
+  2000/3769 images, 110s
+  2500/3769 images, 137s
+  3000/3769 images, 164s
+  3500/3769 images, 190s
+wrote runs/preds/yolo26m_nms__kitti_val__640.json: 393631 detections on 3769 images in 204s
+== yolo26m_nms on kitti_val @ 1280
+  500/3769 images, 33s
+  1000/3769 images, 66s
+  1500/3769 images, 98s
+  2000/3769 images, 130s
+  2500/3769 images, 163s
+  3000/3769 images, 195s
+  3500/3769 images, 227s
+wrote runs/preds/yolo26m_nms__kitti_val__1280.json: 440076 detections on 3769 images in 245s
+== yolo26m_e2e on kitti_val @ 640
+  500/3769 images, 28s
+  1000/3769 images, 55s
+  1500/3769 images, 82s
+  2000/3769 images, 108s
+  2500/3769 images, 135s
+  3000/3769 images, 162s
+  3500/3769 images, 188s
+wrote runs/preds/yolo26m_e2e__kitti_val__640.json: 685081 detections on 3769 images in 203s
+== yolo26m_e2e on kitti_val @ 1280
+  500/3769 images, 32s
+  1000/3769 images, 63s
+  1500/3769 images, 95s
+  2000/3769 images, 127s
+  2500/3769 images, 159s
+  3000/3769 images, 191s
+  3500/3769 images, 223s
+wrote runs/preds/yolo26m_e2e__kitti_val__1280.json: 626927 detections on 3769 images in 240s
+== rtdetr_l on kitti_val @ 640
+  500/3769 images, 60s
+  1000/3769 images, 119s
+  1500/3769 images, 177s
+  2000/3769 images, 236s
+  2500/3769 images, 295s
+  3000/3769 images, 352s
+  3500/3769 images, 411s
+wrote runs/preds/rtdetr_l__kitti_val__640.json: 1130700 detections on 3769 images in 442s
+== rtdetr_l on kitti_val @ 1280
+  500/3769 images, 112s
+  1000/3769 images, 223s
+  1500/3769 images, 332s
+  2000/3769 images, 444s
+  2500/3769 images, 555s
+  3000/3769 images, 666s
+  3500/3769 images, 777s
+wrote runs/preds/rtdetr_l__kitti_val__1280.json: 1130700 detections on 3769 images in 837s
+== yoloe26m on kitti_val @ 640
+[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 1% ──────────── 1.0/67.2MB 9.8MB/s 0.1s<6.8s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 4% ╸─────────── 3.2/67.2MB 21.8MB/s 0.2s<2.9s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 10% ━─────────── 7.3/67.2MB 40.1MB/s 0.3s<1.5s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 14% ━╸────────── 10.0/67.2MB 26.4MB/s 0.4s<2.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 25% ━━━───────── 17.5/67.2MB 74.5MB/s 0.5s<0.7s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 31% ━━━╸──────── 21.0/67.2MB 32.9MB/s 0.6s<1.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 44% ━━━━━─────── 30.0/67.2MB 89.0MB/s 0.7s<0.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 49% ━━━━━╸────── 33.5/67.2MB 35.4MB/s 0.8s<1.0s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 59% ━━━━━━━───── 40.0/67.2MB 49.3MB/s 1.0s<0.6s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 71% ━━━━━━━━╸─── 48.3/67.2MB 82.5MB/s 1.1s<0.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 77% ━━━━━━━━━─── 51.9/67.2MB 36.1MB/s 1.2s<0.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 89% ━━━━━━━━━━╸─ 60.0/67.2MB 80.5MB/s 1.3s<0.1s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 95% ━━━━━━━━━━━─ 64.0/67.2MB 39.2MB/s 1.4s<0.1s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/yoloe-26m-seg.pt to 'yoloe-26m-seg.pt': 100% ━━━━━━━━━━━━ 67.2MB 48.2MB/s 1.4s
+Transferred 882/882 items from pretrained weights
+[31m[1mrequirements:[0m Ultralytics requirement ['git+https://github.com/ultralytics/CLIP.git'] not found, attempting AutoUpdate...
+Collecting git+https://github.com/ultralytics/CLIP.git
+  Cloning https://github.com/ultralytics/CLIP.git to /tmp/pip-req-build-omcw91su
+  Running command git clone --filter=blob:none --quiet https://github.com/ultralytics/CLIP.git /tmp/pip-req-build-omcw91su
+  Resolved https://github.com/ultralytics/CLIP.git to commit 7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting ftfy (from clip==1.0)
+  Downloading ftfy-6.3.1-py3-none-any.whl.metadata (7.3 kB)
+Requirement already satisfied: regex in ./.venv/lib/python3.10/site-packages (from clip==1.0) (2026.9.29)
+Requirement already satisfied: tqdm in ./.venv/lib/python3.10/site-packages (from clip==1.0) (4.70.1)
+Requirement already satisfied: torch in ./.venv/lib/python3.10/site-packages (from clip==1.0) (2.10.0)
+Requirement already satisfied: torchvision in ./.venv/lib/python3.10/site-packages (from clip==1.0) (0.25.0)
+Collecting wcwidth (from ftfy->clip==1.0)
+  Downloading wcwidth-0.9.3-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (23 kB)
+Requirement already satisfied: filelock in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (4.1.0)
+Requirement already satisfied: typing-extensions>=4.10.0 in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (4.16.0)
+Requirement already satisfied: sympy>=1.13.3 in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (1.14.0)
+Requirement already satisfied: networkx>=2.5.1 in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (3.4.2)
+Requirement already satisfied: jinja2 in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (3.1.6)
+Requirement already satisfied: fsspec>=0.8.5 in ./.venv/lib/python3.10/site-packages (from torch->clip==1.0) (2026.9.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in ./.venv/lib/python3.10/site-packages (from sympy>=1.13.3->torch->clip==1.0) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/lib/python3/dist-packages (from jinja2->torch->clip==1.0) (2.0.1)
+Requirement already satisfied: numpy in ./.venv/lib/python3.10/site-packages (from torchvision->clip==1.0) (2.2.6)
+Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in ./.venv/lib/python3.10/site-packages (from torchvision->clip==1.0) (12.3.0)
+Downloading ftfy-6.3.1-py3-none-any.whl (44 kB)
+Downloading wcwidth-0.9.3-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (771 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 771.9/771.9 kB 21.6 MB/s  0:00:00
+Building wheels for collected packages: clip
+  Building wheel for clip (pyproject.toml): started
+  Building wheel for clip (pyproject.toml): finished with status 'done'
+  Created wheel for clip: filename=clip-1.0-py3-none-any.whl size=1382831 sha256=ab516781659e87d223732283e03170e09af4f6c6c2ff35c4970c63befb71e246
+  Stored in directory: /tmp/pip-ephem-wheel-cache-z3q283qs/wheels/2e/25/92/e26f2a227599930e19a8188891e9600b6dd36721a0f8d6ef40
+Successfully built clip
+Installing collected packages: wcwidth, ftfy, clip
+
+Successfully installed clip-1.0 ftfy-6.3.1 wcwidth-0.9.3
+
+[31m[1mrequirements:[0m AutoUpdate success ✅ 7.4s
+WARNING ⚠️ [31m[1mrequirements:[0m [1mRestart runtime or rerun command for updates to take effect[0m
+
+[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 0% ──────────── 1.5/242.0MB 13.1MB/s 0.1s<18.3s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 1% ──────────── 4.4/242.0MB 28.8MB/s 0.2s<8.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 3% ──────────── 9.4/242.0MB 50.4MB/s 0.3s<4.6s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 6% ╸─────────── 14.8/242.0MB 52.4MB/s 0.4s<4.3s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 9% ━─────────── 24.0/242.0MB 91.7MB/s 0.5s<2.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 13% ━╸────────── 33.2/242.0MB 91.9MB/s 0.6s<2.3s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 17% ━━────────── 42.4/242.0MB 91.1MB/s 0.7s<2.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 21% ━━╸───────── 51.6/242.0MB 91.6MB/s 0.8s<2.1s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 25% ━━━───────── 61.2/242.0MB 95.3MB/s 0.9s<1.9s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 29% ━━━───────── 70.4/242.0MB 91.6MB/s 1.0s<1.9s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 32% ━━━╸──────── 79.9/242.0MB 93.1MB/s 1.1s<1.7s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 36% ━━━━──────── 89.6/242.0MB 93.9MB/s 1.2s<1.6s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 40% ━━━━╸─────── 99.0/242.0MB 93.4MB/s 1.3s<1.5s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 44% ━━━━━─────── 108.7/242.0MB 96.1MB/s 1.4s<1.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 48% ━━━━━╸────── 117.6/242.0MB 89.4MB/s 1.5s<1.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 52% ━━━━━━────── 127.3/242.0MB 96.1MB/s 1.6s<1.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 56% ━━━━━━╸───── 137.0/242.0MB 95.8MB/s 1.7s<1.1s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 60% ━━━━━━━───── 146.7/242.0MB 96.5MB/s 1.8s<1.0s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 64% ━━━━━━━╸──── 155.1/242.0MB 83.2MB/s 1.9s<1.0s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 67% ━━━━━━━━──── 163.1/242.0MB 78.4MB/s 2.0s<1.0s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 70% ━━━━━━━━──── 171.1/242.0MB 79.9MB/s 2.1s<0.9s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 74% ━━━━━━━━╸─── 179.3/242.0MB 80.0MB/s 2.2s<0.8s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 77% ━━━━━━━━━─── 187.6/242.0MB 80.9MB/s 2.3s<0.7s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 80% ━━━━━━━━━╸── 196.0/242.0MB 82.7MB/s 2.4s<0.6s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 84% ━━━━━━━━━━── 203.8/242.0MB 76.7MB/s 2.5s<0.5s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 87% ━━━━━━━━━━── 211.3/242.0MB 73.9MB/s 2.6s<0.4s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 90% ━━━━━━━━━━╸─ 219.3/242.0MB 78.4MB/s 2.7s<0.3s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 93% ━━━━━━━━━━━─ 226.1/242.0MB 66.8MB/s 2.8s<0.2s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 96% ━━━━━━━━━━━╸ 232.6/242.0MB 63.4MB/s 2.9s<0.1s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 98% ━━━━━━━━━━━╸ 239.1/242.0MB 64.6MB/s 3.0s<0.0s[KDownloading https://github.com/ultralytics/assets/releases/download/v8.4.0/mobileclip2_b.ts to 'mobileclip2_b.ts': 100% ━━━━━━━━━━━━ 242.0MB 78.3MB/s 3.1s
+  500/3769 images, 29s
+  1000/3769 images, 57s
+  1500/3769 images, 87s
+  2000/3769 images, 116s
+  2500/3769 images, 145s
+  3000/3769 images, 173s
+  3500/3769 images, 201s
+wrote runs/preds/yoloe26m__kitti_val__640.json: 187069 detections on 3769 images in 217s
+== yoloe26m on kitti_val @ 1280
+Transferred 882/882 items from pretrained weights
+  500/3769 images, 36s
+  1000/3769 images, 70s
+  1500/3769 images, 106s
+  2000/3769 images, 141s
+  2500/3769 images, 175s
+  3000/3769 images, 209s
+  3500/3769 images, 243s
+wrote runs/preds/yoloe26m__kitti_val__1280.json: 94434 detections on 3769 images in 261s

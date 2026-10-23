@@ -1,0 +1,4 @@
+Loading weights/yoloe26m_640.engine for TensorRT inference...
+[10/21/2026-18:25:31] [TRT] [I] Loaded engine size: 42 MiB
+[10/21/2026-18:25:31] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +33, now: CPU 0, GPU 71 (MiB)
+yoloe26m: e2e p50 17.25 ms, p99 17.51 ms, peak 10.8 MB

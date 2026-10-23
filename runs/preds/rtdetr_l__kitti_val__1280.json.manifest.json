@@ -1,0 +1,33 @@
+{
+  "output": "runs/preds/rtdetr_l__kitti_val__1280.json",
+  "created": "2026-10-20T22:32:00-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py predict --dataset kitti_val",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "rtdetr_l",
+  "kind": "rtdetr",
+  "weights": "rtdetr-l.pt",
+  "build_yaml": null,
+  "gt": "data/kitti/annotations/kitti_val_coco.json",
+  "image_root": "data/kitti/training",
+  "imgsz": 1280,
+  "conf": 0.001,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "prompts": null,
+  "n_images": 3769,
+  "n_dets": 1130700,
+  "wall_s": 837.5,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

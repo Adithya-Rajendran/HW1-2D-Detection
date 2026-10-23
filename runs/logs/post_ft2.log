@@ -1,0 +1,839 @@
++ cd /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ sleep 60
++ grep -q POST_FT_DONE runs/logs/post_ft.log
++ PYTHONUNBUFFERED=1
++ .venv/bin/python -m det_eval.run predict --only yolo26m_nms_ml
+== yolo26m_nms_ml on coco_val2017 @ 640
+  500/5000 images, 29s
+  1000/5000 images, 52s
+  1500/5000 images, 76s
+  2000/5000 images, 98s
+  2500/5000 images, 121s
+  3000/5000 images, 144s
+  3500/5000 images, 166s
+  4000/5000 images, 188s
+  4500/5000 images, 210s
+  5000/5000 images, 232s
+wrote runs/preds/yolo26m_nms_ml__coco_val2017__640.json: 558014 detections on 5000 images in 232s
+== yolo26m_nms_ml on kitti_val @ 640
+  500/3769 images, 28s
+  1000/3769 images, 55s
+  1500/3769 images, 82s
+  2000/3769 images, 109s
+  2500/3769 images, 136s
+  3000/3769 images, 163s
+  3500/3769 images, 190s
+wrote runs/preds/yolo26m_nms_ml__kitti_val__640.json: 569570 detections on 3769 images in 205s
++ PYTHONUNBUFFERED=1
++ .venv/bin/python -m det_eval.run evaluate --only yolo26m_nms_ml
+wrote yolo26m_nms_ml__coco_val2017__640__full.json: AP 0.528
+wrote yolo26m_nms_ml__coco_val2017__640__shared4.json: AP 0.601
+wrote yolo26m_nms_ml__kitti_val__640__full.json: AP 0.278
+wrote yolo26m_nms_ml__kitti_val__640__vlm300.json: AP 0.238
++ echo POST_FT2_DONE
+POST_FT2_DONE

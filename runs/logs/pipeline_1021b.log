@@ -1,0 +1,326 @@
++ cd /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
++ .venv/bin/python -m det_eval.run latency --engine
+Ultralytics 8.4.183 🚀 Python-3.10.12 torch-2.10.0 CUDA:0 (Orin, 7607MiB)
+YOLO26m summary (fused): 130 layers, 20,411,132 parameters, 0 gradients, 68.4 GFLOPs
+
+[34m[1mPyTorch:[0m starting from 'yolo26m.pt' with input shape (1, 3, 640, 640) BCHW and output shape(s) (1, 84, 8400) (42.2 MB)
+[31m[1mrequirements:[0m Ultralytics requirement ['onnxruntime-gpu'] not found, attempting AutoUpdate...
+WARNING ⚠️ Retry 1/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ Retry 2/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ [31m[1mrequirements:[0m ❌ Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+ERROR: Could not find a version that satisfies the requirement onnxruntime-gpu (from versions: none)
+ERROR: No matching distribution found for onnxruntime-gpu
+
+
+[34m[1mONNX:[0m starting export with onnx 1.23.2 opset 18...
+[34m[1mONNX:[0m slimming with onnxslim 0.1.98...
+[34m[1mONNX:[0m export success ✅ 8.1s, saved as 'yolo26m.onnx' (78.2 MB)
+
+[34m[1mTensorRT:[0m starting export with TensorRT 10.3.0...
+[10/21/2026-11:56:26] [TRT] [I] [MemUsageChange] Init CUDA: CPU +2, GPU +0, now: CPU 941, GPU 2809 (MiB)
+[10/21/2026-11:56:28] [TRT] [I] [MemUsageChange] Init builder kernel library: CPU +927, GPU +990, now: CPU 1911, GPU 3844 (MiB)
+[10/21/2026-11:56:29] [TRT] [I] ----------------------------------------------------------------
+[10/21/2026-11:56:29] [TRT] [I] Input filename:   yolo26m.onnx
+[10/21/2026-11:56:29] [TRT] [I] ONNX IR version:  0.0.8
+[10/21/2026-11:56:29] [TRT] [I] Opset version:    18
+[10/21/2026-11:56:29] [TRT] [I] Producer name:    pytorch
+[10/21/2026-11:56:29] [TRT] [I] Producer version: 2.10.0
+[10/21/2026-11:56:29] [TRT] [I] Domain:           
+[10/21/2026-11:56:29] [TRT] [I] Model version:    0
+[10/21/2026-11:56:29] [TRT] [I] Doc string:       
+[10/21/2026-11:56:29] [TRT] [I] ----------------------------------------------------------------
+[34m[1mTensorRT:[0m input "images" with shape(1, 3, 640, 640) DataType.FLOAT
+[34m[1mTensorRT:[0m output "output0" with shape(1, 84, 8400) DataType.FLOAT
+[34m[1mTensorRT:[0m building FP16 engine as yolo26m.engine
+[10/21/2026-11:56:29] [TRT] [I] Local timing cache in use. Profiling results in this builder pass will not be stored.
+[10/21/2026-12:04:26] [TRT] [I] Detected 1 inputs and 3 output network tensors.
+[10/21/2026-12:04:30] [TRT] [I] Total Host Persistent Memory: 671952
+[10/21/2026-12:04:30] [TRT] [I] Total Device Persistent Memory: 1024
+[10/21/2026-12:04:30] [TRT] [I] Total Scratch Memory: 2764800
+[10/21/2026-12:04:30] [TRT] [I] [BlockAssignment] Started assigning block shifts. This will take 194 steps to complete.
+[10/21/2026-12:04:30] [TRT] [I] [BlockAssignment] Algorithm ShiftNTopDown took 21.6461ms to assign 11 blocks to 194 nodes requiring 34611712 bytes.
+[10/21/2026-12:04:30] [TRT] [I] Total Activation Memory: 34611200
+[10/21/2026-12:04:30] [TRT] [I] Total Weights Memory: 40947620
+[10/21/2026-12:04:31] [TRT] [I] Engine generation completed in 481.834 seconds.
+[10/21/2026-12:04:31] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 4 MiB, GPU 200 MiB
+[10/21/2026-12:04:31] [TRT] [I] [MemUsageStats] Peak memory usage during Engine building and serialization: CPU: 3835 MiB
+[34m[1mTensorRT:[0m export success ✅ 493.4s, saved as 'yolo26m.engine' (42.6 MB)
+
+Export complete (495.0s)
+Results saved to [1m/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/yolo26m.engine[0m
+Predict:         yolo predict task=detect model=yolo26m.engine imgsz=640 quantize=16
+Validate:        yolo val task=detect model=yolo26m.engine imgsz=640  quantize=16
+Visualize:       https://netron.app
+engine: weights/yolo26m_nms_640.engine
+Loading weights/yolo26m_nms_640.engine for TensorRT inference...
+[10/21/2026-12:04:40] [TRT] [I] Loaded engine size: 42 MiB
+[10/21/2026-12:04:41] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +33, now: CPU 0, GPU 72 (MiB)
+yolo26m_nms: e2e p50 18.02 ms, p99 18.47 ms, peak 45.2 MB
+Ultralytics 8.4.183 🚀 Python-3.10.12 torch-2.10.0 CUDA:0 (Orin, 7607MiB)
+YOLO26m summary (fused): 132 layers, 20,411,132 parameters, 0 gradients, 68.4 GFLOPs
+
+[34m[1mPyTorch:[0m starting from 'yolo26m.pt' with input shape (1, 3, 640, 640) BCHW and output shape(s) (1, 300, 6) (42.2 MB)
+[31m[1mrequirements:[0m Ultralytics requirement ['onnxruntime-gpu'] not found, attempting AutoUpdate...
+WARNING ⚠️ Retry 1/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ Retry 2/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ [31m[1mrequirements:[0m ❌ Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+ERROR: Could not find a version that satisfies the requirement onnxruntime-gpu (from versions: none)
+ERROR: No matching distribution found for onnxruntime-gpu
+
+
+[34m[1mONNX:[0m starting export with onnx 1.23.2 opset 18...
+[34m[1mONNX:[0m slimming with onnxslim 0.1.98...
+[34m[1mONNX:[0m export success ✅ 8.0s, saved as 'yolo26m.onnx' (78.2 MB)
+
+[34m[1mTensorRT:[0m starting export with TensorRT 10.3.0...
+[10/21/2026-12:05:01] [TRT] [I] [MemUsageChange] Init CUDA: CPU +0, GPU +0, now: CPU 1605, GPU 3699 (MiB)
+[10/21/2026-12:05:03] [TRT] [I] [MemUsageChange] Init builder kernel library: CPU +926, GPU +942, now: CPU 2531, GPU 4641 (MiB)
+[10/21/2026-12:05:03] [TRT] [I] ----------------------------------------------------------------
+[10/21/2026-12:05:03] [TRT] [I] Input filename:   yolo26m.onnx
+[10/21/2026-12:05:03] [TRT] [I] ONNX IR version:  0.0.8
+[10/21/2026-12:05:03] [TRT] [I] Opset version:    18
+[10/21/2026-12:05:03] [TRT] [I] Producer name:    pytorch
+[10/21/2026-12:05:03] [TRT] [I] Producer version: 2.10.0
+[10/21/2026-12:05:03] [TRT] [I] Domain:           
+[10/21/2026-12:05:03] [TRT] [I] Model version:    0
+[10/21/2026-12:05:03] [TRT] [I] Doc string:       
+[10/21/2026-12:05:03] [TRT] [I] ----------------------------------------------------------------
+[34m[1mTensorRT:[0m input "images" with shape(1, 3, 640, 640) DataType.FLOAT
+[34m[1mTensorRT:[0m output "output0" with shape(1, 300, 6) DataType.FLOAT
+[34m[1mTensorRT:[0m building FP16 engine as yolo26m.engine
+[10/21/2026-12:05:03] [TRT] [I] Local timing cache in use. Profiling results in this builder pass will not be stored.
+[10/21/2026-12:11:04] [TRT] [I] Detected 1 inputs and 1 output network tensors.
+[10/21/2026-12:11:07] [TRT] [I] Total Host Persistent Memory: 671872
+[10/21/2026-12:11:07] [TRT] [I] Total Device Persistent Memory: 1024
+[10/21/2026-12:11:07] [TRT] [I] Total Scratch Memory: 2764800
+[10/21/2026-12:11:07] [TRT] [I] [BlockAssignment] Started assigning block shifts. This will take 180 steps to complete.
+[10/21/2026-12:11:07] [TRT] [I] [BlockAssignment] Algorithm ShiftNTopDown took 18.3677ms to assign 12 blocks to 180 nodes requiring 34612224 bytes.
+[10/21/2026-12:11:07] [TRT] [I] Total Activation Memory: 34611200
+[10/21/2026-12:11:07] [TRT] [I] Total Weights Memory: 40896832
+[10/21/2026-12:11:08] [TRT] [I] Engine generation completed in 364.448 seconds.
+[10/21/2026-12:11:08] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 4 MiB, GPU 200 MiB
+[10/21/2026-12:11:08] [TRT] [I] [MemUsageStats] Peak memory usage during Engine building and serialization: CPU: 4268 MiB
+[34m[1mTensorRT:[0m export success ✅ 375.4s, saved as 'yolo26m.engine' (42.6 MB)
+
+Export complete (376.0s)
+Results saved to [1m/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/yolo26m.engine[0m
+Predict:         yolo predict task=detect model=yolo26m.engine imgsz=640 quantize=16
+Validate:        yolo val task=detect model=yolo26m.engine imgsz=640  quantize=16
+Visualize:       https://netron.app
+engine: weights/yolo26m_e2e_640.engine
+Loading weights/yolo26m_e2e_640.engine for TensorRT inference...
+[10/21/2026-12:11:16] [TRT] [I] Loaded engine size: 42 MiB
+[10/21/2026-12:11:16] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +33, now: CPU 0, GPU 72 (MiB)
+yolo26m_e2e: e2e p50 15.63 ms, p99 15.99 ms, peak 42.6 MB
+Ultralytics 8.4.183 🚀 Python-3.10.12 torch-2.10.0 CUDA:0 (Orin, 7607MiB)
+rt-detr-l summary (fused): 294 layers, 32,148,140 parameters, 0 gradients, 105.7 GFLOPs
+
+[34m[1mPyTorch:[0m starting from 'rtdetr-l.pt' with input shape (1, 3, 640, 640) BCHW and output shape(s) (1, 300, 6) (63.4 MB)
+[31m[1mrequirements:[0m Ultralytics requirement ['onnxruntime-gpu'] not found, attempting AutoUpdate...
+WARNING ⚠️ Retry 1/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ Retry 2/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ [31m[1mrequirements:[0m ❌ Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+ERROR: Could not find a version that satisfies the requirement onnxruntime-gpu (from versions: none)
+ERROR: No matching distribution found for onnxruntime-gpu
+
+
+[34m[1mONNX:[0m starting export with onnx 1.23.2 opset 18...
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/onnx/_internal/torchscript_exporter/jit_utils.py:305: UserWarning: Constant folding - Only steps=1 can be constant folded for opset >= 10 onnx::Slice op. Constant folding not applied. (Triggered internally at /opt/pytorch/torch/csrc/jit/passes/onnx/constant_fold.cpp:178.)
+  _C._jit_pass_onnx_node_shape_type_inference(node, params_dict, opset_version)
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/onnx/_internal/torchscript_exporter/symbolic_opset11.py:954: UserWarning: Exporting aten::index operator of advanced indexing in opset 18 is achieved by combination of multiple ONNX operators, including Reshape, Transpose, Concat, and Gather. If indices include negative values, the exported graph will produce incorrect results.
+  return opset9.index(g, self, index)
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/onnx/_internal/torchscript_exporter/utils.py:714: UserWarning: Constant folding - Only steps=1 can be constant folded for opset >= 10 onnx::Slice op. Constant folding not applied. (Triggered internally at /opt/pytorch/torch/csrc/jit/passes/onnx/constant_fold.cpp:178.)
+  _C._jit_pass_onnx_graph_shape_type_inference(
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/onnx/_internal/torchscript_exporter/utils.py:1186: UserWarning: Constant folding - Only steps=1 can be constant folded for opset >= 10 onnx::Slice op. Constant folding not applied. (Triggered internally at /opt/pytorch/torch/csrc/jit/passes/onnx/constant_fold.cpp:178.)
+  _C._jit_pass_onnx_graph_shape_type_inference(
+[34m[1mONNX:[0m slimming with onnxslim 0.1.98...
+[34m[1mONNX:[0m export success ✅ 19.1s, saved as 'rtdetr-l.onnx' (122.7 MB)
+
+[34m[1mTensorRT:[0m starting export with TensorRT 10.3.0...
+[10/21/2026-12:11:46] [TRT] [I] [MemUsageChange] Init CUDA: CPU +0, GPU +0, now: CPU 1646, GPU 4271 (MiB)
+[10/21/2026-12:11:48] [TRT] [I] [MemUsageChange] Init builder kernel library: CPU +926, GPU +609, now: CPU 2572, GPU 4880 (MiB)
+[10/21/2026-12:11:49] [TRT] [I] ----------------------------------------------------------------
+[10/21/2026-12:11:49] [TRT] [I] Input filename:   rtdetr-l.onnx
+[10/21/2026-12:11:49] [TRT] [I] ONNX IR version:  0.0.8
+[10/21/2026-12:11:49] [TRT] [I] Opset version:    18
+[10/21/2026-12:11:49] [TRT] [I] Producer name:    pytorch
+[10/21/2026-12:11:49] [TRT] [I] Producer version: 2.10.0
+[10/21/2026-12:11:49] [TRT] [I] Domain:           
+[10/21/2026-12:11:49] [TRT] [I] Model version:    0
+[10/21/2026-12:11:49] [TRT] [I] Doc string:       
+[10/21/2026-12:11:49] [TRT] [I] ----------------------------------------------------------------
+[34m[1mTensorRT:[0m input "images" with shape(1, 3, 640, 640) DataType.FLOAT
+[34m[1mTensorRT:[0m output "output0" with shape(1, 300, 6) DataType.FLOAT
+[34m[1mTensorRT:[0m building FP16 engine as rtdetr-l.engine
+[10/21/2026-12:11:49] [TRT] [I] Local timing cache in use. Profiling results in this builder pass will not be stored.
+[10/21/2026-12:21:27] [TRT] [I] Detected 1 inputs and 1 output network tensors.
+[10/21/2026-12:21:32] [TRT] [I] Total Host Persistent Memory: 662848
+[10/21/2026-12:21:32] [TRT] [I] Total Device Persistent Memory: 15360
+[10/21/2026-12:21:32] [TRT] [I] Total Scratch Memory: 84172800
+[10/21/2026-12:21:32] [TRT] [I] [BlockAssignment] Started assigning block shifts. This will take 112 steps to complete.
+[10/21/2026-12:21:32] [TRT] [I] [BlockAssignment] Algorithm ShiftNTopDown took 9.44221ms to assign 12 blocks to 112 nodes requiring 104696832 bytes.
+[10/21/2026-12:21:32] [TRT] [I] Total Activation Memory: 104694272
+[10/21/2026-12:21:32] [TRT] [I] Total Weights Memory: 64168704
+[10/21/2026-12:21:32] [TRT] [I] Engine generation completed in 583.143 seconds.
+[10/21/2026-12:21:32] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 16 MiB, GPU 200 MiB
+[10/21/2026-12:21:32] [TRT] [I] [MemUsageStats] Peak memory usage during Engine building and serialization: CPU: 5319 MiB
+[34m[1mTensorRT:[0m export success ✅ 605.5s, saved as 'rtdetr-l.engine' (64.6 MB)
+
+Export complete (607.1s)
+Results saved to [1m/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/rtdetr-l.engine[0m
+Predict:         yolo predict task=detect model=rtdetr-l.engine imgsz=640 quantize=16
+Validate:        yolo val task=detect model=rtdetr-l.engine imgsz=640  quantize=16
+Visualize:       https://netron.app
+engine: weights/rtdetr_l_640.engine
+Loading weights/rtdetr_l_640.engine for TensorRT inference...
+[10/21/2026-12:21:42] [TRT] [I] Loaded engine size: 64 MiB
+[10/21/2026-12:21:42] [TRT] [I] [MS] Running engine with multi stream info
+[10/21/2026-12:21:42] [TRT] [I] [MS] Number of aux streams is 7
+[10/21/2026-12:21:42] [TRT] [I] [MS] Number of total worker streams is 8
+[10/21/2026-12:21:42] [TRT] [I] [MS] The main stream provided by execute/enqueue calls is the first worker stream
+[10/21/2026-12:21:42] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +100, now: CPU 0, GPU 161 (MiB)
+rtdetr_l: e2e p50 32.51 ms, p99 33.19 ms, peak 135.9 MB
+Transferred 882/882 items from pretrained weights
+Ultralytics 8.4.183 🚀 Python-3.10.12 torch-2.10.0 CUDA:0 (Orin, 7607MiB)
+YOLOe-26m summary (fused): 155 layers, 27,882,722 parameters, 0 gradients, 70.4 GFLOPs
+
+[34m[1mPyTorch:[0m starting from 'yoloe-26m-seg.pt' with input shape (1, 3, 640, 640) BCHW and output shape(s) (1, 9, 8400) (67.2 MB)
+[31m[1mrequirements:[0m Ultralytics requirement ['onnxruntime-gpu'] not found, attempting AutoUpdate...
+WARNING ⚠️ Retry 1/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ Retry 2/2 failed: Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+WARNING ⚠️ [31m[1mrequirements:[0m ❌ Command '['/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/bin/python', '-m', 'pip', 'install', '--no-cache-dir', 'onnxruntime-gpu']' returned non-zero exit status 1.
+ERROR: Could not find a version that satisfies the requirement onnxruntime-gpu (from versions: none)
+ERROR: No matching distribution found for onnxruntime-gpu
+
+
+[34m[1mONNX:[0m starting export with onnx 1.23.2 opset 18...
+[34m[1mONNX:[0m slimming with onnxslim 0.1.98...
+[34m[1mONNX:[0m export success ✅ 8.0s, saved as 'yoloe-26m-seg.onnx' (77.9 MB)
+
+[34m[1mTensorRT:[0m starting export with TensorRT 10.3.0...
+[10/21/2026-12:22:13] [TRT] [I] [MemUsageChange] Init CUDA: CPU +0, GPU +0, now: CPU 1984, GPU 4337 (MiB)
+[10/21/2026-12:22:16] [TRT] [I] [MemUsageChange] Init builder kernel library: CPU +926, GPU +1029, now: CPU 2910, GPU 5366 (MiB)
+[10/21/2026-12:22:16] [TRT] [I] ----------------------------------------------------------------
+[10/21/2026-12:22:16] [TRT] [I] Input filename:   yoloe-26m-seg.onnx
+[10/21/2026-12:22:16] [TRT] [I] ONNX IR version:  0.0.8
+[10/21/2026-12:22:16] [TRT] [I] Opset version:    18
+[10/21/2026-12:22:16] [TRT] [I] Producer name:    pytorch
+[10/21/2026-12:22:16] [TRT] [I] Producer version: 2.10.0
+[10/21/2026-12:22:16] [TRT] [I] Domain:           
+[10/21/2026-12:22:16] [TRT] [I] Model version:    0
+[10/21/2026-12:22:16] [TRT] [I] Doc string:       
+[10/21/2026-12:22:16] [TRT] [I] ----------------------------------------------------------------
+[34m[1mTensorRT:[0m input "images" with shape(1, 3, 640, 640) DataType.FLOAT
+[34m[1mTensorRT:[0m output "output0" with shape(1, 9, 8400) DataType.FLOAT
+[34m[1mTensorRT:[0m building FP16 engine as yoloe-26m-seg.engine
+[10/21/2026-12:22:16] [TRT] [I] Local timing cache in use. Profiling results in this builder pass will not be stored.
+[10/21/2026-12:28:19] [TRT] [I] Detected 1 inputs and 3 output network tensors.
+[10/21/2026-12:28:22] [TRT] [I] Total Host Persistent Memory: 675088
+[10/21/2026-12:28:22] [TRT] [I] Total Device Persistent Memory: 0
+[10/21/2026-12:28:22] [TRT] [I] Total Scratch Memory: 2764800
+[10/21/2026-12:28:22] [TRT] [I] [BlockAssignment] Started assigning block shifts. This will take 192 steps to complete.
+[10/21/2026-12:28:22] [TRT] [I] [BlockAssignment] Algorithm ShiftNTopDown took 21.7688ms to assign 12 blocks to 192 nodes requiring 34612224 bytes.
+[10/21/2026-12:28:22] [TRT] [I] Total Activation Memory: 34611200
+[10/21/2026-12:28:22] [TRT] [I] Total Weights Memory: 40836884
+[10/21/2026-12:28:22] [TRT] [I] Engine generation completed in 366.671 seconds.
+[10/21/2026-12:28:22] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 16 MiB, GPU 200 MiB
+[10/21/2026-12:28:22] [TRT] [I] [MemUsageStats] Peak memory usage during Engine building and serialization: CPU: 5319 MiB
+[34m[1mTensorRT:[0m export success ✅ 377.6s, saved as 'yoloe-26m-seg.engine' (42.4 MB)
+
+Export complete (378.4s)
+Results saved to [1m/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/yoloe-26m-seg.engine[0m
+Predict:         yolo predict task=detect model=yoloe-26m-seg.engine imgsz=640 quantize=16
+Validate:        yolo val task=detect model=yoloe-26m-seg.engine imgsz=640  quantize=16
+Visualize:       https://netron.app
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 254, in <module>
+    main()
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 250, in main
+    globals()[f"cmd_{args.stage}"](cfg, args)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 166, in cmd_latency
+    run_latency(mc["kind"], weights, ds["gt"], ds["image_root"], str(out), lc["imgsz"], d["conf_deploy"],
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/latency.py", line 92, in run_latency
+    model = build_model(kind, weights, build_yaml)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/predict_ultralytics.py", line 30, in build_model
+    return YOLOE(build_yaml).load(weights) if build_yaml else YOLOE(weights)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/engine/model.py", line 342, in load
+    weights, ckpt = load_checkpoint(weights)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/nn/tasks.py", line 2032, in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/nn/tasks.py", line 1897, in torch_safe_load
+    check_suffix(file=weight, suffix=".pt")
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/utils/checks.py", line 713, in check_suffix
+    assert f".{s}" in suffix, f"{msg}{f} acceptable suffix is {suffix}, not .{s}"
+AssertionError: weights/yoloe26m_640.engine acceptable suffix is {'.pt'}, not .engine
+engine: weights/yoloe26m_640.engine
++ .venv/bin/python -m det_eval.run vlm --model cosmos3_edge --smoke
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   0%|          | 1/670 [00:00<04:53,  2.28it/s]Loading weights:   2%|▏         | 11/670 [00:00<00:25, 25.71it/s]Loading weights:   3%|▎         | 20/670 [00:00<00:15, 41.50it/s]Loading weights:   5%|▍         | 33/670 [00:00<00:09, 64.84it/s]Loading weights:   6%|▋         | 43/670 [00:00<00:08, 73.65it/s]Loading weights:   8%|▊         | 53/670 [00:01<00:09, 64.64it/s]Loading weights:   9%|▉         | 61/670 [00:01<00:09, 65.64it/s]Loading weights:  10%|█         | 70/670 [00:01<00:08, 70.94it/s]Loading weights:  12%|█▏        | 81/670 [00:01<00:07, 80.33it/s]Loading weights:  14%|█▎        | 91/670 [00:01<00:07, 81.02it/s]Loading weights:  15%|█▍        | 100/670 [00:01<00:07, 80.47it/s]Loading weights:  17%|█▋        | 111/670 [00:01<00:06, 87.90it/s]Loading weights:  18%|█▊        | 123/670 [00:01<00:06, 89.99it/s]Loading weights:  20%|█▉        | 133/670 [00:01<00:06, 87.14it/s]Loading weights:  22%|██▏       | 145/670 [00:02<00:05, 95.14it/s]Loading weights:  23%|██▎       | 155/670 [00:02<00:05, 94.06it/s]Loading weights:  25%|██▍       | 165/670 [00:02<00:05, 90.36it/s]Loading weights:  26%|██▋       | 177/670 [00:02<00:05, 98.06it/s]Loading weights:  28%|██▊       | 187/670 [00:02<00:06, 77.41it/s]Loading weights:  29%|██▉       | 196/670 [00:02<00:06, 77.41it/s]Loading weights:  31%|███▏      | 211/670 [00:02<00:05, 88.90it/s]Loading weights:  33%|███▎      | 221/670 [00:02<00:04, 89.91it/s]Loading weights:  41%|████      | 273/670 [00:03<00:02, 197.10it/s]Loading weights:  48%|████▊     | 324/670 [00:03<00:01, 279.94it/s]Loading weights:  56%|█████▌    | 375/670 [00:03<00:00, 342.98it/s]Loading weights:  65%|██████▍   | 433/670 [00:03<00:00, 401.71it/s]Loading weights:  72%|███████▏  | 485/670 [00:03<00:00, 434.84it/s]Loading weights:  80%|████████  | 537/670 [00:03<00:00, 459.20it/s]Loading weights:  89%|████████▊ | 593/670 [00:03<00:00, 469.66it/s]Loading weights:  96%|█████████▌| 643/670 [00:03<00:00, 478.18it/s]Loading weights: 100%|██████████| 670/670 [00:03<00:00, 175.33it/s]
+Some parameters are on the meta device because they were offloaded to the disk.
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 254, in <module>
+    main()
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 250, in main
+    globals()[f"cmd_{args.stage}"](cfg, args)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 178, in cmd_vlm
+    vlm_main(argv)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/vlm_grounding.py", line 326, in main
+    summary = run_grounding(backend, gt, ds["image_root"], img_ids, ov["prompts"], ov["label_to_category"],
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/vlm_grounding.py", line 264, in run_grounding
+    text, n_tok = backend.generate(path, prompt)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/vlm_grounding.py", line 190, in generate
+    out = self.model.generate(**inputs, do_sample=False, max_new_tokens=self.max_new_tokens)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/generation/utils.py", line 2891, in generate
+    model_kwargs = self._maybe_prepare_encoder_kwargs_for_generation(
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/generation/utils.py", line 978, in _maybe_prepare_encoder_kwargs_for_generation
+    return self._prepare_multimodal_encoder_kwargs_for_generation(model_kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/generation/utils.py", line 1048, in _prepare_multimodal_encoder_kwargs_for_generation
+    model_kwargs["mm_encoder_outputs"][modality] = encoder_fn(**encoder_kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/utils/generic.py", line 1006, in wrapper
+    return func(*args, **translated)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/models/cosmos3_edge/modeling_cosmos3_edge.py", line 968, in get_image_features
+    image_embeds = self.projector(vision_outputs.last_hidden_state)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/transformers/models/cosmos3_edge/modeling_cosmos3_edge.py", line 752, in forward
+    x = self.linear_fc2(self.act_fn(self.linear_fc1(x)))
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/accelerate/hooks.py", line 187, in new_forward
+    args, kwargs = module._hf_hook.pre_forward(module, *args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/accelerate/hooks.py", line 50, in wrapper
+    return wrapper._compiled_fn(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py", line 1181, in _fn
+    return fn(*args, **kwargs)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/accelerate/hooks.py", line 371, in pre_forward
+    value = self.weights_map[name]
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/accelerate/utils/offload.py", line 127, in __getitem__
+    return self.dataset[f"{self.prefix}{key}"]
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/accelerate/utils/offload.py", line 179, in __getitem__
+    with safe_open(weight_info["safetensors_file"], framework="pt", device=device) as f:
+FileNotFoundError: No such file or directory: /home/jetson/.cache/huggingface/hub/models--nvidia--Cosmos3-Edge/snapshots/344d602b128d1bbdacb43b08d0a3626f46343e29/transformer/vision_encoder/model.safetensors
++ .venv/bin/python -m det_eval.run figures
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+F2 paper/figures/f2_height_bins.pdf
+F3 paper/figures/f3_nms_gap.pdf
+F4 paper/figures/f4_latency_vs_clutter.pdf
+F5 paper/figures/f5_speed_accuracy.pdf
++ echo PIPELINE2_DONE
+PIPELINE2_DONE

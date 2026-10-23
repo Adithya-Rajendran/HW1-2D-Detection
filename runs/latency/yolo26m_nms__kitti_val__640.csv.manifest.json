@@ -1,0 +1,29 @@
+{
+  "output": "runs/latency/yolo26m_nms__kitti_val__640.csv",
+  "created": "2026-10-21T10:54:54-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py latency",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "yolo26m_nms",
+  "kind": "yolo",
+  "weights": "yolo26m.pt",
+  "gt": "data/kitti/annotations/kitti_val_coco.json",
+  "imgsz": 640,
+  "conf": 0.25,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "n_images": 500,
+  "warmup": 50,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

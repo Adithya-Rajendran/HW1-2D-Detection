@@ -1,0 +1,77 @@
++ cd /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
++ .venv/bin/python -m det_eval.run latency --engine --only yoloe26m
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 254, in <module>
+    main()
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 250, in main
+    globals()[f"cmd_{args.stage}"](cfg, args)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py", line 166, in cmd_latency
+    run_latency(mc["kind"], weights, ds["gt"], ds["image_root"], str(out), lc["imgsz"], d["conf_deploy"],
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/latency.py", line 92, in run_latency
+    model = build_model(kind, weights, build_yaml)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/predict_ultralytics.py", line 30, in build_model
+    return YOLOE(build_yaml).load(weights) if build_yaml else YOLOE(weights)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/engine/model.py", line 342, in load
+    weights, ckpt = load_checkpoint(weights)
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/nn/tasks.py", line 2032, in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/nn/tasks.py", line 1897, in torch_safe_load
+    check_suffix(file=weight, suffix=".pt")
+  File "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/ultralytics/utils/checks.py", line 713, in check_suffix
+    assert f".{s}" in suffix, f"{msg}{f} acceptable suffix is {suffix}, not .{s}"
+AssertionError: weights/yoloe26m_640.engine acceptable suffix is {'.pt'}, not .engine
++ .venv/bin/hf download nvidia/Cosmos3-Edge --force-download
+Fetching 54 files:   0%|          | 0/54 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 54 files:   2%|▏         | 1/54 [00:00<00:40,  1.29it/s]Fetching 54 files:   4%|▎         | 2/54 [00:01<00:25,  2.04it/s]Fetching 54 files:   6%|▌         | 3/54 [00:01<00:17,  2.94it/s]Fetching 54 files:   7%|▋         | 4/54 [00:01<00:13,  3.62it/s]Fetching 54 files:   9%|▉         | 5/54 [00:01<00:10,  4.46it/s]Fetching 54 files:  13%|█▎        | 7/54 [00:01<00:07,  6.48it/s]Fetching 54 files:  15%|█▍        | 8/54 [00:01<00:06,  7.13it/s]Fetching 54 files:  17%|█▋        | 9/54 [00:02<00:06,  6.48it/s]Fetching 54 files:  19%|█▊        | 10/54 [00:02<00:07,  6.24it/s]Fetching 54 files:  22%|██▏       | 12/54 [00:02<00:04,  8.54it/s]Fetching 54 files:  26%|██▌       | 14/54 [00:02<00:04,  8.31it/s]Fetching 54 files:  30%|██▉       | 16/54 [00:02<00:04,  8.10it/s]Fetching 54 files:  31%|███▏      | 17/54 [00:02<00:04,  8.40it/s]Fetching 54 files:  35%|███▌      | 19/54 [00:03<00:03,  9.35it/s]Fetching 54 files:  39%|███▉      | 21/54 [00:03<00:04,  8.11it/s]Fetching 54 files:  41%|████      | 22/54 [00:03<00:04,  6.60it/s]Fetching 54 files:  43%|████▎     | 23/54 [00:03<00:04,  7.12it/s]Fetching 54 files:  44%|████▍     | 24/54 [00:03<00:04,  7.30it/s]Fetching 54 files:  48%|████▊     | 26/54 [00:04<00:03,  8.92it/s]Fetching 54 files:  52%|█████▏    | 28/54 [00:04<00:02, 10.83it/s]Fetching 54 files:  56%|█████▌    | 30/54 [00:04<00:02,  9.39it/s]Fetching 54 files:  59%|█████▉    | 32/54 [00:04<00:02,  9.17it/s]Fetching 54 files:  63%|██████▎   | 34/54 [00:04<00:01, 10.30it/s]Fetching 54 files:  67%|██████▋   | 36/54 [00:04<00:01, 11.11it/s]Fetching 54 files:  70%|███████   | 38/54 [00:05<00:01,  9.42it/s]Fetching 54 files:  74%|███████▍  | 40/54 [00:05<00:01,  9.89it/s]Fetching 54 files:  78%|███████▊  | 42/54 [00:05<00:01,  8.83it/s]Fetching 54 files:  81%|████████▏ | 44/54 [00:05<00:01,  8.05it/s]Fetching 54 files:  83%|████████▎ | 45/54 [00:06<00:01,  7.28it/s]Fetching 54 files:  85%|████████▌ | 46/54 [00:06<00:01,  6.32it/s]Fetching 54 files:  91%|█████████ | 49/54 [00:06<00:00,  5.99it/s]Fetching 54 files:  93%|█████████▎| 50/54 [00:14<00:06,  1.57s/it]Fetching 54 files:  94%|█████████▍| 51/54 [00:40<00:19,  6.43s/it]Fetching 54 files:  96%|█████████▋| 52/54 [00:44<00:11,  5.92s/it]Fetching 54 files:  98%|█████████▊| 53/54 [01:02<00:08,  8.99s/it]Fetching 54 files: 100%|██████████| 54/54 [01:36<00:00, 15.50s/it]Fetching 54 files: 100%|██████████| 54/54 [01:36<00:00,  1.79s/it]
+[32m✓ Downloaded[0m
+  path: /home/jetson/.cache/huggingface/hub/models--nvidia--Cosmos3-Edge/snapshots/344d602b128d1bbdacb43b08d0a3626f46343e29
++ du -shL /home/jetson/.cache/huggingface/hub/models--nvidia--Cosmos3-Edge
+8.6G	/home/jetson/.cache/huggingface/hub/models--nvidia--Cosmos3-Edge
++ .venv/bin/python -m det_eval.run vlm --model cosmos3_edge --smoke
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   2%|▏         | 12/670 [00:00<00:05, 111.51it/s]Loading weights:   4%|▎         | 24/670 [00:00<00:05, 110.71it/s]Loading weights:   5%|▌         | 36/670 [00:00<00:07, 80.42it/s] Loading weights:   8%|▊         | 51/670 [00:00<00:06, 93.76it/s]Loading weights:   9%|▉         | 61/670 [00:00<00:06, 88.32it/s]Loading weights:  11%|█         | 72/670 [00:00<00:06, 94.01it/s]Loading weights:  12%|█▏        | 83/670 [00:00<00:06, 91.07it/s]Loading weights:  14%|█▍        | 93/670 [00:01<00:06, 87.56it/s]Loading weights:  16%|█▌        | 104/670 [00:01<00:06, 91.32it/s]Loading weights:  17%|█▋        | 114/670 [00:01<00:05, 93.39it/s]Loading weights:  19%|█▊        | 124/670 [00:01<00:06, 81.37it/s]Loading weights:  20%|██        | 135/670 [00:01<00:06, 87.66it/s]Loading weights:  22%|██▏       | 145/670 [00:01<00:06, 84.74it/s]Loading weights:  23%|██▎       | 155/670 [00:01<00:06, 83.07it/s]Loading weights:  24%|██▍       | 164/670 [00:01<00:06, 73.54it/s]Loading weights:  26%|██▌       | 175/670 [00:02<00:06, 82.34it/s]Loading weights:  28%|██▊       | 185/670 [00:02<00:05, 86.77it/s]Loading weights:  29%|██▉       | 195/670 [00:02<00:06, 76.47it/s]Loading weights:  31%|███       | 208/670 [00:02<00:05, 89.35it/s]Loading weights:  33%|███▎      | 219/670 [00:02<00:05, 88.49it/s]Loading weights:  34%|███▍      | 229/670 [00:03<00:11, 36.77it/s]Loading weights:  40%|████      | 271/670 [00:03<00:04, 85.21it/s]Loading weights:  50%|█████     | 335/670 [00:03<00:01, 170.14it/s]Loading weights:  58%|█████▊    | 387/670 [00:03<00:01, 232.97it/s]Loading weights:  67%|██████▋   | 449/670 [00:03<00:00, 311.98it/s]Loading weights:  76%|███████▋  | 511/670 [00:03<00:00, 381.36it/s]Loading weights:  84%|████████▍ | 562/670 [00:03<00:00, 412.35it/s]Loading weights:  93%|█████████▎| 625/670 [00:03<00:00, 461.08it/s]Loading weights: 100%|██████████| 670/670 [00:04<00:00, 167.26it/s]
+  [1/20] 000006 ok        5 boxes  15.2s
+  [2/20] 000118 ok        7 boxes  18.5s
+  [3/20] 000128 ok       10 boxes  24.6s
+  [4/20] 000135 ok       19 boxes  45.4s
+  [5/20] 000156 ok        3 boxes   8.2s
+  [6/20] 000197 ok       14 boxes  34.0s
+  [7/20] 000207 ok       20 boxes  48.1s
+  [8/20] 000239 ok        6 boxes  15.2s
+  [9/20] 000291 ok        5 boxes  12.8s
+  [10/20] 000320 ok       12 boxes  29.4s
+  [11/20] 000335 ok        7 boxes  17.4s
+  [12/20] 000341 ok        9 boxes  23.3s
+  [13/20] 000347 ok        7 boxes  17.7s
+  [14/20] 000378 ok        3 boxes   8.1s
+  [15/20] 000473 ok        2 boxes   5.8s
+  [16/20] 000493 ok        8 boxes  20.0s
+  [17/20] 000498 ok        2 boxes   6.0s
+  [18/20] 000499 ok        1 boxes   3.5s
+  [19/20] 000504 ok        2 boxes   5.6s
+  [20/20] 000558 ok       11 boxes  27.2s
+{
+  "frames": 20,
+  "parse_status": {
+    "ok": 20
+  },
+  "parse_ok_rate": 1.0,
+  "n_dets": 153,
+  "latency_s": {
+    "mean": 19.302586243250698,
+    "p50": 17.571676330000628,
+    "p90": 35.14743861120662
+  }
+}
++ .venv/bin/python -m det_eval.run figures
+/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+F2 paper/figures/f2_height_bins.pdf
+F3 paper/figures/f3_nms_gap.pdf
+F4 paper/figures/f4_latency_vs_clutter.pdf
+F5 paper/figures/f5_speed_accuracy.pdf
++ echo PIPELINE3_DONE
+PIPELINE3_DONE

@@ -1,0 +1,15 @@
+{
+  "output": "runs/vlm/cosmos3_edge__kitti_val__20.json",
+  "created": "2026-10-21T12:43:14-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py vlm --model cosmos3_edge --smoke",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "cosmos3_edge",
+  "backend": "TransformersBackend",
+  "model_id": "nvidia/Cosmos3-Edge",
+  "prompt": "Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram. Report bbox coordinates in JSON format.",
+  "coord_mode": "norm1000",
+  "n_frames": 20
+}

@@ -1,0 +1,35 @@
++ cd /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
+++ docker ps -q
++ '[' -n 9cb92fce0ed2 ']'
++ sleep 10
+++ docker ps -q
++ '[' -n 9cb92fce0ed2 ']'
++ sleep 10
+++ docker ps -q
++ '[' -n 9cb92fce0ed2 ']'
++ sleep 10
+++ docker ps -q
++ '[' -n 9cb92fce0ed2 ']'
++ sleep 10
+++ docker ps -q
++ '[' -n '' ']'
++ Z=/mnt/bench-data/datasets/kitti
++ scripts/docker_run.sh python -m det_eval.kitti copy --split configs/splits/kitti_train.txt --image-zip /mnt/bench-data/datasets/kitti/data_object_image_2.zip --label-zip /mnt/bench-data/datasets/kitti/data_object_label_2.zip
+copied 3712 frames into data/kitti/training
++ ls data/kitti/training/image_2
++ wc -l
+7481
++ ls data/kitti/training/label_2
++ wc -l
+7481
++ scripts/docker_run.sh python -m pytest -q
+.............................                                            [100%]
+29 passed in 10.16s
++ scripts/docker_run.sh python -m det_eval.finetune split
+train_ft 3412 frames, minival 300 frames (seed 0)
++ scripts/docker_run.sh python -m det_eval.finetune export
+train {'frames': 3412, 'objects': {'car': 13195, 'pedestrian': 2019, 'cyclist': 681, 'truck': 450, 'tram': 206}}
+minival {'frames': 300, 'objects': {'car': 1161, 'pedestrian': 188, 'cyclist': 53, 'truck': 38, 'tram': 18}}
+data yaml: /work/data/kitti_yolo/kitti5.yaml
++ echo FT_PREP_DONE
+FT_PREP_DONE

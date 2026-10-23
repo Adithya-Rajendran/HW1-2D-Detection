@@ -1,0 +1,33 @@
+{
+  "output": "runs/preds/rtdetr_l__coco_val2017__640.json",
+  "created": "2026-10-20T17:59:37-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py predict --dataset coco_val2017",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "rtdetr_l",
+  "kind": "rtdetr",
+  "weights": "rtdetr-l.pt",
+  "build_yaml": null,
+  "gt": "data/coco/annotations/instances_val2017.json",
+  "image_root": "data/coco/images/val2017",
+  "imgsz": 640,
+  "conf": 0.001,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "prompts": null,
+  "n_images": 5000,
+  "n_dets": 1500000,
+  "wall_s": 541.5,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

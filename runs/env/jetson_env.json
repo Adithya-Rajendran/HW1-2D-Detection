@@ -1,0 +1,42 @@
+{
+  "created": "2026-10-20T17:41:28-07:00",
+  "hostname": "jetson-nano",
+  "platform": "Linux-5.15.199-tegra-aarch64-with-glibc2.35",
+  "machine": "aarch64",
+  "python": "3.10.12",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "packages": {
+    "torch": "2.10.0",
+    "torchvision": "0.25.0",
+    "ultralytics": "8.4.183",
+    "transformers": "5.21.0.dev0",
+    "pycocotools": "2.0.11",
+    "numpy": "2.2.6",
+    "opencv-python": "5.0.0.93",
+    "tensorrt": "10.3.0",
+    "accelerate": "1.15.0"
+  },
+  "torch_cuda": "12.6",
+  "cuda_available": true,
+  "gpu": "Orin",
+  "gpu_capability": "8.7",
+  "nvidia_smi": "Orin (nvgpu), 540.5.0",
+  "os-release": {
+    "PRETTY_NAME": "\"Ubuntu 22.04.5 LTS\"",
+    "NAME": "\"Ubuntu\"",
+    "VERSION_ID": "\"22.04\"",
+    "VERSION": "\"22.04.5 LTS (Jammy Jellyfish)\"",
+    "VERSION_CODENAME": "jammy",
+    "ID": "ubuntu",
+    "ID_LIKE": "debian",
+    "HOME_URL": "\"https://www.ubuntu.com/\"",
+    "SUPPORT_URL": "\"https://help.ubuntu.com/\"",
+    "BUG_REPORT_URL": "\"https://bugs.launchpad.net/ubuntu/\"",
+    "PRIVACY_POLICY_URL": "\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"",
+    "UBUNTU_CODENAME": "jammy"
+  },
+  "mem_total_gib": 7.4
+}

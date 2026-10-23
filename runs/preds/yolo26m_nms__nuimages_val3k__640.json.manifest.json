@@ -1,0 +1,33 @@
+{
+  "output": "runs/preds/yolo26m_nms__nuimages_val3k__640.json",
+  "created": "2026-10-22T15:51:47-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py predict --dataset nuimages_val3k --only yolo26m_nms yolo26m_nms_ml yolo26m_e2e rtdetr_l yoloe26m",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "yolo26m_nms",
+  "kind": "yolo",
+  "weights": "yolo26m.pt",
+  "build_yaml": null,
+  "gt": "data/nuimages_coco/nuimages_val3k_coco.json",
+  "image_root": "data/nuimages",
+  "imgsz": 640,
+  "conf": 0.001,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "prompts": null,
+  "n_images": 3000,
+  "n_dets": 214893,
+  "wall_s": 151.2,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

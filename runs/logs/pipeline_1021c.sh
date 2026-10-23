@@ -1,0 +1,8 @@
+set -x
+cd ~/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection
+.venv/bin/python -m det_eval.run latency --engine --only yoloe26m
+.venv/bin/hf download nvidia/Cosmos3-Edge --force-download
+du -shL ~/.cache/huggingface/hub/models--nvidia--Cosmos3-Edge
+.venv/bin/python -m det_eval.run vlm --model cosmos3_edge --smoke
+.venv/bin/python -m det_eval.run figures
+echo PIPELINE3_DONE

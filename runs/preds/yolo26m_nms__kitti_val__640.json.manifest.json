@@ -1,0 +1,33 @@
+{
+  "output": "runs/preds/yolo26m_nms__kitti_val__640.json",
+  "created": "2026-10-20T21:58:09-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/run.py predict --dataset kitti_val",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "name": "yolo26m_nms",
+  "kind": "yolo",
+  "weights": "yolo26m.pt",
+  "build_yaml": null,
+  "gt": "data/kitti/annotations/kitti_val_coco.json",
+  "image_root": "data/kitti/training",
+  "imgsz": 640,
+  "conf": 0.001,
+  "iou_nms": 0.7,
+  "max_det": 300,
+  "fp16": true,
+  "predict_kwargs": {},
+  "prompts": null,
+  "n_images": 3769,
+  "n_dets": 393631,
+  "wall_s": 204.1,
+  "runtime": {
+    "python": "3.10.12",
+    "machine": "aarch64",
+    "ultralytics": "8.4.183",
+    "torch": "2.10.0",
+    "cuda": "12.6",
+    "gpu": "Orin"
+  }
+}

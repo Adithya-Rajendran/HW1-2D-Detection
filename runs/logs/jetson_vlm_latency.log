@@ -1,0 +1,235 @@
+++ dirname scripts/jetson_vlm_latency.sh
++ cd scripts/..
++ docker build -f docker/Dockerfile.cosmos -t hw2d-cosmos:jp6 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  5.632kB
+Step 1/2 : FROM hw2d:jp6
+ ---> b2ed875cd058
+Step 2/2 : RUN pip install --no-cache-dir       "transformers @ https://github.com/huggingface/transformers/archive/60f49549e0db78f022ee30aa1571d9ab6e4a15bf.zip"       peft==0.21.2 accelerate==1.15.0  && python -c "import transformers, peft, torch; print(transformers.__version__, peft.__version__, torch.__version__)"
+ ---> Using cache
+ ---> 614b43fed619
+Successfully built 614b43fed619
+Successfully tagged hw2d-cosmos:jp6
++ SRC=/mnt/bench-data/datasets/cmpe249-hw1/spark/vlm_ft
++ for a in cosmos3_edge_kitti cosmos3_edge_kitti_compact
++ mkdir -p runs/vlm_ft/cosmos3_edge_kitti
++ cp -rn /mnt/bench-data/datasets/cmpe249-hw1/spark/vlm_ft/cosmos3_edge_kitti/adapter_best runs/vlm_ft/cosmos3_edge_kitti/
++ for a in cosmos3_edge_kitti cosmos3_edge_kitti_compact
++ mkdir -p runs/vlm_ft/cosmos3_edge_kitti_compact
++ cp -rn /mnt/bench-data/datasets/cmpe249-hw1/spark/vlm_ft/cosmos3_edge_kitti_compact/adapter_best runs/vlm_ft/cosmos3_edge_kitti_compact/
++ mkdir -p runs/vlm_jetson
++ for m in cosmos3_edge_ftc cosmos3_edge_ft cosmos3_edge
++ run python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --limit 50 --out runs/vlm_jetson/cosmos3_edge_ftc__kitti_val__50.json
+++ id -u
+++ id -g
+++ id -un
++ docker run --rm --runtime nvidia --ipc=host -u 1000:1000 -e HOME=/work/runs/.home -e USER=jetson -e HF_HOME=/hf -e HF_HUB_OFFLINE=1 -v /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection:/work -v /home/jetson/.cache/huggingface:/hf hw2d-cosmos:jp6 python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --limit 50 --out runs/vlm_jetson/cosmos3_edge_ftc__kitti_val__50.json
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   0%|          | 1/670 [00:00<03:49,  2.92it/s]Loading weights:   2%|▏         | 11/670 [00:00<00:22, 29.17it/s]Loading weights:   3%|▎         | 20/670 [00:00<00:15, 43.32it/s]Loading weights:   4%|▍         | 30/670 [00:00<00:10, 58.68it/s]Loading weights:   6%|▌         | 40/670 [00:00<00:09, 69.21it/s]Loading weights:   8%|▊         | 51/670 [00:00<00:08, 75.12it/s]Loading weights:   9%|▉         | 60/670 [00:01<00:08, 73.44it/s]Loading weights:  11%|█         | 72/670 [00:01<00:07, 84.37it/s]Loading weights:  12%|█▏        | 81/670 [00:01<00:06, 85.81it/s]Loading weights:  14%|█▎        | 91/670 [00:01<00:06, 83.49it/s]Loading weights:  15%|█▍        | 100/670 [00:01<00:07, 78.93it/s]Loading weights:  17%|█▋        | 111/670 [00:01<00:06, 83.87it/s]Loading weights:  18%|█▊        | 123/670 [00:01<00:06, 87.04it/s]Loading weights:  20%|█▉        | 132/670 [00:01<00:06, 82.04it/s]Loading weights:  21%|██▏       | 143/670 [00:01<00:05, 87.94it/s]Loading weights:  23%|██▎       | 152/670 [00:02<00:05, 88.01it/s]Loading weights:  24%|██▍       | 163/670 [00:02<00:05, 88.13it/s]Loading weights:  26%|██▌       | 172/670 [00:02<00:05, 83.10it/s]Loading weights:  27%|██▋       | 181/670 [00:02<00:05, 84.27it/s]Loading weights:  28%|██▊       | 190/670 [00:02<00:05, 85.53it/s]Loading weights:  30%|██▉       | 199/670 [00:02<00:05, 86.29it/s]Loading weights:  31%|███       | 209/670 [00:02<00:05, 89.59it/s]Loading weights:  33%|███▎      | 219/670 [00:02<00:05, 86.83it/s]Loading weights:  34%|███▍      | 228/670 [00:03<00:12, 34.05it/s]Loading weights:  38%|███▊      | 256/670 [00:03<00:06, 66.57it/s]Loading weights:  46%|████▌     | 305/670 [00:03<00:02, 133.94it/s]Loading weights:  54%|█████▎    | 359/670 [00:03<00:01, 208.90it/s]Loading weights:  61%|██████▏   | 412/670 [00:03<00:00, 275.30it/s]Loading weights:  69%|██████▉   | 464/670 [00:04<00:00, 323.90it/s]Loading weights:  77%|███████▋  | 514/670 [00:04<00:00, 363.72it/s]Loading weights:  85%|████████▌ | 570/670 [00:04<00:00, 410.98it/s]Loading weights:  93%|█████████▎| 622/670 [00:04<00:00, 439.85it/s]Loading weights: 100%|██████████| 670/670 [00:04<00:00, 150.12it/s]
+  [1/50] 000006 ok        4 boxes   7.5s
+  [2/50] 000118 ok        2 boxes   3.4s
+  [3/50] 000128 ok        4 boxes   5.5s
+  [4/50] 000135 ok        8 boxes  10.2s
+  [5/50] 000156 ok        1 boxes   1.9s
+  [6/50] 000197 ok        7 boxes   9.2s
+  [7/50] 000207 ok        3 boxes   4.3s
+  [8/50] 000239 ok        1 boxes   1.8s
+  [9/50] 000291 ok        4 boxes   5.5s
+  [10/50] 000320 ok        4 boxes   5.6s
+  [11/50] 000335 ok        6 boxes   8.0s
+  [12/50] 000341 ok        6 boxes   8.7s
+  [13/50] 000347 ok        3 boxes   4.4s
+  [14/50] 000378 ok        3 boxes   4.3s
+  [15/50] 000473 ok        1 boxes   1.8s
+  [16/50] 000493 ok        5 boxes   6.8s
+  [17/50] 000498 ok        1 boxes   2.0s
+  [18/50] 000499 ok        1 boxes   1.8s
+  [19/50] 000504 ok        1 boxes   1.8s
+  [20/50] 000558 ok        9 boxes  11.4s
+  [21/50] 000564 ok        3 boxes   4.4s
+  [22/50] 000583 ok        4 boxes   5.6s
+  [23/50] 000604 ok        1 boxes   1.9s
+  [24/50] 000610 ok        3 boxes   4.3s
+  [25/50] 000657 ok        1 boxes   1.8s
+  [26/50] 000658 ok        2 boxes   3.0s
+  [27/50] 000679 ok       13 boxes  18.3s
+  [28/50] 000745 ok        4 boxes   5.6s
+  [29/50] 000754 ok        8 boxes  10.5s
+  [30/50] 000756 ok        7 boxes   9.0s
+  [31/50] 000761 ok        2 boxes   3.1s
+  [32/50] 000772 ok        3 boxes   4.3s
+  [33/50] 000790 ok        4 boxes   5.5s
+  [34/50] 000816 ok        8 boxes  11.3s
+  [35/50] 000841 ok        1 boxes   2.0s
+  [36/50] 000843 ok        9 boxes  11.6s
+  [37/50] 000847 ok       10 boxes  12.7s
+  [38/50] 000916 ok        2 boxes   3.1s
+  [39/50] 000967 ok        2 boxes   3.1s
+  [40/50] 000971 ok        6 boxes   8.8s
+  [41/50] 000979 ok        4 boxes   5.8s
+  [42/50] 000981 ok        4 boxes   5.6s
+  [43/50] 001007 ok        7 boxes   9.0s
+  [44/50] 001039 ok        3 boxes   4.3s
+  [45/50] 001043 ok       12 boxes  15.3s
+  [46/50] 001050 ok        8 boxes  10.5s
+  [47/50] 001089 ok        6 boxes   7.8s
+  [48/50] 001148 ok        5 boxes   6.9s
+  [49/50] 001150 ok        8 boxes  10.5s
+  [50/50] 001176 ok        1 boxes   1.8s
+{
+  "frames": 50,
+  "parse_status": {
+    "ok": 50
+  },
+  "parse_ok_rate": 1.0,
+  "n_dets": 225,
+  "latency_s": {
+    "mean": 6.265925073079416,
+    "p50": 5.533581369003514,
+    "p90": 11.279639829212101
+  }
+}
++ for m in cosmos3_edge_ftc cosmos3_edge_ft cosmos3_edge
++ run python -m det_eval.vlm_grounding --model cosmos3_edge_ft --limit 50 --out runs/vlm_jetson/cosmos3_edge_ft__kitti_val__50.json
+++ id -u
+++ id -g
+++ id -un
++ docker run --rm --runtime nvidia --ipc=host -u 1000:1000 -e HOME=/work/runs/.home -e USER=jetson -e HF_HOME=/hf -e HF_HUB_OFFLINE=1 -v /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection:/work -v /home/jetson/.cache/huggingface:/hf hw2d-cosmos:jp6 python -m det_eval.vlm_grounding --model cosmos3_edge_ft --limit 50 --out runs/vlm_jetson/cosmos3_edge_ft__kitti_val__50.json
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   0%|          | 1/670 [00:00<03:45,  2.97it/s]Loading weights:   2%|▏         | 11/670 [00:00<00:22, 29.91it/s]Loading weights:   2%|▏         | 16/670 [00:00<00:18, 34.89it/s]Loading weights:   4%|▎         | 24/670 [00:00<00:13, 47.75it/s]Loading weights:   5%|▍         | 33/670 [00:00<00:10, 59.52it/s]Loading weights:   6%|▋         | 43/670 [00:00<00:09, 66.81it/s]Loading weights:   8%|▊         | 52/670 [00:01<00:08, 69.46it/s]Loading weights:   9%|▉         | 63/670 [00:01<00:07, 79.52it/s]Loading weights:  11%|█         | 75/670 [00:01<00:07, 83.77it/s]Loading weights:  13%|█▎        | 84/670 [00:01<00:07, 77.11it/s]Loading weights:  14%|█▍        | 95/670 [00:01<00:06, 84.27it/s]Loading weights:  16%|█▌        | 104/670 [00:01<00:06, 85.18it/s]Loading weights:  17%|█▋        | 115/670 [00:01<00:06, 85.52it/s]Loading weights:  19%|█▊        | 124/670 [00:01<00:06, 83.10it/s]Loading weights:  20%|██        | 135/670 [00:01<00:05, 89.34it/s]Loading weights:  22%|██▏       | 145/670 [00:02<00:05, 90.55it/s]Loading weights:  23%|██▎       | 155/670 [00:02<00:05, 87.92it/s]Loading weights:  24%|██▍       | 164/670 [00:02<00:06, 83.03it/s]Loading weights:  26%|██▌       | 173/670 [00:02<00:05, 83.55it/s]Loading weights:  27%|██▋       | 183/670 [00:02<00:05, 86.94it/s]Loading weights:  29%|██▊       | 192/670 [00:02<00:05, 87.64it/s]Loading weights:  30%|███       | 203/670 [00:02<00:05, 88.49it/s]Loading weights:  32%|███▏      | 212/670 [00:02<00:05, 83.20it/s]Loading weights:  33%|███▎      | 224/670 [00:02<00:04, 92.46it/s]Loading weights:  35%|███▍      | 234/670 [00:03<00:10, 39.77it/s]Loading weights:  41%|████      | 275/670 [00:03<00:04, 92.50it/s]Loading weights:  50%|████▉     | 333/670 [00:03<00:01, 174.71it/s]Loading weights:  57%|█████▋    | 383/670 [00:03<00:01, 236.23it/s]Loading weights:  64%|██████▍   | 431/670 [00:03<00:00, 287.20it/s]Loading weights:  70%|███████   | 472/670 [00:04<00:00, 313.76it/s]Loading weights:  78%|███████▊  | 520/670 [00:04<00:00, 354.92it/s]Loading weights:  86%|████████▌ | 576/670 [00:04<00:00, 405.48it/s]Loading weights:  94%|█████████▍| 630/670 [00:04<00:00, 438.51it/s]Loading weights: 100%|██████████| 670/670 [00:04<00:00, 150.80it/s]
+  [1/50] 000006 ok        5 boxes  13.7s
+  [2/50] 000118 ok       10 boxes  26.1s
+  [3/50] 000128 ok        5 boxes  12.9s
+  [4/50] 000135 ok        9 boxes  22.1s
+  [5/50] 000156 ok        1 boxes   3.5s
+  [6/50] 000197 ok        8 boxes  19.9s
+  [7/50] 000207 ok        3 boxes   8.2s
+  [8/50] 000239 ok        2 boxes   5.8s
+  [9/50] 000291 ok        4 boxes  10.7s
+  [10/50] 000320 ok        5 boxes  13.0s
+  [11/50] 000335 ok        7 boxes  17.7s
+  [12/50] 000341 ok        5 boxes  13.5s
+  [13/50] 000347 ok        4 boxes  10.7s
+  [14/50] 000378 ok        3 boxes   8.2s
+  [15/50] 000473 ok        1 boxes   3.5s
+  [16/50] 000493 ok        4 boxes  10.5s
+  [17/50] 000498 ok        1 boxes   3.6s
+  [18/50] 000499 ok        1 boxes   3.4s
+  [19/50] 000504 ok        1 boxes   3.4s
+  [20/50] 000558 ok        8 boxes  19.7s
+  [21/50] 000564 ok        3 boxes   8.2s
+  [22/50] 000583 ok        5 boxes  13.0s
+  [23/50] 000604 ok        1 boxes   3.6s
+  [24/50] 000610 ok        3 boxes   8.2s
+  [25/50] 000657 ok        1 boxes   3.5s
+  [26/50] 000658 ok        1 boxes   3.5s
+  [27/50] 000679 ok        3 boxes   8.5s
+  [28/50] 000745 ok        3 boxes   8.3s
+  [29/50] 000754 ok        9 boxes  22.5s
+  [30/50] 000756 ok        7 boxes  17.3s
+  [31/50] 000761 ok        1 boxes   3.4s
+  [32/50] 000772 ok        2 boxes   5.8s
+  [33/50] 000790 ok        4 boxes  10.5s
+  [34/50] 000816 ok        3 boxes   8.4s
+  [35/50] 000841 ok        1 boxes   3.5s
+  [36/50] 000843 ok       10 boxes  24.6s
+  [37/50] 000847 ok        5 boxes  12.8s
+  [38/50] 000916 ok        2 boxes   5.8s
+  [39/50] 000967 ok        2 boxes   5.8s
+  [40/50] 000971 ok        2 boxes   6.1s
+  [41/50] 000979 ok        3 boxes   8.4s
+  [42/50] 000981 ok        5 boxes  13.0s
+  [43/50] 001007 ok        8 boxes  19.8s
+  [44/50] 001039 ok        4 boxes  10.6s
+  [45/50] 001043 ok       12 boxes  29.2s
+  [46/50] 001050 ok       10 boxes  24.7s
+  [47/50] 001089 ok        7 boxes  18.0s
+  [48/50] 001148 ok        5 boxes  13.1s
+  [49/50] 001150 ok        9 boxes  22.8s
+  [50/50] 001176 ok        2 boxes   5.9s
+{
+  "frames": 50,
+  "parse_status": {
+    "ok": 50
+  },
+  "parse_ok_rate": 1.0,
+  "n_dets": 220,
+  "latency_s": {
+    "mean": 11.580068656678778,
+    "p50": 10.508064063993515,
+    "p90": 22.49718300870154
+  }
+}
++ for m in cosmos3_edge_ftc cosmos3_edge_ft cosmos3_edge
++ run python -m det_eval.vlm_grounding --model cosmos3_edge --limit 50 --out runs/vlm_jetson/cosmos3_edge__kitti_val__50.json
+++ id -u
+++ id -g
+++ id -un
++ docker run --rm --runtime nvidia --ipc=host -u 1000:1000 -e HOME=/work/runs/.home -e USER=jetson -e HF_HOME=/hf -e HF_HUB_OFFLINE=1 -v /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection:/work -v /home/jetson/.cache/huggingface:/hf hw2d-cosmos:jp6 python -m det_eval.vlm_grounding --model cosmos3_edge --limit 50 --out runs/vlm_jetson/cosmos3_edge__kitti_val__50.json
+Loading weights:   0%|          | 0/670 [00:00<?, ?it/s]Loading weights:   0%|          | 1/670 [00:00<03:41,  3.02it/s]Loading weights:   2%|▏         | 11/670 [00:00<00:22, 29.83it/s]Loading weights:   3%|▎         | 20/670 [00:00<00:14, 43.82it/s]Loading weights:   5%|▍         | 31/670 [00:00<00:10, 61.05it/s]Loading weights:   6%|▌         | 39/670 [00:00<00:09, 64.67it/s]Loading weights:   7%|▋         | 47/670 [00:00<00:11, 55.27it/s]Loading weights:   8%|▊         | 54/670 [00:01<00:12, 50.44it/s]Loading weights:   9%|▉         | 61/670 [00:01<00:11, 54.66it/s]Loading weights:  11%|█         | 72/670 [00:01<00:08, 67.57it/s]Loading weights:  12%|█▏        | 81/670 [00:01<00:08, 72.60it/s]Loading weights:  13%|█▎        | 89/670 [00:01<00:07, 74.15it/s]Loading weights:  14%|█▍        | 97/670 [00:01<00:07, 75.68it/s]Loading weights:  16%|█▌        | 105/670 [00:01<00:07, 76.14it/s]Loading weights:  17%|█▋        | 113/670 [00:01<00:07, 77.02it/s]Loading weights:  18%|█▊        | 123/670 [00:01<00:06, 78.70it/s]Loading weights:  20%|█▉        | 132/670 [00:02<00:06, 77.22it/s]Loading weights:  21%|██        | 141/670 [00:02<00:06, 80.40it/s]Loading weights:  23%|██▎       | 151/670 [00:02<00:06, 85.82it/s]Loading weights:  24%|██▍       | 163/670 [00:02<00:05, 86.50it/s]Loading weights:  26%|██▌       | 172/670 [00:02<00:06, 79.69it/s]Loading weights:  27%|██▋       | 181/670 [00:02<00:05, 81.93it/s]Loading weights:  28%|██▊       | 190/670 [00:02<00:05, 82.46it/s]Loading weights:  30%|██▉       | 199/670 [00:02<00:05, 83.60it/s]Loading weights:  31%|███       | 209/670 [00:03<00:05, 87.23it/s]Loading weights:  33%|███▎      | 219/670 [00:03<00:05, 82.87it/s]Loading weights:  34%|███▍      | 228/670 [00:03<00:12, 36.42it/s]Loading weights:  38%|███▊      | 257/670 [00:03<00:05, 72.10it/s]Loading weights:  46%|████▌     | 307/670 [00:03<00:02, 143.62it/s]Loading weights:  53%|█████▎    | 356/670 [00:04<00:01, 210.40it/s]Loading weights:  61%|██████    | 410/670 [00:04<00:00, 281.57it/s]Loading weights:  68%|██████▊   | 457/670 [00:04<00:00, 325.85it/s]Loading weights:  75%|███████▌  | 505/670 [00:04<00:00, 363.23it/s]Loading weights:  83%|████████▎ | 554/670 [00:04<00:00, 396.63it/s]Loading weights:  90%|█████████ | 603/670 [00:04<00:00, 420.42it/s]Loading weights:  97%|█████████▋| 653/670 [00:04<00:00, 442.48it/s]Loading weights: 100%|██████████| 670/670 [00:04<00:00, 143.37it/s]
+  [1/50] 000006 ok        5 boxes  13.8s
+  [2/50] 000118 ok        7 boxes  18.6s
+  [3/50] 000128 ok       10 boxes  24.9s
+  [4/50] 000135 ok       19 boxes  45.2s
+  [5/50] 000156 ok        3 boxes   8.2s
+  [6/50] 000197 ok       14 boxes  34.1s
+  [7/50] 000207 ok       20 boxes  49.9s
+  [8/50] 000239 ok        6 boxes  15.4s
+  [9/50] 000291 ok        5 boxes  12.9s
+  [10/50] 000320 ok       12 boxes  29.9s
+  [11/50] 000335 ok        7 boxes  17.6s
+  [12/50] 000341 ok        9 boxes  23.2s
+  [13/50] 000347 ok        7 boxes  17.6s
+  [14/50] 000378 ok        3 boxes   8.1s
+  [15/50] 000473 ok        2 boxes   5.8s
+  [16/50] 000493 ok        8 boxes  20.0s
+  [17/50] 000498 ok        2 boxes   6.1s
+  [18/50] 000499 ok        1 boxes   3.6s
+  [19/50] 000504 ok        2 boxes   5.6s
+  [20/50] 000558 ok       11 boxes  27.0s
+  [21/50] 000564 ok        3 boxes   8.2s
+  [22/50] 000583 ok        6 boxes  15.4s
+  [23/50] 000604 ok        2 boxes   6.0s
+  [24/50] 000610 ok        6 boxes  15.3s
+  [25/50] 000657 ok        2 boxes   5.8s
+  [26/50] 000658 ok        4 boxes  10.6s
+  [27/50] 000679 ok       13 boxes  32.4s
+  [28/50] 000745 ok        6 boxes  15.3s
+  [29/50] 000754 ok       10 boxes  24.8s
+  [30/50] 000756 ok        8 boxes  20.2s
+  [31/50] 000761 ok        2 boxes   5.9s
+  [32/50] 000772 ok        4 boxes  10.6s
+  [33/50] 000790 ok        6 boxes  15.4s
+  [34/50] 000816 ok       12 boxes  30.9s
+  [35/50] 000841 ok        2 boxes   6.0s
+  [36/50] 000843 ok       14 boxes  33.9s
+  [37/50] 000847 ok       15 boxes  36.2s
+  [38/50] 000916 ok        3 boxes   8.2s
+  [39/50] 000967 ok        5 boxes  12.8s
+  [40/50] 000971 ok        6 boxes  16.6s
+  [41/50] 000979 ok        4 boxes  11.0s
+  [42/50] 000981 ok        5 boxes  13.5s
+  [43/50] 001007 ok       17 boxes  43.1s
+  [44/50] 001039 ok        7 boxes  18.5s
+  [45/50] 001043 ok       16 boxes  40.1s
+  [46/50] 001050 ok       20 boxes  49.8s
+  [47/50] 001089 ok        7 boxes  18.0s
+  [48/50] 001148 ok        4 boxes  11.2s
+  [49/50] 001150 ok       10 boxes  25.6s
+  [50/50] 001176 ok        2 boxes   6.0s
+{
+  "frames": 50,
+  "parse_status": {
+    "ok": 50
+  },
+  "parse_ok_rate": 1.0,
+  "n_dets": 374,
+  "latency_s": {
+    "mean": 19.09851568521932,
+    "p50": 15.40486682349001,
+    "p90": 36.559452477714515
+  }
+}
++ echo JETSON_VLM_LATENCY_DONE
+JETSON_VLM_LATENCY_DONE

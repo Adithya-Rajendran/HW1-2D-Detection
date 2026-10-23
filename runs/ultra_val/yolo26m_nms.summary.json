@@ -1,0 +1,7 @@
+{
+  "weights": "yolo26m.pt",
+  "e2e": false,
+  "AP": 0.5234603809086468,
+  "AP50": 0.701215388026001,
+  "save_dir": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/runs/ultra_val/yolo26m_nms"
+}

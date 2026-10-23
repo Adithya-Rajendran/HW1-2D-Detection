@@ -1,0 +1,21 @@
+{
+  "output": "runs/ultra_val/yolo26m_nms.summary.json",
+  "created": "2026-10-22T01:50:23-07:00",
+  "command": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/src/det_eval/ultra_val.py val --name yolo26m_nms",
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "data": "data/coco/coco_val.yaml",
+  "imgsz": 640,
+  "batch": 8,
+  "conf": 0.001,
+  "iou": 0.7,
+  "half": true,
+  "save_json": true,
+  "plots": false,
+  "project": "/home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/runs/ultra_val",
+  "name": "yolo26m_nms",
+  "exist_ok": true,
+  "device": 0
+}

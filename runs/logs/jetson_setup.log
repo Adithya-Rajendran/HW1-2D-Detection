@@ -1,0 +1,16 @@
+# R36 (release), REVISION: 5.2, GCID: 46426093, BOARD: generic, EABI: aarch64, DATE: Thu Jul 16 18:56:22 UTC 2026
+(sudo available)
+NV Power Mode: MAXN_SUPER
+torch 2.10.0 | cuda True | Orin
+bf16 matmul ok: True
+tensorrt 10.3.0
+..........................                                               [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63
+  /home/jetson/Projects/SJSU/Fall26/CMPE249/HW-2D-Detection/.venv/lib/python3.10/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+26 passed, 1 warning in 9.37s
+wrote runs/env/jetson_env.json
+done: source .venv/bin/activate
