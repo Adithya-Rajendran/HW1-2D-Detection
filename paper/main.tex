@@ -619,7 +619,8 @@ fixes (that the VLM's outputs were identical across machines). All are corrected
 \section*{Reproducibility}\label{app:repro}
 {\sloppy
 Code, configs (\texttt{configs/experiments.yaml} holds every setting), run manifests, logs and metric files:
-\repourl; the README gives the full run order. Detectors: \texttt{python -m det\_eval.run gt}, \texttt{predict},
+\repourl; the README gives the full run order. Weights: \url{https://huggingface.co/Adithya-Rajendran/yolo26m-kitti}
+and \url{https://huggingface.co/Adithya-Rajendran/cosmos3-edge-kitti-lora}. Detectors: \texttt{python -m det\_eval.run gt}, \texttt{predict},
 \texttt{evaluate}, \texttt{latency -{}-engine}, \texttt{figures}. Fine-tuning: \texttt{python -m det\_eval.finetune
 split}; \texttt{export} (add \texttt{-{}-mask Van Person\_sitting} for the ablation); \texttt{train -{}-hours 7}. LoRA:
 \texttt{python -m det\_eval.vlm\_finetune train -{}-epochs 4 -{}-grad-accum 8} (add \texttt{-{}-format compact

@@ -28,6 +28,15 @@ Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge
 | Failure analysis | Section V, Table XI, Fig. 5 |
 | Evidence the experiments ran | Run logs and manifests in `runs/`, metrics in `results/`, tests in `tests/` |
 
+## Released weights
+
+| Weights | Hugging Face | License |
+|---|---|---|
+| Cosmos 3 Edge KITTI LoRA adapters (`json/`, `compact/`) | [Adithya-Rajendran/cosmos3-edge-kitti-lora](https://huggingface.co/Adithya-Rajendran/cosmos3-edge-kitti-lora) | OpenMDW-1.1 (from Cosmos 3 Edge); KITTI-trained, non-commercial |
+| YOLO26m fine-tuned on KITTI (plain and Van-masked) | [Adithya-Rajendran/yolo26m-kitti](https://huggingface.co/Adithya-Rajendran/yolo26m-kitti) | AGPL-3.0 (from Ultralytics YOLO26); KITTI-trained, non-commercial |
+
+Each model card has the metrics, usage code and training details. The code in this repository is MIT; the weights are not.
+
 ## Citation
 
 See [`CITATION.cff`](CITATION.cff). GitHub shows a "Cite this repository" button from it.
