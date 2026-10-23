@@ -30,6 +30,19 @@ Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge
 
 See [`CITATION.cff`](CITATION.cff). GitHub shows a "Cite this repository" button from it.
 
+## Relation to the course tutorial (ngdet)
+
+The starting point is the course's [ngdet tutorial](https://github.com/lkk688/DeepDataMiningLearning/blob/main/DeepDataMiningLearning/ngdet/TUTORIAL.md) by Prof. Kaikai Liu. This repository does not fork or modify it; it is an independent harness, and the tutorial's KITTI run is reproduced with ngdet's own `run_eval` (unmodified, in Docker on the Jetson Orin Nano):
+
+| KITTI, ngdet `driving3`, mAP | YOLO26x | RT-DETR-R50 | Faster R-CNN v2 |
+|---|---|---|---|
+| Tutorial (RTX 3090, 120 images) | 0.264 | 0.262 | 0.279 |
+| Reproduced, same command | 0.236 | 0.240 | 0.236 |
+| `--score-thr 0.001` | 0.248 | 0.248 | 0.238 |
+| `--score-thr 0.001`, 1,000 images | 0.242 | 0.244 | 0.234 |
+
+Variants that change the protocol (KITTI DontCare as ignore regions, a five-class taxonomy, multi-label NMS) run on a separate patched copy outside the tutorial repository; see the paper's reproduction section.
+
 ## Original questions
 
 - **RQ1, scale vs appearance.** How much of a COCO detector's accuracy drop on KITTI comes from objects shrinking at the input resolution, and how much from the scenes looking different?
