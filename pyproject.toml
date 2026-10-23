@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "det-eval"
+version = "0.1.0"
+description = "COCO-to-KITTI 2D detection evaluation harness (CMPE 249 homework, Track A)"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pycocotools>=2.0.7",
+  "pyyaml>=6.0",
+  "pandas>=2.0",
+  "matplotlib>=3.8",
+  "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+detect = ["ultralytics>=8.4"]           # YOLO26, RT-DETR, YOLOE; `quantize` and `nms` predict args
+vlm = ["transformers>=5.11", "accelerate", "safetensors>=0.8.0"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-p no:cacheprovider"

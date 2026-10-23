@@ -1,0 +1,35 @@
+# KITTI 2D object labels -> COCO categories used for evaluation.
+#
+# action: map     the object becomes a normal ground-truth box of category `coco`
+#         ignore  the object becomes an ignore region for the categories in `for`
+#                 (a detection that matches it is neither a TP nor an FP; it is never counted as a miss)
+#         drop    not used as ground truth (a detection on it counts as a false positive)
+#
+# match (only for ignore):
+#         iou     matched with standard IoU; KITTI's devkit does this for "neighboring" classes
+#         crowd   matched by intersection over detection area (pycocotools iscrowd semantics);
+#                 KITTI's devkit does this for DontCare regions
+#
+# COCO ids follow the official 91-id scheme, so COCO-trained detectors map one to one.
+
+coco_categories:
+  1: person
+  3: car
+  7: train
+  8: truck
+
+kitti_classes:
+  Car:            {action: map, coco: car}
+  Pedestrian:     {action: map, coco: person}
+  Truck:          {action: map, coco: truck}
+  Tram:           {action: map, coco: train}
+  Van:            {action: ignore, for: [car], match: iou}        # devkit: neighboring class of Car
+  Person_sitting: {action: ignore, for: [person], match: iou}     # devkit: neighboring class of Pedestrian
+  Cyclist:        {action: ignore, for: [person], match: crowd}   # a COCO 'person' box covers only the rider, so match by containment
+  Misc:           {action: drop}
+  DontCare:       {action: ignore, for: all, match: crowd}        # devkit: DontCare regions
+
+# Categories that only open-vocabulary models and VLMs can predict.
+# Written into a separate GT file by `python -m det_eval.kitti gt --open-vocab`.
+open_vocab:
+  cyclist: {id: 1001, kitti: [Cyclist]}

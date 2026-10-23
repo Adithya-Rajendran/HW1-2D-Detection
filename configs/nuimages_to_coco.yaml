@@ -1,0 +1,43 @@
+# nuImages categories -> COCO categories, with the same action vocabulary as kitti_to_coco.yaml.
+# Rules are tried in order; the first whose category (exact, or prefix with ".*") and attribute conditions
+# match wins. Objects with no matching rule are dropped (a detection on them counts as a false positive).
+#
+# Choices mirror the KITTI mapping: neighboring classes are ignored (IoU-matched) for the class they resemble,
+# and a COCO "person" box on a rider is matched by containment against the cycle box.
+
+coco_categories:
+  1: person
+  3: car
+  6: bus
+  8: truck
+
+rules:
+  # devkit-style neighbor class: sitting or lying people are not required (KITTI's Person_sitting rule)
+  - {category: human.pedestrian.*, with_attributes: [pedestrian.sitting_lying_down], action: ignore, for: [person], match: iou}
+  - {category: vehicle.car, action: map, coco: car}
+  - {category: vehicle.emergency.police, action: map, coco: car}
+  - {category: vehicle.truck, action: map, coco: truck}
+  - {category: vehicle.bus.*, action: map, coco: bus}
+  - {category: human.pedestrian.adult, action: map, coco: person}
+  - {category: human.pedestrian.child, action: map, coco: person}
+  - {category: human.pedestrian.construction_worker, action: map, coco: person}
+  - {category: human.pedestrian.police_officer, action: map, coco: person}
+  # neighbors: not errors for the class they resemble, not required either
+  - {category: vehicle.emergency.ambulance, action: ignore, for: [car, truck], match: iou}
+  - {category: vehicle.trailer, action: ignore, for: [truck], match: iou}
+  - {category: vehicle.construction, action: ignore, for: [truck], match: iou}
+  - {category: human.pedestrian.personal_mobility, action: ignore, for: [person], match: iou}
+  - {category: human.pedestrian.stroller, action: ignore, for: [person], match: iou}
+  - {category: human.pedestrian.wheelchair, action: ignore, for: [person], match: iou}
+  - {category: vehicle.ego, action: ignore, for: all, match: crowd}   # the recording car's own hood
+  # ridden cycles: nuImages rarely boxes the rider separately (21 of 233 in val), so a person box on the rider
+  # is matched by containment and is neither a hit nor a false positive
+  - {category: vehicle.bicycle, with_attributes: [cycle.with_rider], action: ignore, for: [person], match: crowd}
+  - {category: vehicle.motorcycle, with_attributes: [cycle.with_rider], action: ignore, for: [person], match: crowd}
+
+# Classes only open-vocabulary models, VLMs and the KITTI fine-tuned model predict.
+open_vocab:
+  cyclist:
+    id: 1001
+    rules:
+      - {category: vehicle.bicycle, with_attributes: [cycle.with_rider]}

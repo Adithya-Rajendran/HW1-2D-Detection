@@ -1,0 +1,179 @@
+{
+  "n_images": 300,
+  "n_dets": 2329,
+  "categories": [
+    "person",
+    "car",
+    "train",
+    "truck",
+    "cyclist"
+  ],
+  "scored": false,
+  "kitti_protocol": true,
+  "coco": {},
+  "operating_points": {
+    "iou0.5": {
+      "all_dets": {
+        "iou": 0.5,
+        "score_thr": null,
+        "tp": 1035,
+        "fp": 648,
+        "fn": 426,
+        "n_gt": 1461,
+        "precision": 0.6149732620320856,
+        "recall": 0.7084188911704312,
+        "f1": 0.6583969465648856
+      },
+      "conf0.25": null,
+      "best_f1": null,
+      "per_class_all_dets": {
+        "person": {
+          "iou": 0.5,
+          "score_thr": null,
+          "tp": 96,
+          "fp": 70,
+          "fn": 70,
+          "n_gt": 166,
+          "precision": 0.5783132530120482,
+          "recall": 0.5783132530120482,
+          "f1": 0.5783132530120482
+        },
+        "car": {
+          "iou": 0.5,
+          "score_thr": null,
+          "tp": 910,
+          "fp": 457,
+          "fn": 259,
+          "n_gt": 1169,
+          "precision": 0.6656912948061449,
+          "recall": 0.7784431137724551,
+          "f1": 0.7176656151419559
+        },
+        "train": {
+          "iou": 0.5,
+          "score_thr": null,
+          "tp": 7,
+          "fp": 2,
+          "fn": 21,
+          "n_gt": 28,
+          "precision": 0.7777777777777778,
+          "recall": 0.25,
+          "f1": 0.3783783783783784
+        },
+        "truck": {
+          "iou": 0.5,
+          "score_thr": null,
+          "tp": 16,
+          "fp": 84,
+          "fn": 28,
+          "n_gt": 44,
+          "precision": 0.16,
+          "recall": 0.36363636363636365,
+          "f1": 0.2222222222222222
+        },
+        "cyclist": {
+          "iou": 0.5,
+          "score_thr": null,
+          "tp": 6,
+          "fp": 35,
+          "fn": 48,
+          "n_gt": 54,
+          "precision": 0.14634146341463414,
+          "recall": 0.1111111111111111,
+          "f1": 0.12631578947368421
+        }
+      }
+    },
+    "iou0.7": {
+      "all_dets": {
+        "iou": 0.7,
+        "score_thr": null,
+        "tp": 806,
+        "fp": 958,
+        "fn": 655,
+        "n_gt": 1461,
+        "precision": 0.45691609977324266,
+        "recall": 0.5516769336071184,
+        "f1": 0.4998449612403102
+      },
+      "conf0.25": null,
+      "best_f1": null,
+      "per_class_all_dets": {
+        "person": {
+          "iou": 0.7,
+          "score_thr": null,
+          "tp": 58,
+          "fp": 114,
+          "fn": 108,
+          "n_gt": 166,
+          "precision": 0.3372093023255814,
+          "recall": 0.3493975903614458,
+          "f1": 0.3431952662721893
+        },
+        "car": {
+          "iou": 0.7,
+          "score_thr": null,
+          "tp": 730,
+          "fp": 711,
+          "fn": 439,
+          "n_gt": 1169,
+          "precision": 0.5065926439972241,
+          "recall": 0.6244653550042771,
+          "f1": 0.5593869731800766
+        },
+        "train": {
+          "iou": 0.7,
+          "score_thr": null,
+          "tp": 3,
+          "fp": 6,
+          "fn": 25,
+          "n_gt": 28,
+          "precision": 0.3333333333333333,
+          "recall": 0.10714285714285714,
+          "f1": 0.16216216216216214
+        },
+        "truck": {
+          "iou": 0.7,
+          "score_thr": null,
+          "tp": 13,
+          "fp": 88,
+          "fn": 31,
+          "n_gt": 44,
+          "precision": 0.12871287128712872,
+          "recall": 0.29545454545454547,
+          "f1": 0.1793103448275862
+        },
+        "cyclist": {
+          "iou": 0.7,
+          "score_thr": null,
+          "tp": 2,
+          "fp": 39,
+          "fn": 52,
+          "n_gt": 54,
+          "precision": 0.04878048780487805,
+          "recall": 0.037037037037037035,
+          "f1": 0.042105263157894736
+        }
+      }
+    }
+  },
+  "height_bins": {
+    "<25": {
+      "n_gt": 152,
+      "recall_iou0.5_all_dets": 0.756578947368421
+    },
+    "25-40": {
+      "n_gt": 327,
+      "recall_iou0.5_all_dets": 0.764525993883792
+    },
+    "40-80": {
+      "n_gt": 502,
+      "recall_iou0.5_all_dets": 0.6633466135458167
+    },
+    ">=80": {
+      "n_gt": 480,
+      "recall_iou0.5_all_dets": 0.7208333333333333
+    }
+  },
+  "gt": "data/kitti/annotations/kitti_val_coco_openvocab.json"
+}

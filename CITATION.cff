@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this harness or its findings, please cite it as below."
+title: "One Flag and Two Gaps: What Zero-Shot COCO-to-Driving Detection Results Hide"
+type: software
+authors:
+  - family-names: Rajendran
+    given-names: Adithya
+    affiliation: San José State University
+repository-code: "https://github.com/Adithya-Rajendran/HW1-2D-Detection"
+license: MIT
+version: "1.0.0"
+date-released: "2026-11-02"
+keywords:
+  - object detection
+  - domain shift
+  - KITTI
+  - nuImages
+  - YOLO26
+  - RT-DETR
+  - non-maximum suppression
+  - Jetson Orin Nano
+abstract: >-
+  A devkit-faithful, tested harness for zero-shot and fine-tuned 2D detection across COCO, KITTI and nuImages,
+  with paired bootstrap tests, a typed error census and Jetson Orin Nano latency. Finds that Ultralytics'
+  multi-label NMS setting decides the NMS vs. NMS-free comparison on KITTI, and that the COCO-to-KITTI gap splits
+  into a far-field part fixed by resolution and a near-field part fixed by fine-tuning.

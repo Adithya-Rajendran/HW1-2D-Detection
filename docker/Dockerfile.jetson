@@ -1,0 +1,11 @@
+# Jetson Orin (JetPack 6) image for new work (fine-tuning). Earlier zero-shot runs used the .venv
+# described in the README; their manifests record those versions.
+# Build:  docker build -f docker/Dockerfile.jetson -t hw2d:jp6 .
+# Run:    scripts/docker_run.sh python -m det_eval.finetune train --hours 6
+FROM ultralytics/ultralytics:latest-jetson-jetpack6
+RUN pip install --no-cache-dir pycocotools pyyaml pandas pytest
+ENV PYTHONPATH=/work/src \
+    PYTHONUNBUFFERED=1 \
+    YOLO_CONFIG_DIR=/work/runs/.ultralytics \
+    MPLCONFIGDIR=/work/runs/.mpl
+WORKDIR /work

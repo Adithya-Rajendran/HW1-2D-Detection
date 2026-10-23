@@ -1,0 +1,42 @@
+# Private planning notes
+GOALS.md
+
+# Datasets, weights and run outputs (large or licensed; never commit)
+data/
+runs/
+weights/
+hf_cache/
+*.pt
+*.pth
+*.engine
+*.onnx
+*.safetensors
+*.bin
+# TorchScript text encoders that YOLOE downloads into the working directory
+*.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# LaTeX build products
+paper/build/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/

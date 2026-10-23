@@ -1,0 +1,149 @@
+# Single source of truth for every run. `python -m det_eval.run ...` reads this file,
+# and every output gets a manifest recording the exact settings, versions and command used.
+
+paths:
+  runs: runs              # predictions, manifests, latency logs (gitignored)
+  results: results        # small metric summaries (committed as evidence)
+  figures: paper/figures
+
+datasets:
+  coco_val2017:
+    image_root: data/coco/images/val2017
+    gt: data/coco/annotations/instances_val2017.json
+  kitti_val:
+    image_root: data/kitti/training
+    gt: data/kitti/annotations/kitti_val_coco.json
+    gt_open_vocab: data/kitti/annotations/kitti_val_coco_openvocab.json
+    subset_vlm: configs/splits/kitti_val_vlm300.txt
+  nuimages_val3k:       # 3,000 random val key frames (seed 0); see det_eval/nuimages.py
+    image_root: data/nuimages
+    gt: data/nuimages_coco/nuimages_val3k_coco.json            # data/nuimages is the read-only NFS extraction
+    gt_open_vocab: data/nuimages_coco/nuimages_val3k_coco_openvocab.json
+    split: configs/splits/nuimages_val3k.txt
+
+defaults:
+  conf_ap: 0.001       # AP runs keep low-score boxes (Ultralytics val default)
+  conf_deploy: 0.25    # latency runs, operating points, qualitative figures (Ultralytics predict default)
+  iou_nms: 0.7         # NMS IoU (Ultralytics default); unused by NMS-free configs
+  max_det: 300
+  fp16: true
+  device: 0
+
+models:
+  yolo26m_nms:
+    kind: yolo
+    weights: yolo26m.pt
+    family: "Dense one-stage CNN, one-to-many head + NMS"
+  yolo26m_e2e:
+    kind: yolo
+    weights: yolo26m.pt
+    family: "Dense one-stage CNN, one-to-one head, NMS-free"
+    predict_kwargs: {nms: false}
+  yolo26m_nms_ml:       # NMS head with multi_label=True, as in Ultralytics' validator (isolates multi-label vs NMS-free)
+    kind: yolo
+    weights: yolo26m.pt
+    family: "Dense one-stage CNN, one-to-many head + NMS, multi-label"
+    predict_kwargs: {multi_label: true}
+  rtdetr_l:
+    kind: rtdetr
+    weights: rtdetr-l.pt
+    family: "Query-based transformer, Hungarian matching, NMS-free"
+  yoloe26m:
+    kind: yoloe
+    weights: yoloe-26m-seg.pt
+    build_yaml: yoloe-26m.yaml    # detection-only head; Ultralytics ships segmentation checkpoints only
+    family: "Open-vocabulary dense detector (text prompts)"
+    open_vocab: true
+  yolo26m_ft_kitti:     # YOLO26m fine-tuned on KITTI train (python -m det_eval.finetune); 5 classes incl. cyclist
+    kind: yolo
+    weights: runs/finetune/yolo26m_kitti5_640/weights/best.pt
+    family: "YOLO26m fine-tuned on KITTI train (5 classes)"
+    open_vocab: true      # predicts cyclist natively, so it is scored on the open-vocab GT
+    finetuned: true       # also scored on the closed 4-class GT for a like-for-like zero-shot comparison
+  yolo26m_ft_kitti_maskvan:   # ablation: same recipe, Van and Person_sitting grayed out in training images
+    kind: yolo
+    weights: runs/finetune/yolo26m_kitti5_640_maskvan/weights/best.pt
+    family: "YOLO26m fine-tuned on KITTI train, neighbor classes masked"
+    open_vocab: true
+    finetuned: true
+  yolo26m_ft_kitti_e2e: # same fine-tuned weights, one-to-one head (does the NMS-free recall gain survive fine-tuning?)
+    kind: yolo
+    weights: runs/finetune/yolo26m_kitti5_640/weights/best.pt
+    family: "YOLO26m fine-tuned on KITTI train, NMS-free head"
+    predict_kwargs: {nms: false}
+    open_vocab: true
+    finetuned: true
+  cosmos3_edge:         # primary VLM: 2.4B reasoner, validated by NVIDIA on the 8 GB Orin Nano (needs transformers from main)
+    kind: vlm
+    hf_id: nvidia/Cosmos3-Edge
+    transformers_class: AutoModelForImageTextToText
+    family: "Physical-AI VLM (Cosmos 3 Edge, 2.4B reasoner)"
+    open_vocab: true
+  cosmos3_edge_ft:      # Cosmos 3 Edge + LoRA trained on KITTI train boxes (det_eval.vlm_finetune), same prompt
+    kind: vlm
+    hf_id: nvidia/Cosmos3-Edge
+    transformers_class: AutoModelForImageTextToText
+    adapter: runs/vlm_ft/cosmos3_edge_kitti/adapter_best
+    family: "Physical-AI VLM (Cosmos 3 Edge), LoRA fine-tuned on KITTI"
+    open_vocab: true
+  cosmos3_edge_ftc:     # speed-tuned: same LoRA recipe, compact `label x1 y1 x2 y2` lines, nearest objects first
+    kind: vlm
+    hf_id: nvidia/Cosmos3-Edge
+    transformers_class: AutoModelForImageTextToText
+    adapter: runs/vlm_ft/cosmos3_edge_kitti_compact/adapter_best
+    prompt: "Locate every instance that belongs to the following categories: {categories}. Answer one object per line as: label x1 y1 x2 y2, with coordinates from 0 to 1000, nearest objects first. Answer none if there are none."
+    family: "Physical-AI VLM (Cosmos 3 Edge), LoRA fine-tuned on KITTI, compact output"
+    open_vocab: true
+  cosmos3_nano:         # optional, GX10 only (8B reasoner, about 17 GB)
+    kind: vlm
+    hf_id: nvidia/Cosmos3-Nano
+    transformers_class: Cosmos3OmniForConditionalGeneration
+    family: "Physical-AI VLM (Cosmos 3 Nano reasoner, 2D grounding)"
+    open_vocab: true
+  qwen3vl_8b:           # optional, GX10 only: the model Cosmos 3 Nano's reasoner was initialized from
+    kind: vlm
+    hf_id: Qwen/Qwen3-VL-8B-Instruct
+    transformers_class: AutoModelForImageTextToText
+    family: "General VLM (Qwen3-VL-8B, Nano's base)"
+    open_vocab: true
+
+# Detector prediction runs: every model x dataset x imgsz listed here.
+# VLM runs use `python -m det_eval.run vlm` on the fixed 300-frame subset instead.
+experiments:
+  - {models: [yolo26m_nms, yolo26m_e2e, rtdetr_l], dataset: coco_val2017, imgsz: [640]}
+  - {models: [yolo26m_nms, yolo26m_e2e, rtdetr_l], dataset: kitti_val, imgsz: [640, 1280]}
+  - {models: [yoloe26m], dataset: kitti_val, imgsz: [640, 1280]}
+  - {models: [yolo26m_nms_ml], dataset: coco_val2017, imgsz: [640]}
+  - {models: [yolo26m_nms_ml], dataset: kitti_val, imgsz: [640]}
+  - {models: [yolo26m_ft_kitti, yolo26m_ft_kitti_e2e, yolo26m_ft_kitti_maskvan], dataset: kitti_val, imgsz: [640]}
+  # second domain: does the multi-label effect, the scale split and the fine-tuning trade-off transfer?
+  - {models: [yolo26m_nms, yolo26m_nms_ml, yolo26m_e2e, rtdetr_l, yoloe26m, yolo26m_ft_kitti, yolo26m_ft_kitti_maskvan], dataset: nuimages_val3k, imgsz: [640]}
+  - {models: [yolo26m_nms, yolo26m_e2e], dataset: nuimages_val3k, imgsz: [1280]}
+
+open_vocab:
+  prompts: [car, pedestrian, cyclist, truck, tram]
+  # free-text labels -> GT category names (lowercased; a trailing plural 's' is tolerated)
+  label_to_category:
+    car: car
+    pedestrian: person
+    person: person
+    people: person
+    cyclist: cyclist
+    bicyclist: cyclist
+    bicycle rider: cyclist
+    truck: truck
+    tram: train
+    train: train
+    streetcar: train
+
+vlm:
+  prompt: "Locate every instance that belongs to the following categories: {categories}. Report bbox coordinates in JSON format."
+  coord_mode: norm1000           # Qwen3-VL convention; confirm on the smoke test by drawing boxes
+  max_new_tokens: 1024
+  chat_template_kwargs: {enable_thinking: false}
+  smoke_frames: 20
+
+latency:
+  n_images: 500
+  warmup: 50
+  imgsz: 640
