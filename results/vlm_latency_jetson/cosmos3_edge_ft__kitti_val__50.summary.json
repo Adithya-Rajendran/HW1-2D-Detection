@@ -1,0 +1,19 @@
+{
+  "name": "cosmos3_edge_ft",
+  "frames": 50,
+  "parse_status": {
+    "ok": 50
+  },
+  "parse_ok_rate": 1.0,
+  "unknown_labels": {},
+  "n_dets": 220,
+  "latency_s": {
+    "mean": 11.580068656678778,
+    "p50": 10.508064063993515,
+    "p90": 22.49718300870154
+  },
+  "completion_tokens_mean": 153.0,
+  "decode_tok_per_s": 13.212356898398665,
+  "prompt": "Locate every instance that belongs to the following categories: car, pedestrian, cyclist, truck, tram. Report bbox coordinates in JSON format.",
+  "coord_mode": "norm1000"
+}

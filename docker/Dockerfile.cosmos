@@ -1,0 +1,9 @@
+# Cosmos 3 Edge (+ LoRA adapters) on the Jetson, on top of the project image. Pins the versions the adapters were
+# trained with on the Spark: transformers main at a fixed commit (Cosmos 3 support), peft and accelerate.
+# Build:  docker build -f docker/Dockerfile.cosmos -t hw2d-cosmos:jp6 .
+# Run:    IMAGE=hw2d-cosmos:jp6 scripts/docker_run.sh python -m det_eval.vlm_grounding --model cosmos3_edge_ftc --limit 50
+FROM hw2d:jp6
+RUN pip install --no-cache-dir \
+      "transformers @ https://github.com/huggingface/transformers/archive/60f49549e0db78f022ee30aa1571d9ab6e4a15bf.zip" \
+      peft==0.21.2 accelerate==1.15.0 \
+ && python -c "import transformers, peft, torch; print(transformers.__version__, peft.__version__, torch.__version__)"

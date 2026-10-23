@@ -12,18 +12,21 @@ A devkit-faithful, tested harness for evaluating COCO-pretrained detectors zero-
 | F2 | **The COCO-to-KITTI gap is two gaps.** 1280 px input helps only cars under 40 px; 7 hours of fine-tuning on the Orin Nano helps only cars above 25 px (car AP 50.7 to 68.3). | Paper Fig. 2, `results/metrics/*__full.json` height bins |
 | F3 | **Many "false positives" are missing labels.** 60 to 70% of audited tiny false positives are real, unlabeled objects. | `results/audit_unlabeled_small.json` |
 
-Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge, 17 s/frame on the Orin Nano), TensorRT latency and memory, per-class AP, and a failure gallery.
+| | **F1 and F2 replicate on nuImages; the KITTI fine-tune does not transfer.** Multi-label NMS adds 0.6 AP / 5.1 AR on nuImages, 1280 px again helps only small objects, and the KITTI fine-tune collapses from 34.0 to 9.6 shared-class AP. | Paper Table X, `results/metrics/*__nuimages_val3k__*` |
+| | **LoRA on a VLM forgets less than a full fine-tune of a detector.** Cosmos 3 Edge with a KITTI LoRA adapter reaches 30.1 AP on KITTI val vs. 26.5 for fine-tuned YOLO26m, keeping trucks (47.7 vs. 5.6 moderate AP) and cyclists; masking Van regions in YOLO training recovers part of the truck loss (8.0 to 18.1 AP). | Paper Tables VI, VII |
+
+Also measured: closed-set vs. open-vocabulary (YOLOE-26m) vs. VLM (Cosmos 3 Edge, 17 s/frame zero-shot on the Orin Nano), TensorRT latency and memory, per-class AP, a failure gallery, and the course tutorial's own harness under three protocol switches.
 
 ## Assignment requirements map
 
 | Requirement (Track A) | Where |
 |---|---|
 | 3+ configurations, 2+ families | Paper Table I; `configs/experiments.yaml` |
-| 2+ datasets, taxonomy mapping | COCO, KITTI, nuImages; `configs/kitti_to_coco.yaml`, `configs/nuimages_to_coco.yaml`; Table II |
-| Metrics (AP, AP50/75, S/M/L, per-class, AR, latency, memory) | Tables III, V, VII |
-| Reproducibility (checkpoint, split, resolution, thresholds, hardware, versions, commands) | Appendix tables IX and X, `runs/*/*.manifest.json` |
+| 2+ datasets, taxonomy mapping | COCO, KITTI, nuImages; `configs/kitti_to_coco.yaml`, `configs/nuimages_to_coco.yaml`; Tables II, X |
+| Metrics (AP, AP50/75, S/M/L, per-class, AR, latency, memory) | Tables IV, VI, IX, X |
+| Reproducibility (checkpoint, split, resolution, thresholds, hardware, versions, commands) | Appendix tables XII and XIII, `runs/*/*.manifest.json` |
 | 2+ technical analyses | All five: cross-dataset, architecture, closed vs. open-vocabulary, speed-accuracy, fine-tuning |
-| Failure analysis | Section V, Table VIII, Fig. 5 |
+| Failure analysis | Section V, Table XI, Fig. 5 |
 | Evidence the experiments ran | Run logs and manifests in `runs/`, metrics in `results/`, tests in `tests/` |
 
 ## Citation

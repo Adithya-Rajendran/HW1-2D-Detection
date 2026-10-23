@@ -1,0 +1,3 @@
+# The images only need pip; the repo is bind-mounted at run time. Keep the build context empty of data.
+*
+!docker/
